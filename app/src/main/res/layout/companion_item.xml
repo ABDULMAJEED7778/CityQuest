@@ -1,0 +1,46 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/companion_item_card_view"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@drawable/companion_item_selector"
+
+>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/companion_item_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/solo_photo"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/companion_item_name"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Going solo"
+            android:fontFamily="@font/barlowsemicondensed_black"
+            android:layout_alignParentBottom="true"
+            android:textSize="25sp"
+
+            android:textColor="@color/secondary_color"
+            android:layout_margin="16dp" />
+
+        <ImageView
+            android:id="@+id/checkmark"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/check_mark"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="8dp"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

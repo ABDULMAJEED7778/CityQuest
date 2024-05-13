@@ -1,0 +1,125 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    >
+    <RelativeLayout
+        android:id="@+id/trip_item_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bangalore"
+       >
+        <RelativeLayout
+            android:layout_width="54dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/rounded_corner_rating">
+
+            <TextView
+                android:id="@+id/rating_trip_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="4.8"
+                android:textColor="@color/white"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:id="@+id/star_icon_trip_item"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/star_icon_sum"
+                android:layout_toLeftOf="@id/rating_trip_txt"
+
+                android:paddingRight="3dp"
+                app:tint="@color/white"
+
+                />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/favorite_trip"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/heart_icon"
+            android:layout_above="@+id/trip_desc_ll"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:layout_margin="12dp"
+            app:tint="@color/white"
+            android:background="@drawable/rounded_corner_rating"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/trip_desc_ll"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:background="@drawable/trip_desc_background"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"  >
+
+
+            <TextView
+                android:id="@+id/trip_name_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="Cultural Delights of Bangalore"
+                android:textColor="@color/primary_color"
+                android:fontFamily="@font/barlowsemicondensed_black"
+
+
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+
+                <TextView
+                    android:id="@+id/trip_date_range"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Dec 12 - Dec 14 ,2023"
+
+                    android:textColor="@color/gray"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_gravity="start"
+                    android:layout_centerVertical="true"
+
+                    />
+                <TextView
+                    android:id="@+id/trip_companion_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Family"
+                    android:textColor="@color/gray"
+                    android:layout_toRightOf="@id/trip_date_range"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginLeft="5dp"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,7 @@
+<!-- res/drawable/header_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Set the background color here -->
+    <solid android:color="@color/primary_color" />
+    <!-- You can also define other properties such as corner radius, stroke, etc. -->
+</shape>

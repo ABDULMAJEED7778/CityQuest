@@ -1,0 +1,89 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="170dp"
+    android:layout_height="160dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    >
+    <RelativeLayout
+        android:id="@+id/city_item_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bangalore"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@drawable/rounded_corner_city_info"
+
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"  >
+
+
+            <TextView
+                android:id="@+id/CityName_city_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Bangalore"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_regular"
+
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/location_icon_city_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/location_icon"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    android:id="@+id/CountryName_city_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="India"
+                    android:layout_toRightOf="@id/location_icon_city_category"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_gravity="start"
+                    android:layout_centerVertical="true"
+
+                    />
+                <TextView
+                    android:id="@+id/rating_city_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="4.8"
+                    android:textColor="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/poppins_regular"
+                    android:layout_centerVertical="true"
+                    />
+                <ImageView
+                    android:id="@+id/star_icon_city_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/star_icon"
+                    android:layout_toLeftOf="@id/rating_city_category"
+                    android:paddingTop="2dp"
+
+                   />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
