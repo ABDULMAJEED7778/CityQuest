@@ -26,28 +26,68 @@ tools:context=".DestinationActivity">
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@color/secondary_color"/>
+    <Button
+        android:id="@+id/mapBtn_dest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="map"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/backBtn_dest"
+        android:background="@color/gray"/>
 
     <LinearLayout
     android:id="@+id/logo_dest_ll"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:gravity="center_vertical">
-    <ImageView
-        android:id="@+id/App_logo_destination"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/applogoicon"
-        android:layout_marginTop="16dp"
-        android:scaleType="fitCenter"
-        android:layout_marginRight="10dp"/>
+        <ImageView
+            android:id="@+id/userPhoto"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
 
-    <ImageView
-        android:id="@+id/cityquest_destination"
-        android:layout_width="115dp"
-        android:layout_height="36dp"
-        android:src="@drawable/cityquesticon"
-        android:layout_marginTop="16dp"
-        android:scaleType="fitCenter" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/user_placholer_icon" />
+
+        <TextView
+
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello, "
+
+
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="@color/primary_color"
+
+            />
+
+        <TextView
+            android:id="@+id/userName_Destination"
+            android:layout_below="@id/logo_dest_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ghassan"
+
+
+            android:textSize="24sp"
+            android:fontFamily="@font/poppins_light"
+            android:textColor="@color/secondary_color"
+
+            />
+        <Button
+            android:id="@+id/logoutBtn_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="logout"
+            android:background="@color/red"
+            android:layout_marginLeft="20dp"
+            />
+
+
+
 </LinearLayout>
 
 <TextView
@@ -77,22 +117,36 @@ tools:context=".DestinationActivity">
 
     />
 
-<EditText
-    android:id="@+id/search_input"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_centerHorizontal="true"
-    android:layout_below="@id/want_to_go_txt"
-    android:layout_marginTop="16dp"
-    android:background="@drawable/rounded_corner_et"
-    android:hint="Search..."
-    android:inputType="textEmailAddress"
-    android:padding="10dp"
-    android:textColorHint="#828282"
-    android:textSize="12sp"
-    android:drawableEnd="@drawable/search_icon"
-    android:drawablePadding="8dp"
-    />
+<!--<EditText-->
+<!--    android:id="@+id/search_input"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="50dp"-->
+<!--    android:layout_centerHorizontal="true"-->
+<!--    android:layout_below="@id/want_to_go_txt"-->
+<!--    android:layout_marginTop="16dp"-->
+<!--    android:background="@drawable/rounded_corner_et"-->
+<!--    android:hint="Search..."-->
+<!--    android:inputType="textEmailAddress"-->
+<!--    android:padding="10dp"-->
+<!--    android:textColorHint="#828282"-->
+<!--    android:textSize="12sp"-->
+<!--    android:drawableEnd="@drawable/search_icon"-->
+<!--    android:drawablePadding="8dp"-->
+<!--    />-->
+    <AutoCompleteTextView
+        android:id="@+id/search_input"
+        android:layout_below="@id/want_to_go_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@android:color/white"
+        android:textColor="@android:color/black"/>
+
+
+
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -132,24 +186,13 @@ tools:context=".DestinationActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_city_popular"
-        android:layout_below="@+id/popular_cities_text"
         android:layout_width="match_parent"
         android:layout_height="320dp"
+        android:layout_below="@+id/popular_cities_text"
 
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
-        android:scrollbars="horizontal"/>
-
-
-
-
-
-
-
-
-
-
-
-
+        android:scrollbars="horizontal" />
 
 
 </RelativeLayout>

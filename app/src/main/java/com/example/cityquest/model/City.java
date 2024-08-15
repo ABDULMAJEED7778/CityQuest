@@ -17,6 +17,11 @@ public class City {
         CityRating = cityRating;
     }
 
+    public City(String cityName, String countryName) {
+        CityName = cityName;
+        CountryName = countryName;
+    }
+
     public String getCityName() {
         return CityName;
     }
@@ -48,5 +53,12 @@ public class City {
     public void setCityRating(String cityRating) {
         CityRating = cityRating;
     }
+
+    public String toString() {
+        return "City{name='" + getCityName() + "', imageResId=" + getBackgroundDrawable() + ", country='" + getCountryName() + "', rating='" + getCityRating() + "'}";
+    }
+
+
+
 }
 
