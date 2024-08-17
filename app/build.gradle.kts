@@ -49,9 +49,13 @@ android {
         // Firebase
         implementation("com.google.firebase:firebase-auth:23.0.0")
         implementation("com.google.firebase:firebase-firestore:25.0.0")
-        implementation(files("libs/OlaMapSdk.aar"))
-        implementation(files("libs/OlaMapSdk.aar"))
-        implementation(files("libs\\classes.jar"))
+
+        implementation(files("libs/OlaMapSdk-1.5.0.aar"))
+
+//Maplibre
+        implementation ("org.maplibre.gl:android-sdk:10.0.2")
+        implementation ("org.maplibre.gl:android-plugin-annotation-v9:1.0.0")
+        implementation ("org.maplibre.gl:android-plugin-markerview-v9:1.0.0")
 
         // Testing
         testImplementation("junit:junit:4.13.2")

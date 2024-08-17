@@ -47,7 +47,7 @@ import com.ola.mapsdk.MapFactory;
 
 public class DestinationActivity extends AppCompatActivity {
 
-    private Button skipBtn, backBtn, logOutBtn;
+    private Button skipBtn, backBtn, logOutBtn,mapBtn;
     private AutoCompleteTextView searchET;
     private TextView usernameTV;
     private RecyclerView recyclerView;
@@ -67,6 +67,7 @@ public class DestinationActivity extends AppCompatActivity {
         searchET = findViewById(R.id.search_input);
         searchET.setContentDescription("Search for a city or place");
         skipBtn = findViewById(R.id.skipBtn_dest);
+        mapBtn = findViewById(R.id.mapBtn_dest);
         backBtn = findViewById(R.id.backBtn_dest);
         logOutBtn = findViewById(R.id.logoutBtn_dest);
         usernameTV = findViewById(R.id.userName_Destination);
@@ -77,6 +78,11 @@ public class DestinationActivity extends AppCompatActivity {
         // Set up buttons' onClick listeners
         skipBtn.setOnClickListener(v -> {
             Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        });
+        mapBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DestinationActivity.this, MapActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
