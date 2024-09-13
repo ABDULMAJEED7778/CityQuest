@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -24,13 +21,12 @@ import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityArrayAdapter;
 import com.example.cityquest.adapter.FilterAdapter;
 import com.example.cityquest.adapter.PopularCityAdapter;
+import com.example.cityquest.apiCalls.VolleyCallback;
 import com.example.cityquest.model.City;
 import com.example.cityquest.model.Filter;
 import com.example.cityquest.model.User;
 import com.example.cityquest.utils.FirebaseUtils;
-import com.example.cityquest.olaMap.NetworkUtils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.example.cityquest.apiCalls.NetworkUtils;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -42,8 +38,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ola.mapsdk.MapFactory;
 
 public class DestinationActivity extends AppCompatActivity {
 
@@ -138,8 +132,14 @@ public class DestinationActivity extends AppCompatActivity {
 
         // Set up search functionality
         searchET.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedItem = (String) parent.getItemAtPosition(position);
-            // Handle the selected item
+            String selectedCity = (String) parent.getItemAtPosition(position);
+            if (!TextUtils.isEmpty(selectedCity)) {
+                // Start DestinationDetailsActivity with the selected city name
+                Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
+                intent.putExtra("city_name", selectedCity);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
+            }
         });
         searchET.addTextChangedListener(new android.text.TextWatcher() {
             @Override
@@ -184,60 +184,69 @@ public class DestinationActivity extends AppCompatActivity {
     }
 
     private void performSearch(String searchText) {
-        new Thread(() -> {
-            try {
-                String apiKey = getString(R.string.api_key);  // Assuming you store your API key in strings.xml
-                String response = NetworkUtils.getCitySuggestions(searchText, apiKey);  // Update this to match Ola Maps API
-                Log.d("API_RESPONSE", "Raw Response: " + response);
-                runOnUiThread(() -> handleApiResponse(response));
-            } catch (IOException e) {
-                Log.e("API_ERROR", "Error fetching suggestions: " + e.getMessage());
-                runOnUiThread(() -> Toast.makeText(DestinationActivity.this, "Err: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+        String apiKey = getString(R.string.api_key);  // Assuming you store your API key in strings.xml
+
+        NetworkUtils.getCitySuggestions(this, searchText, apiKey, new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray response) {
+                // Directly pass the JSONArray to handleApiResponse
+                handleApiResponse(response);
             }
-        }).start();
+
+            @Override
+            public void onError(String error) {
+                Log.e("API_ERROR", "Error fetching suggestions: " + error);
+                Toast.makeText(DestinationActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
-    private void handleApiResponse(String response) {
+
+
+    private void handleApiResponse(JSONArray response) {
         List<String> suggestions = new ArrayList<>();
         try {
-            JSONObject jsonObject = new JSONObject(response);
-            JSONArray predictions = jsonObject.getJSONArray("predictions");
-            for (int i = 0; i < predictions.length(); i++) {
-                JSONObject prediction = predictions.getJSONObject(i);
+            // Loop through each item in the JSONArray
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject result = response.getJSONObject(i);
 
-                // Check if the prediction is of type "locality" (city)
-                JSONArray types = prediction.getJSONArray("types");
+                // Check if the result is of type "locality"
+                JSONArray types = result.getJSONArray("types");
+                boolean isLocality = false;
                 for (int j = 0; j < types.length(); j++) {
                     if (types.getString(j).equals("locality")) {
-                        // Extract the city name, which is usually the first term
-                        JSONArray terms = prediction.getJSONArray("terms");
-                        if (terms.length() > 0) {
-                            String cityName = terms.getJSONObject(0).getString("value");
-                            suggestions.add(cityName);
-                        }
-                        break; // Exit the loop after finding a locality type
+                        isLocality = true;
+                        break;
+                    }
+                }
+
+                if (isLocality) {
+                    // Extract the name from the structured_formatting object
+                    JSONObject structuredFormatting = result.getJSONObject("structured_formatting");
+                    String mainText = structuredFormatting.getString("main_text");
+                    if (!suggestions.contains(mainText)) {
+                        suggestions.add(mainText);
                     }
                 }
             }
 
-            // Set the adapter with city names only
+            // Set the adapter with the city names
             CityArrayAdapter adapter = new CityArrayAdapter(this, suggestions);
             searchET.setAdapter(adapter);
             searchET.setThreshold(1); // Start filtering after 1 character
 
         } catch (JSONException e) {
-            Toast.makeText(DestinationActivity.this, "Error parsing response: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e("api_error", e.getMessage());
+            Toast.makeText(DestinationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
 
 
-    // In your DestinationActivity.java
 
 
 
-    // Ensure this method is called after your API response is processed
 
 
 
