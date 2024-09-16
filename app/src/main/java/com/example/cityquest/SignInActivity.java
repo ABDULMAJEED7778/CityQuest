@@ -1,14 +1,11 @@
 package com.example.cityquest;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,11 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInActivity extends AppCompatActivity {
 
-    Button skipBtn;
+    //change from skipBtn to exploreBtn
+    Button exploreBtn;
     TextView signupTv;
     EditText emailET, passwordET;
     Button signInBtn;
@@ -58,11 +55,11 @@ public class SignInActivity extends AppCompatActivity {
 
 
 
-        skipBtn = findViewById(R.id.skipBtn_signup);
+        exploreBtn = findViewById(R.id.explore_around_btn);
 
         signupTv = findViewById(R.id.signUpTXT);
 
-        skipBtn.setOnClickListener(new View.OnClickListener() {
+        exploreBtn.setOnClickListener(new View.OnClickListener() {
 
 
             @Override

@@ -65,8 +65,15 @@ dependencies {
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
-    // Ola Maps SDK
-    implementation("com.moengage:moe-android-sdk:12.6.01")
+//    // Ola Maps SDK
+//    implementation("com.moengage:moe-android-sdk:12.6.01")
+    //OlaMap SDK
+    implementation(files("libs/OlaMapSdk.aar"))
+
+    //Maplibre
+    implementation ("org.maplibre.gl:android-sdk:10.0.2")
+    implementation ("org.maplibre.gl:android-plugin-annotation-v9:1.0.0")
+    implementation ("org.maplibre.gl:android-plugin-markerview-v9:1.0.0")
 
     // Volley
     implementation("com.android.volley:volley:1.2.1")

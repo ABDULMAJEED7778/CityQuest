@@ -60,7 +60,7 @@ public class DestinationActivity extends AppCompatActivity {
 
         searchET = findViewById(R.id.search_input);
         searchET.setContentDescription("Search for a city or place");
-        skipBtn = findViewById(R.id.skipBtn_dest);
+//        skipBtn = findViewById(R.id.skipBtn_dest);
         mapBtn = findViewById(R.id.mapBtn_dest);
         backBtn = findViewById(R.id.backBtn_dest);
         logOutBtn = findViewById(R.id.logoutBtn_dest);
@@ -70,11 +70,11 @@ public class DestinationActivity extends AppCompatActivity {
 
 
         // Set up buttons' onClick listeners
-        skipBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        });
+//        skipBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
+//            startActivity(intent);
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        });
         mapBtn.setOnClickListener(v -> {
             Intent intent = new Intent(DestinationActivity.this, MapActivity.class);
             startActivity(intent);
