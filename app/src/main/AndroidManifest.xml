@@ -22,6 +22,11 @@
             android:exported="false"
             />
         <activity
+            android:name=".ExploreAroundActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
+        <activity
             android:name=".MapActivity"
             android:exported="false" />
         <activity

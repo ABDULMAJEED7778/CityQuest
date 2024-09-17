@@ -48,6 +48,7 @@ dependencies {
     // Firebase
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("com.google.firebase:firebase-firestore:25.0.0")
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
 
     // Local JAR/AAR files
 
