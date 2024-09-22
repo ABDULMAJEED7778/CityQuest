@@ -104,8 +104,8 @@
 
             </LinearLayout>
 
-            <ScrollView
-                android:layout_width="match_parent"
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="300dp">
 
                 <LinearLayout
@@ -150,7 +150,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_weight="0" />
                 </LinearLayout>
-            </ScrollView>
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,8 +162,8 @@
                 android:textColor="@color/primary_color"
                 android:textSize="16sp" />
 
-            <ScrollView
-                android:layout_width="match_parent"
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
                 android:layout_height="300dp">
 
                 <LinearLayout
@@ -208,7 +208,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_weight="0" />
                 </LinearLayout>
-            </ScrollView>
+            </HorizontalScrollView>
 
         </LinearLayout>
     </ScrollView>

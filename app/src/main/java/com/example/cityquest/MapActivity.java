@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 //import com.ola.mapsdk.model.OlaLatLng;
 //import com.ola.mapsdk.model.OlaMarkerOptions;
-import com.ola.maps.mapslibrary.viewmodels.OlaMapViewModel;
+//import com.ola.mapsdk.view.OlaMap;
 //import com.ola.mapsdk.view.OlaMapView;
 //
 //import com.ola.mapsdk.interfaces.OlaMapCallback;
@@ -15,15 +15,15 @@ import com.ola.maps.mapslibrary.viewmodels.OlaMapViewModel;
 
 public class MapActivity extends AppCompatActivity {
 
-    OlaMapViewModel mapView;
+//    OlaMapView mapView;
 //    OlaMarkerOptions markerOptions;
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_map);
-//
-////         Initialize the map view
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_map);
+
+        // Initialize the map view
 //        mapView = findViewById(R.id.mapView);
 //
 //
@@ -47,16 +47,16 @@ public class MapActivity extends AppCompatActivity {
 //                .setZoomGesturesEnabled(true)   // Enable zoom gestures
 //                .build()
 //        );
-////         markerOptions = new OlaMarkerOptions.Builder()
-////                 .setMarkerId("marker1")
-////                .setPosition(new OlaLatLng(18.52145653681468, 73.93178277572254,18.52145653681468))
-////                .setIsIconClickable(true)
-////                .setIconRotation(0f)
-////                .setIsAnimationEnable(true)
-////                .setIsInfoWindowDismissOnClick(true)
-////                .build();
-//
-//    }
+//         markerOptions = new OlaMarkerOptions.Builder()
+//                 .setMarkerId("marker1")
+//                .setPosition(new OlaLatLng(18.52145653681468, 73.93178277572254,18.52145653681468))
+//                .setIsIconClickable(true)
+//                .setIconRotation(0f)
+//                .setIsAnimationEnable(true)
+//                .setIsInfoWindowDismissOnClick(true)
+//                .build();
+
+    }
 
 
 

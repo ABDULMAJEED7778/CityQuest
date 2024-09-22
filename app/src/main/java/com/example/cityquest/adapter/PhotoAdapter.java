@@ -1,5 +1,6 @@
 package com.example.cityquest.adapter;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,25 +40,32 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoViewHol
                 .into(holder.imageView);
 
         // If you want to display photographer's name
-        holder.photographerName.setText(photo.getPhotographer());
+       //holder.photographerName.setText(photo.getPhotographer());
     }
 
     @Override
     public int getItemCount() {
         return photos.size();
     }
+    public void addPhoto(Uri uri, String photographer) {
+        // Create a Photo object with the URL and photographer name
+        Photo photo = new Photo(uri.toString(), photographer);
+        photos.add(photo);
+        notifyItemInserted(photos.size() - 1);
+    }
+
 
     public static class PhotoViewHolder extends RecyclerView.ViewHolder {
         // Define view elements
         ImageView imageView;
-         TextView photographerName;
+
 
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
             // Initialize view elements
              imageView = itemView.findViewById(R.id.photo_image);
-             photographerName = itemView.findViewById(R.id.photographer_name);
+//             photographerName = itemView.findViewById(R.id.photographer_name);
         }
     }
 }

@@ -2,10 +2,13 @@ package com.example.cityquest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityArrayAdapter;
 import com.example.cityquest.adapter.FilterAdapter;
+import com.example.cityquest.adapter.*;
 import com.example.cityquest.adapter.PopularCityAdapter;
 import com.example.cityquest.apiCalls.VolleyCallback;
 import com.example.cityquest.model.City;
@@ -27,6 +31,13 @@ import com.example.cityquest.model.Filter;
 import com.example.cityquest.model.User;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.apiCalls.NetworkUtils;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,14 +48,21 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DestinationActivity extends AppCompatActivity {
 
     private Button skipBtn, backBtn, logOutBtn,mapBtn;
     private AutoCompleteTextView searchET;
+
     private TextView usernameTV;
     private RecyclerView recyclerView;
+
+    private PlacesClient placesClient;
+
+    private PlaceAutocompleteAdapter suggestionAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,23 +76,44 @@ public class DestinationActivity extends AppCompatActivity {
             return insets;
         });
 
+        String apiKey = getString(R.string.google_maps_api_key);
+        Places.initializeWithNewPlacesApiEnabled(this, apiKey);
+        placesClient = Places.createClient(this);
+
+        // Initialize RecyclerView for showing autocomplete results
+        recyclerView = findViewById(R.id.recyclerView_search_suggestion);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialize Autocomplete Adapter
+        suggestionAdapter = new PlaceAutocompleteAdapter(this, new ArrayList<>());
+        recyclerView.setAdapter(suggestionAdapter);
+
+        suggestionAdapter.setOnItemClickListener(position -> {
+            AutocompletePrediction selectedPrediction = suggestionAdapter.getItemAt(position);
+            if (selectedPrediction != null) {
+                String placeId = selectedPrediction.getPlaceId();
+                Log.e("placeId",placeId);
+                DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId);
+                bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
+
+                fetchPlaceDetails(placeId);
+            }
+        });
+
+
         searchET = findViewById(R.id.search_input);
         searchET.setContentDescription("Search for a city or place");
-//        skipBtn = findViewById(R.id.skipBtn_dest);
+
         mapBtn = findViewById(R.id.mapBtn_dest);
         backBtn = findViewById(R.id.backBtn_dest);
+        skipBtn = findViewById(R.id.skipBtn_dest);
         logOutBtn = findViewById(R.id.logoutBtn_dest);
         usernameTV = findViewById(R.id.userName_Destination);
 
 
 
 
-        // Set up buttons' onClick listeners
-//        skipBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
-//            startActivity(intent);
-//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//        });
+
         mapBtn.setOnClickListener(v -> {
             Intent intent = new Intent(DestinationActivity.this, MapActivity.class);
             startActivity(intent);
@@ -85,6 +124,12 @@ public class DestinationActivity extends AppCompatActivity {
             Intent intent = new Intent(DestinationActivity.this, SignInActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        });
+
+        skipBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
 
@@ -130,30 +175,42 @@ public class DestinationActivity extends AppCompatActivity {
         recyclerViewCityCategory.setAdapter(adapter);
         recyclerViewCityPopular.setAdapter(adapter2);
 
-        // Set up search functionality
-        searchET.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedCity = (String) parent.getItemAtPosition(position);
-            if (!TextUtils.isEmpty(selectedCity)) {
-                // Start DestinationDetailsActivity with the selected city name
-                Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
-                intent.putExtra("city_name", selectedCity);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_down);
-            }
-        });
-        searchET.addTextChangedListener(new android.text.TextWatcher() {
+
+
+        searchET.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No action required here
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(s)) {
-                    performSearch(s.toString());
+                if (s.length() > 2) {
+                    // Fetch predictions after the user has typed at least 3 characters
+                    fetchPlacePredictions(s.toString());
+                } else {
+                    // Clear the predictions if input is too short
+
+                    suggestionAdapter.updateData(new ArrayList<>());
                 }
             }
 
             @Override
-            public void afterTextChanged(android.text.Editable s) {}
+            public void afterTextChanged(Editable s) {
+                // No action required here
+            }
+        });
+
+
+        searchET.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedCity = (String) parent.getItemAtPosition(position);
+
+            DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(selectedCity);
+            bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
+
+//            Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
+//            intent.putExtra("city_name", selectedCity);
+//            startActivity(intent);
         });
     }
 
@@ -183,71 +240,52 @@ public class DestinationActivity extends AppCompatActivity {
         });
     }
 
-    private void performSearch(String searchText) {
-        String apiKey = getString(R.string.api_key);  // Assuming you store your API key in strings.xml
 
-        NetworkUtils.getCitySuggestions(this, searchText, apiKey, new VolleyCallback() {
-            @Override
-            public void onSuccess(JSONArray response) {
-                // Directly pass the JSONArray to handleApiResponse
-                handleApiResponse(response);
-            }
+    private void fetchPlacePredictions(String query) {
+        // Build the autocomplete request
+        FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setQuery(query)
+                .build();
 
-            @Override
-            public void onError(String error) {
-                Log.e("API_ERROR", "Error fetching suggestions: " + error);
-                Toast.makeText(DestinationActivity.this, "Error: " + error, Toast.LENGTH_SHORT).show();
-            }
-        });
+        // Make the request to fetch predictions
+        placesClient.findAutocompletePredictions(request)
+                .addOnSuccessListener(response -> {
+                    List<AutocompletePrediction> predictions = response.getAutocompletePredictions();
+                    // Update adapter with the new list of predictions
+                    suggestionAdapter.updateData(predictions);
+                })
+                .addOnFailureListener(exception -> {
+                    Log.e("PlaceError", "Error fetching place predictions: " + exception.getMessage());
+                });
     }
 
+    private void fetchPlaceDetails(String placeId) {
+        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+        FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
 
-
-
-    private void handleApiResponse(JSONArray response) {
-        List<String> suggestions = new ArrayList<>();
-        try {
-            // Loop through each item in the JSONArray
-            for (int i = 0; i < response.length(); i++) {
-                JSONObject result = response.getJSONObject(i);
-
-                // Check if the result is of type "locality"
-                JSONArray types = result.getJSONArray("types");
-                boolean isLocality = false;
-                for (int j = 0; j < types.length(); j++) {
-                    if (types.getString(j).equals("locality")) {
-                        isLocality = true;
-                        break;
-                    }
-                }
-
-                if (isLocality) {
-                    // Extract the name from the structured_formatting object
-                    JSONObject structuredFormatting = result.getJSONObject("structured_formatting");
-                    String mainText = structuredFormatting.getString("main_text");
-                    if (!suggestions.contains(mainText)) {
-                        suggestions.add(mainText);
-                    }
-                }
-            }
-
-            // Set the adapter with the city names
-            CityArrayAdapter adapter = new CityArrayAdapter(this, suggestions);
-            searchET.setAdapter(adapter);
-            searchET.setThreshold(1); // Start filtering after 1 character
-
-        } catch (JSONException e) {
-            Log.e("api_error", e.getMessage());
-            Toast.makeText(DestinationActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+        placesClient.fetchPlace(fetchPlaceRequest)
+                .addOnSuccessListener(response -> {
+                    Place place = response.getPlace();
+//                    Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
+//                    intent.putExtra("place_id", place.getId());
+//                    startActivity(intent);
+                })
+                .addOnFailureListener(e -> Log.e("Place Error", "Place not found: " + e.getMessage()));
     }
-
-
-
-
-
-
-
-
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
