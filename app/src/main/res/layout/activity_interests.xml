@@ -88,18 +88,37 @@
        android:layout_below="@id/preferred_activities_txt"
        >
 
-       <com.google.android.flexbox.FlexboxLayout
-           android:id="@+id/interest_flexbox_interests"
+<!--       <com.google.android.flexbox.FlexboxLayout-->
+<!--           android:id="@+id/interest_flexbox_interests"-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="wrap_content"-->
+
+<!--           android:padding="16dp"-->
+<!--           app:flexWrap="wrap"-->
+<!--           app:alignItems="stretch"-->
+<!--           app:justifyContent="flex_start">-->
+
+
+<!--       </com.google.android.flexbox.FlexboxLayout>-->
+
+
+
+       <com.google.android.material.chip.ChipGroup
+           android:id="@+id/chipGroupInterests"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-
-           android:padding="16dp"
-           app:flexWrap="wrap"
-           app:alignItems="stretch"
-           app:justifyContent="flex_start">
+           app:singleSelection="false"
+       android:layout_margin="16dp"
+       android:padding="8dp">
 
 
-       </com.google.android.flexbox.FlexboxLayout>
+
+       </com.google.android.material.chip.ChipGroup>
+
+
+
+
+
 
    </RelativeLayout>
 

@@ -3,6 +3,7 @@ package com.example.cityquest;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -12,11 +13,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.cityquest.model.Trips;
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterestsActivity extends AppCompatActivity {
 
     Button nextBtn, backBtn;
+    ChipGroup chipGroup;
+    Trips trip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +36,30 @@ public class InterestsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        trip = getIntent().getParcelableExtra("trip");
+        if (trip == null) {
+            trip = new Trips();
+        }
         nextBtn = findViewById(R.id.nextBtn_comp);
         nextBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(InterestsActivity.this,SummaryActivity.class);
+            List<String> selectedActivities = new ArrayList<>();
+            for (int i = 0; i < chipGroup.getChildCount(); i++) {
+                Chip chip = (Chip) chipGroup.getChildAt(i);
+                if (chip.isChecked()) {
+                    selectedActivities.add(chip.getText().toString());
+                }
+            }
+            trip.setActivities(selectedActivities); // Store selected activities
+            Log.e("intersts",trip.getActivities().toString());
+
+
+            Intent intent = new Intent(InterestsActivity.this, SummaryActivity.class);
+            intent.putExtra("trip", trip); // Pass the trip object
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
+
+
         backBtn = findViewById(R.id.backBtn_comp);
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(InterestsActivity.this,CompanionsActivity.class);
@@ -41,40 +68,18 @@ public class InterestsActivity extends AppCompatActivity {
         });
 
 
-
-        FlexboxLayout flexboxLayout = findViewById(R.id.interest_flexbox_interests);
-        String[] interests = {"Great food", "Art Galleries", "Hidden Gems", "Nightlife and Entertainment", "Outdoors", "Shopping Experience", "Royal heritage",
-                "Great food", "Art Galleries", "Hidden Gems", "Nightlife and Entertainment", "Outdoors", "Shopping Experience", "Royal heritage"};
+        chipGroup = findViewById(R.id.chipGroupInterests);
+        String[] interests = {"Great food", "Art Galleries", "Hidden Gems", "Nightlife and Entertainment", "Outdoors", "Shopping Experience", "Royal heritage"};
 
         for (String interest : interests) {
-            Button button = new Button(this);
-            button.setText(interest);
-            button.setBackgroundResource(R.drawable.interest_background_int_default); // Set background drawable
-            button.setTextColor(getResources().getColor(R.color.primary_color)); // Set default text color
-            Typeface defaultFont = Typeface.create("sans-serif", Typeface.NORMAL);
-            button.setTypeface(defaultFont);
-            button.setPadding(16, 8, 16, 8); // Set padding
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Change text color and background when clicked
-                    if (button.getCurrentTextColor() == getResources().getColor(R.color.primary_color)) {
-                        button.setTextColor(getResources().getColor(R.color.secondary_color));
-                        button.setBackgroundResource(R.drawable.interest_background_int_clicked);
-                    } else {
-                        button.setTextColor(getResources().getColor(R.color.primary_color));
-                        button.setBackgroundResource(R.drawable.interest_background_int_default);
-                    }
-                }
-            });
-            FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
-                    FlexboxLayout.LayoutParams.WRAP_CONTENT,
-                    FlexboxLayout.LayoutParams.WRAP_CONTENT
-            );
-            layoutParams.setMargins(16, 16, 16, 16); // Set margins
-            button.setLayoutParams(layoutParams); // Set layout parameters
-            flexboxLayout.addView(button); // Add Button to FlexboxLayout
+            Chip chip = new Chip(this);
+            chip.setText(interest);
+            chip.setCheckable(true);
+            chip.setChipBackgroundColorResource(R.color.primary_color_light); // Customize as needed
+            chip.setTextColor((R.color.primary_color)); // Customize as needed
+            chipGroup.addView(chip);
         }
+
 
     }
 }

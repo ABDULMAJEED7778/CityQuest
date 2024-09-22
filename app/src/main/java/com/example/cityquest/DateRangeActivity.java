@@ -2,6 +2,7 @@ package com.example.cityquest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.archit.calendardaterangepicker.customviews.CalendarListener;
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
+import com.example.cityquest.model.Trips;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +29,7 @@ public class DateRangeActivity extends AppCompatActivity {
     Button nextBtn,backBtn,resetBtn;
     EditText dateRangET;
     DateRangeCalendarView calendar;
+    Trips trip;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,25 @@ public class DateRangeActivity extends AppCompatActivity {
 
         dateRangET = findViewById(R.id.date_range_et);
         calendar = findViewById(R.id.calendar);
+        trip = getIntent().getParcelableExtra("trip");
+        if (trip == null) {
+            trip = new Trips();
+        }
+
         nextBtn = findViewById(R.id.nextBtn_dr);
         resetBtn = findViewById(R.id.reset_dateRange_btn);
         Calendar today = Calendar.getInstance();
         String todayFormattedDate = DATE_FORMAT.format(today.getTime());
         nextBtn.setOnClickListener(v -> {
+
+            if(dateRangET.getText().toString().isEmpty()){
+                Toast.makeText(this, "Please select a date range", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
             Intent intent = new Intent(DateRangeActivity.this,CompanionsActivity.class);
+            intent.putExtra("trip", trip);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
@@ -61,6 +77,8 @@ public class DateRangeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.resetAllSelectedViews();
+                trip.setStartDate("");
+                trip.setEndDate("");
                 dateRangET.setText("");
                 Calendar endDate = (Calendar) today.clone();
                 endDate.add(Calendar.DAY_OF_MONTH, 5);
@@ -96,6 +114,8 @@ public class DateRangeActivity extends AppCompatActivity {
         Calendar endDateSelectable = Calendar.getInstance();
         endDateSelectable.add(Calendar.YEAR, 2); // Example: Set end date to 2 years from now
         calendar.setSelectableDateRange(startDateSelectable, endDateSelectable);
+        trip.setStartDate(DATE_FORMAT.format(startDateSelectable.getTime()));
+        trip.setEndDate(DATE_FORMAT.format(endDateSelectable.getTime()));
 
         // Set current date as default
 
