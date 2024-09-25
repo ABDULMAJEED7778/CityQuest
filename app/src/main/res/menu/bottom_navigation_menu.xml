@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/explore_page"
+        android:title="Explore" />
+    <item
+        android:id="@+id/nav_itinerary"
+        android:icon="@drawable/itinerary_page_inactive"
+        android:title="Itinerary" />
+    <item
+        android:id="@+id/nav_community"
+        android:icon="@drawable/community"
+        android:title="Community" />
+    <item
+        android:id="@+id/nav_saved"
+        android:icon="@drawable/saved_page"
+        android:title="Saved" />
+</menu>

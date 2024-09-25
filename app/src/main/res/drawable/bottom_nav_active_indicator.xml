@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/primary_color_light" /> <!-- Set the color of the active indicator -->
+    <corners android:radius="50dp" /> <!-- Customize the shape, e.g., rounded corners -->
+</shape>

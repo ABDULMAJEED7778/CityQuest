@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CityQuest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.CityQuest" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_color</item>
@@ -10,12 +10,11 @@
         <item name="colorSecondaryVariant">@color/secondary_color</item>
         <item name="colorOnSecondary">@color/secondary_color</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/primary_color</item>
         <item name="android:fontFamily">@font/</item>
         <!-- Customize your theme here. -->
 
     </style>
-
 
 
 
