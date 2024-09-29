@@ -1,15 +1,14 @@
 package com.example.cityquest.adapter;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
 import com.example.cityquest.model.Companion;
 
@@ -17,15 +16,13 @@ import java.util.List;
 
 public class CompanionAdapter extends BaseAdapter {
     private List<Companion> companionList;
-
     private Context mContext;
+    private int selectedPosition = -1; // Track the selected position
 
     public CompanionAdapter(Context context, List<Companion> companionList) {
         this.mContext = context;
         this.companionList = companionList;
     }
-
-
 
     @Override
     public int getCount() {
@@ -35,6 +32,13 @@ public class CompanionAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return companionList.get(position);
+    }
+
+    public String getSelectedCompanion() {
+        if (selectedPosition != -1) {
+            return companionList.get(selectedPosition).getName();
+        }
+        return null; // No selection
     }
 
     @Override
@@ -58,23 +62,16 @@ public class CompanionAdapter extends BaseAdapter {
         }
 
         Companion companion = companionList.get(position);
-
         holder.companionName.setText(companion.getName());
-
-
         holder.companionImage.setImageResource(companion.getImgId());
 
+        // Update the checkmark visibility based on the selected position
+        holder.checkMarkImageView.setVisibility(position == selectedPosition ? View.VISIBLE : View.GONE);
 
         // Set click listener
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.checkMarkImageView.getVisibility() == View.VISIBLE) {
-                    holder.checkMarkImageView.setVisibility(View.INVISIBLE);
-                } else {
-                    holder.checkMarkImageView.setVisibility(View.VISIBLE);
-                }
-            }
+        convertView.setOnClickListener(v -> {
+            selectedPosition = position; // Update selected position
+            notifyDataSetChanged(); // Refresh the adapter
         });
 
         return convertView;
@@ -82,8 +79,6 @@ public class CompanionAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView companionName;
-        ImageView companionImage,checkMarkImageView;
+        ImageView companionImage, checkMarkImageView;
     }
-
-
 }

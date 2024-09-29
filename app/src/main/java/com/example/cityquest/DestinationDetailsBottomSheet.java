@@ -1,5 +1,6 @@
 package com.example.cityquest;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,8 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.cityquest.adapter.PhotoAdapter;
+import com.example.cityquest.model.Trip;
+import com.example.cityquest.model.Trips;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
@@ -39,14 +43,17 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
 
 
     private static final String ARG_PLACE_ID = "place_id";
+    private static final String ARG_CITY_NAME = "city_name";
     private RecyclerView recyclerView;
+    private Button selectBtn;
     private PhotoAdapter photosAdapter;
 
 
-    public static DestinationDetailsBottomSheet newInstance(String placeId) {
+    public static DestinationDetailsBottomSheet newInstance(String placeId, String cityName) {
         DestinationDetailsBottomSheet fragment = new DestinationDetailsBottomSheet();
         Bundle args = new Bundle();
         args.putString(ARG_PLACE_ID, placeId);
+        args.putString(ARG_CITY_NAME, cityName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,11 +67,13 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
 
         // Initialize ViewPager2
         recyclerView = view.findViewById(R.id.recyclerView_CityDetails);
+        selectBtn = view.findViewById(R.id.select_btn_detail);
 
         photosAdapter = new PhotoAdapter(new ArrayList<>());
 
 
         recyclerView.setLayoutManager(new CarouselLayoutManager());
+
 
 
 
@@ -76,7 +85,24 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         Bundle args = getArguments();
         if (args != null) {
             String placeId = args.getString(ARG_PLACE_ID);
+            String cityName = args.getString(ARG_CITY_NAME);
+
+            Trips trip = new Trips(); // Create a new Trip object
+            trip.setDestination(cityName); // Set the destination
+            trip.setTripId(placeId);
+
+
+            // Pass the trip object to the next activity
+
+
+
             fetchPlacePhotos(placeId);
+
+            selectBtn.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), DateRangeActivity.class);
+                intent.putExtra("trip", trip);
+                startActivity(intent);
+            });
         }
 
         return view;

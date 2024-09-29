@@ -1,6 +1,7 @@
 package com.example.cityquest.utils;
 
 import com.example.cityquest.model.Trip;
+import com.example.cityquest.model.Trips;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,5 +51,24 @@ public class FirebaseUtils {
                 .whereLessThanOrEqualTo("endDate", endDate);
     }
 
-    // Other Firebase-related utility methods can be added here...
+    public static void addTrip(Trips trip, OnCompleteListener<DocumentReference> onCompleteListener) {
+        FirebaseUser currentUser = getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            getTripsCollection(userId).add(trip).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Call the listener with the DocumentReference
+                    onCompleteListener.onComplete(task);
+                } else {
+                    // Handle error
+                    onCompleteListener.onComplete(null);
+                }
+            });
+        } else {
+            // Handle case when user is not logged in
+            onCompleteListener.onComplete(null);
+        }
+    }
+
+
 }

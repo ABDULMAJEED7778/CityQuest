@@ -92,11 +92,12 @@ public class DestinationActivity extends AppCompatActivity {
             AutocompletePrediction selectedPrediction = suggestionAdapter.getItemAt(position);
             if (selectedPrediction != null) {
                 String placeId = selectedPrediction.getPlaceId();
+                String cityName = selectedPrediction.getPrimaryText(null).toString();
                 Log.e("placeId",placeId);
-                DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId);
+                DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId,cityName);
                 bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
 
-                fetchPlaceDetails(placeId);
+//                fetchPlaceDetails(placeId);
             }
         });
 
@@ -202,16 +203,17 @@ public class DestinationActivity extends AppCompatActivity {
         });
 
 
-        searchET.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedCity = (String) parent.getItemAtPosition(position);
-
-            DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(selectedCity);
-            bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
-
-//            Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
-//            intent.putExtra("city_name", selectedCity);
-//            startActivity(intent);
-        });
+//        searchET.setOnItemClickListener((parent, view, position, id) -> {
+//            String selectedCity = (String) parent.getItemAtPosition(position);
+//            Log.e("placeid",selectedCity);
+//
+//            DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(selectedCity);
+//            bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
+//
+////            Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
+////            intent.putExtra("city_name", selectedCity);
+////            startActivity(intent);
+//        });
     }
 
     private void setUserInfo(String userId) {
@@ -244,6 +246,7 @@ public class DestinationActivity extends AppCompatActivity {
     private void fetchPlacePredictions(String query) {
         // Build the autocomplete request
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                .setTypesFilter(Arrays.asList("locality"))
                 .setQuery(query)
                 .build();
 
@@ -259,19 +262,19 @@ public class DestinationActivity extends AppCompatActivity {
                 });
     }
 
-    private void fetchPlaceDetails(String placeId) {
-        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
-        FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
-
-        placesClient.fetchPlace(fetchPlaceRequest)
-                .addOnSuccessListener(response -> {
-                    Place place = response.getPlace();
-//                    Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
-//                    intent.putExtra("place_id", place.getId());
-//                    startActivity(intent);
-                })
-                .addOnFailureListener(e -> Log.e("Place Error", "Place not found: " + e.getMessage()));
-    }
+//    private void fetchPlaceDetails(String placeId) {
+//        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+//        FetchPlaceRequest fetchPlaceRequest = FetchPlaceRequest.builder(placeId, placeFields).build();
+//
+//        placesClient.fetchPlace(fetchPlaceRequest)
+//                .addOnSuccessListener(response -> {
+//                    Place place = response.getPlace();
+////                    Intent intent = new Intent(DestinationActivity.this, DestinationDetailsActivity.class);
+////                    intent.putExtra("place_id", place.getId());
+////                    startActivity(intent);
+//                })
+//                .addOnFailureListener(e -> Log.e("Place Error", "Place not found: " + e.getMessage()));
+//    }
 
 }
 
