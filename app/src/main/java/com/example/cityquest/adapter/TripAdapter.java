@@ -1,7 +1,8 @@
 package com.example.cityquest.adapter;
 
-
-
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +10,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.cityquest.R;
-import com.example.cityquest.model.City;
-import com.example.cityquest.model.Trip;
+import com.example.cityquest.ReadyPlanDetailsActivity;
+import com.example.cityquest.model.ReadyTrips;
 
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
-    private List<Trip> tripList;
+    private List<ReadyTrips> tripList;
+    private Context context;
 
-    public TripAdapter(List<Trip> tripList) {
+    public TripAdapter(Context context, List<ReadyTrips> tripList) {
+        this.context = context;
         this.tripList = tripList;
     }
 
@@ -33,17 +40,41 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TripViewHolder holder, int position) {
-        Trip trip = tripList.get(position);
-        holder.textViewTripName.setText(trip.getName());
-        holder.textViewCompanion.setText(trip.getCompanion());
-        holder.textViewTripRating.setText(trip.getRating());
-        holder.textViewTripDateRange.setText(trip.getDateRange());
+        ReadyTrips trip = tripList.get(position);
+        holder.name.setText(trip.getName());
+        holder.rating.setText(String.valueOf(trip.getRating()));
+        holder.startEndDate.setText(trip.getStartDate() + " - " + trip.getEndDate());
+        holder.companion.setText(trip.getCompanionType());
 
+        // Load the background image from the URL
+        Glide.with(context)
+                .load(trip.getPhotoUrl())
+                .into(new CustomViewTarget<RelativeLayout, Drawable>(holder.tripItemLayout) {
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+                        // Clear any existing resources
+                        holder.tripItemLayout.setBackground(null);
+                    }
 
-        // Assume you have a method to load images
-        //Glide.with(holder.imageViewCity.getContext()).load(city.getImageUrl()).into(holder.imageViewCity);
-        holder.relativeLayout.setBackgroundResource(trip.getBackgroundDrawable());
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        // Set the loaded image as the background of the RelativeLayout
+                        holder.tripItemLayout.setBackground(resource);
+                    }
 
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        // Handle the error scenario (optional)
+                        // Optionally set a default background
+                        holder.tripItemLayout.setBackground(errorDrawable);
+                    }
+                });
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ReadyPlanDetailsActivity.class);
+            intent.putExtra("tripId", trip.getTripId()); // Pass the trip ID to the detail activity
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -51,18 +82,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         return tripList.size();
     }
 
-    public static class TripViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout;
-        TextView textViewTripName, textViewCompanion,textViewTripRating,textViewTripDateRange;
+    static class TripViewHolder extends RecyclerView.ViewHolder {
+        TextView name, rating, startEndDate, companion;
+        RelativeLayout tripItemLayout; // Add an ImageView for the trip photo
 
-        public TripViewHolder(@NonNull View itemView) {
+        public TripViewHolder(View itemView) {
             super(itemView);
-            relativeLayout = itemView.findViewById(R.id.trip_item_rl);
-            textViewTripName = itemView.findViewById(R.id.trip_name_txt);
-            textViewCompanion = itemView.findViewById(R.id.trip_companion_txt);
-            textViewTripRating = itemView.findViewById(R.id.rating_trip_txt);
-            textViewTripDateRange = itemView.findViewById(R.id.trip_date_range);
+            name = itemView.findViewById(R.id.trip_name_txt);
+            rating = itemView.findViewById(R.id.rating_trip_txt);
+            startEndDate = itemView.findViewById(R.id.trip_date_range);
+            companion = itemView.findViewById(R.id.trip_companion_txt);
+            tripItemLayout = itemView.findViewById(R.id.trip_item_rl);
         }
     }
 }
-

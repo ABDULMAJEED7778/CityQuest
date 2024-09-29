@@ -31,6 +31,7 @@ import com.example.cityquest.model.Filter;
 import com.example.cityquest.model.User;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.apiCalls.NetworkUtils;
+import com.example.cityquest.utils.FirestoreTripUploader;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.Place;
@@ -75,6 +76,9 @@ public class DestinationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left + 24, systemBars.top + 30, systemBars.right, systemBars.bottom + 30);
             return insets;
         });
+
+        FirestoreTripUploader tripUploader = new FirestoreTripUploader();
+        tripUploader.generateAndStoreTrips();
 
         String apiKey = getString(R.string.google_maps_api_key);
         Places.initializeWithNewPlacesApiEnabled(this, apiKey);
@@ -128,7 +132,7 @@ public class DestinationActivity extends AppCompatActivity {
         });
 
         skipBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(DestinationActivity.this, DateRangeActivity.class);
+            Intent intent = new Intent(DestinationActivity.this, TripsActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
