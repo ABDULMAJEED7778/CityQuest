@@ -19,8 +19,8 @@
             android:layout_marginStart="0dp"
 
             android:layout_marginBottom="0dp"
-            android:alpha="0.7"
-            android:background="@color/primary_color"
+            android:alpha="1"
+            android:background="@color/primary_color_light"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -29,9 +29,9 @@
                 android:id="@+id/CityName_popular_cities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/poppins_medium"
                 android:text="Bangalore"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_color"
                 android:textSize="14sp"
 
                 />
@@ -45,7 +45,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/location_icon" />
+                    android:foregroundTint="@color/primary_color"
+                    android:src="@drawable/location_icon"
+                    android:tint="@color/primary_color" />
 
                 <TextView
                     android:id="@+id/CountryName_popular_cities"
@@ -56,7 +58,7 @@
                     android:layout_toRightOf="@id/location_icon_popular_cities"
                     android:fontFamily="@font/poppins_regular"
                     android:text="India"
-                    android:textColor="@color/white"
+                    android:textColor="@color/primary_color"
                     android:textSize="12sp"
 
                     />
@@ -68,19 +70,23 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingVertical="0dp"
                     android:text="4.8"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_color"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/star_icon_city_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/rating_popular_cities"
-                    android:paddingTop="2dp"
-                    android:src="@drawable/star_icon"
 
-                    />
+                    android:paddingTop="2dp"
+                    android:src="@drawable/star"
+                    android:tint="@color/primary_color" />
             </RelativeLayout>
 
         </LinearLayout>
