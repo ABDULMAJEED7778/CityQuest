@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.cityquest.adapter.PhotoAdapter;
 import com.example.cityquest.model.Trip;
@@ -34,7 +35,10 @@ import com.google.android.material.carousel.HeroCarouselStrategy;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +49,8 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
     private static final String ARG_PLACE_ID = "place_id";
     private static final String ARG_CITY_NAME = "city_name";
     private RecyclerView recyclerView;
-    private Button selectBtn;
+     Button selectBtn,viewOnMap;
+     TextView cityNameTextView,aboutCityNameTextView,CityOverfiewTextView;
     private PhotoAdapter photosAdapter;
 
 
@@ -68,6 +73,9 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         // Initialize ViewPager2
         recyclerView = view.findViewById(R.id.recyclerView_CityDetails);
         selectBtn = view.findViewById(R.id.select_btn_detail);
+        cityNameTextView = view.findViewById(R.id.city_name_txt);
+        aboutCityNameTextView = view.findViewById(R.id.about_city_txt);
+        CityOverfiewTextView = view.findViewById(R.id.city_details);
 
         photosAdapter = new PhotoAdapter(new ArrayList<>());
 
@@ -109,13 +117,31 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void fetchPlacePhotos(String placeId) {
-        final List<Place.Field> fields = Collections.singletonList(Place.Field.PHOTO_METADATAS);
+        // Request DISPLAY_NAME, PHOTO_METADATAS, and EDITORIAL_SUMMARY fields
+        final List<Place.Field> fields = Arrays.asList(
+                Place.Field.NAME,
+                Place.Field.PHOTO_METADATAS,
+                Place.Field.EDITORIAL_SUMMARY
+        );
 
         final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, fields);
 
         PlacesClient placesClient = Places.createClient(requireContext());
         placesClient.fetchPlace(placeRequest).addOnSuccessListener((response) -> {
             final Place place = response.getPlace();
+
+            // Get the city name (DISPLAY_NAME)
+            String displayName = place.getName();
+            if (displayName != null) {
+                cityNameTextView.setText(displayName);
+                aboutCityNameTextView.setText("About " + displayName); // Set the text to "About {city name}"
+            }
+
+            // Get the city overview (EDITORIAL_SUMMARY)
+            Log.e("hellow", "place.getEditorialSummary()");
+            String overview = place.getEditorialSummary() != null ? place.getEditorialSummary() : "No overview available";
+
+            CityOverfiewTextView.setText(overview); // Set the city overview
 
             // Get the photo metadata
             final List<PhotoMetadata> metadataList = place.getPhotoMetadatas();
@@ -145,8 +171,14 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
                     }
                 });
             }
+        }).addOnFailureListener((exception) -> {
+            if (exception instanceof ApiException) {
+                final ApiException apiException = (ApiException) exception;
+                Log.e("PlaceBottomSheet", "Error fetching place details: " + ((ApiException) exception).getStatusCode());
+            }
         });
     }
+
 
 
 

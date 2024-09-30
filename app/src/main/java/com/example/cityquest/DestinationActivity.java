@@ -76,9 +76,9 @@ public class DestinationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left + 24, systemBars.top + 30, systemBars.right, systemBars.bottom + 30);
             return insets;
         });
-
-        FirestoreTripUploader tripUploader = new FirestoreTripUploader();
-        tripUploader.generateAndStoreTrips();
+//
+//        FirestoreTripUploader tripUploader = new FirestoreTripUploader();
+//        tripUploader.generateAndStoreTrips();
 
         String apiKey = getString(R.string.google_maps_api_key);
         Places.initializeWithNewPlacesApiEnabled(this, apiKey);

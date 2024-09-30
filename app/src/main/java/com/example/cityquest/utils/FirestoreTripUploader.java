@@ -105,11 +105,11 @@ public class FirestoreTripUploader {
         List<TripDay> itinerary = new ArrayList<>();
 
         // Example: Adding a basic itinerary for demonstration purposes
-        itinerary.add(new TripDay("Day 1", Arrays.asList(
+        itinerary.add(new TripDay(1, Arrays.asList(
                 new ItineraryPlace("Gateway of India", "https://example.com/gateway_of_india.jpg", "An iconic arch monument in Mumbai."),
                 new ItineraryPlace("Marine Drive", "https://example.com/marine_drive.jpg", "A famous promenade along the coast.")
         )));
-        itinerary.add(new TripDay("Day 2", Arrays.asList(
+        itinerary.add(new TripDay(2, Arrays.asList(
                 new ItineraryPlace("Elephanta Caves", "https://example.com/elephanta_caves.jpg", "Ancient rock-cut temples on an island."),
                 new ItineraryPlace("Colaba Causeway", "https://example.com/colaba_causeway.jpg", "A vibrant street market.")
         )));
@@ -117,8 +117,8 @@ public class FirestoreTripUploader {
         // Store each day in the itinerary collection
         for (TripDay day : itinerary) {
             db.collection("readyTrips").document(tripId)
-                    .collection("itinerary").document(day.getDayName()).set(day)
-                    .addOnSuccessListener(aVoid -> Log.e("tripadd","Day itinerary added for " + tripId + " - " + day.getDayName()))
+                    .collection("itinerary").document(day.getDayNumber()+"").set(day)
+                    .addOnSuccessListener(aVoid -> Log.e("tripadd","Day itinerary added for " + tripId + " - " + day.getDayNumber()))
                     .addOnFailureListener(e -> Log.e("tripadd","Error adding itinerary: " + e.getMessage()));
         }
     }
