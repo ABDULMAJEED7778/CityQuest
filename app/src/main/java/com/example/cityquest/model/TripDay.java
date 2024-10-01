@@ -3,27 +3,24 @@ package com.example.cityquest.model;
 import java.util.List;
 
 public class TripDay {
-    private String dayName; // e.g., "Day1", "Day2"
+    private int dayNumber; // e.g., "Day1", "Day2"
     private List<ItineraryPlace> places; // List of places visited on this day
 
     // Empty constructor required for Firestore
-    public TripDay() {}
+    public TripDay() {
+    }
 
-    // Constructor
-    public TripDay(String dayName, List<ItineraryPlace> places) {
-        this.dayName = dayName;
+    public TripDay(int dayNumber, List<ItineraryPlace> places) {
+        this.dayNumber = dayNumber;
         this.places = places;
     }
 
-    // Getters and setters
-    // (Generate getters and setters for all fields)
-
-    public String getDayName() {
-        return dayName;
+    public int getDayNumber() {
+        return dayNumber;
     }
 
-    public void setDayName(String dayName) {
-        this.dayName = dayName;
+    public void setDayNumber(int dayNumber) {
+        this.dayNumber = dayNumber;
     }
 
     public List<ItineraryPlace> getPlaces() {
