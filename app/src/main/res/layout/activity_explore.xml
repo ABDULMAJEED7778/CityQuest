@@ -90,30 +90,28 @@
             <!-- Search Bar -->
 
 
-            <LinearLayout
-                android:id="@+id/search_bar_layout"
+            <Button
+                android:id="@+id/search_bar_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:gravity="center_vertical|start"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="60dp"
-                android:layout_gravity="start"
-                android:background="@drawable/semi_transparent_layout">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:tint="@color/white"
-                    android:src="@drawable/search_icon"
-                    android:layout_marginRight="8dp"
-                    />
-                <TextView
-                    android:textColor="@android:color/white"
-                    android:id="@+id/exploreCityTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Find amazing road trip destinations..."/>
-            </LinearLayout>
+                android:paddingStart="20dp"
+                android:background="@drawable/semi_transparent_layout"
+                android:drawableStart="@drawable/search_icon"
+                android:drawableTint="@color/white"
+
+
+
+                android:text="Find amazing road trip destinations..."
+
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"/>
+
+
+
 
 
         </FrameLayout>

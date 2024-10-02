@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.cityquest.adapter.CityAdapter;
@@ -41,7 +42,7 @@ import java.util.TimerTask;
 public class ExploreAroundFragment extends Fragment {
 
     private CityPagerAdapter cityPagerAdapter;
-    LinearLayout exploreLayout; // Replace with your actual ID
+    Button searchButton;
 
     private RecyclerView trendingCitiesRecyclerView, weekendTripRecyclerView, citiesRecyclerView;
     private TrendingCityAdapter cityAdapter;
@@ -60,10 +61,34 @@ public class ExploreAroundFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_explore, container, false);
 
 
-        exploreLayout = view.findViewById(R.id.search_bar_layout); // Replace with your actual ID
+        searchButton = view.findViewById(R.id.search_bar_btn); // Replace with your actual ID
         final Animation shrinkAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.shrink_animation);
         final Animation releaseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.release_animation);
 
+        searchButton.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // Start shrinking animation when the button is pressed
+                    searchButton.startAnimation(shrinkAnimation);
+                    return true; // Indicate that the touch event is handled
+
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    // Start releasing animation when the button is released
+                    searchButton.startAnimation(releaseAnimation);
+
+                    // Check if the touch is within the button bounds before navigating
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        // Navigate to the new activity
+                        Intent intent = new Intent(getContext(), searchInExploreActivity.class);
+                        startActivity(intent);
+                    }
+                    return true;
+
+                default:
+                    return false; // For other events, do nothing
+            }
+        });
 
 
 
@@ -92,25 +117,25 @@ public class ExploreAroundFragment extends Fragment {
         weekendTripAdapter = new WeekendTripAdapter(getContext(),cityList);
         weekendTripRecyclerView.setAdapter(weekendTripAdapter);
 
-        // automatic scrolling of cities
+        // Set up the timer for automatic scrolling
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                requireActivity().runOnUiThread(() -> {
-                    int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
-
-                    if (lastVisibleItemPosition < cityAdapter.getItemCount() - 1) {
-                        // Scroll to the next item
-                        layoutManager.smoothScrollToPosition(citiesRecyclerView, new RecyclerView.State(), lastVisibleItemPosition + 1);
+                // Ensure the fragment is attached to the activity before accessing context
+                if (isAdded()) {
+                    // Your existing logic for scrolling goes here
+                    if (layoutManager.findLastCompletelyVisibleItemPosition() < (cityAdapter.getItemCount() - 1)) {
+                        layoutManager.smoothScrollToPosition(citiesRecyclerView, new RecyclerView.State(), layoutManager.findLastCompletelyVisibleItemPosition() + 1);
                     } else {
-                        // If the last item is reached, scroll back to the first item
                         layoutManager.smoothScrollToPosition(citiesRecyclerView, new RecyclerView.State(), 0);
                     }
-                });
+                } else {
+                    // Cancel the timer if the fragment is not attached
+                    cancel();
+                }
             }
-        }, 0, 4000);
-
+        }, 0, 3000);
         // Fetch cities data from Firestore
         fetchCitiesFromFirestore();
 
@@ -119,26 +144,7 @@ public class ExploreAroundFragment extends Fragment {
 
 
 
-        exploreLayout.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    // Start the shrink animation when clicked
-                    exploreLayout.startAnimation(shrinkAnimation);
-                    break;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    // Start the release animation when released
-                    exploreLayout.startAnimation(releaseAnimation);
-
-                    // Add code to navigate to the new activity
-                    exploreLayout.postDelayed(() -> {
-                        Intent intent = new Intent(getContext(), searchInExploreActivity.class); // Replace YourNewActivity with the target activity
-                        startActivity(intent);
-                    }, releaseAnimation.getDuration()); // Delay to wait for the animation to finish
-                    break;
-            }
-            return true;
-        });
+//
 
 
 
@@ -183,6 +189,26 @@ public class ExploreAroundFragment extends Fragment {
                     }
                 });
     }
+    // Helper method to check if the touch is inside the view bounds
+    private boolean isTouchInsideView(View view, MotionEvent event) {
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+
+        return (event.getRawX() >= x && event.getRawX() <= (x + view.getWidth()) &&
+                event.getRawY() >= y && event.getRawY() <= (y + view.getHeight()));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (timer != null) {
+            timer.cancel(); // Cancel the timer when the view is destroyed
+            timer = null; // Avoid memory leaks
+        }
+    }
+
 
 
 }
