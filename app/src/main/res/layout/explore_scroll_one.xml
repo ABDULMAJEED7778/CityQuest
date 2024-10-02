@@ -4,23 +4,28 @@
     android:layout_height="300dp"
     app:cardCornerRadius="20dp"
     >
-    <RelativeLayout
-        android:id="@+id/city_item_popular_rl"
+    <FrameLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bangalore"
-        android:paddingBottom="0dp">
+
+       >
+        <ImageView
+            android:id="@+id/city_image_popularCity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bangalore"
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:layout_marginStart="0dp"
 
             android:layout_marginBottom="0dp"
             android:alpha="1"
-            android:background="@color/primary_color_light"
+            android:background="@color/white"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -47,7 +52,7 @@
                     android:layout_centerVertical="true"
                     android:foregroundTint="@color/primary_color"
                     android:src="@drawable/location_icon"
-                    android:tint="@color/primary_color" />
+                    app:tint="@color/primary_color" />
 
                 <TextView
                     android:id="@+id/CountryName_popular_cities"
@@ -86,12 +91,12 @@
 
                     android:paddingTop="2dp"
                     android:src="@drawable/star"
-                    android:tint="@color/primary_color" />
+                    app:tint="@color/primary_color" />
             </RelativeLayout>
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </FrameLayout>
 
 
 </androidx.cardview.widget.CardView>

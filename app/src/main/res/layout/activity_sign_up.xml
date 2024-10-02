@@ -64,6 +64,7 @@
         android:textColorHint="@color/hintTextColor"
         android:padding="10dp"
         android:textSize="12sp"
+        android:textColor="@color/primary_color"
         android:layout_below="@id/enterEmailTxt"
         android:inputType="textEmailAddress" />
 
@@ -73,7 +74,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-
+        android:textColor="@color/primary_color"
         android:hint="email@gmail.com"
         android:background="@drawable/rounded_corner_et"
         android:layout_marginTop="8dp"
@@ -88,7 +89,7 @@
         android:layout_width="320dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
-
+        android:textColor="@color/primary_color"
         android:hint="Create a password"
         android:background="@drawable/rounded_corner_et"
         android:layout_marginTop="8dp"

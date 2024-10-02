@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "105881031674",
+    "project_id": "cityquest-435914",
+    "storage_bucket": "cityquest-435914.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105881031674:android:57b93407de7c328f4c4a43",
+        "android_client_info": {
+          "package_name": "com.example.cityquest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105881031674-1v0mhp5hqqtr87m203mbavs7j40mm2kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cityquest",
+            "certificate_hash": "625d5aa2358f9f1305e6f8c55259efff27563e43"
+          }
+        },
+        {
+          "client_id": "105881031674-scsu47hg589evmukqju0p9f0iod1dfd1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cityquest",
+            "certificate_hash": "1d1cffcc62f5afbf41742c3094c7398327d3d5b6"
+          }
+        },
+        {
+          "client_id": "105881031674-unodhvrnrjpf3r0srsieb1p73edv6qqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlPMTH6m2VOGuDNDkpL405aOK7OIBbI2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105881031674-unodhvrnrjpf3r0srsieb1p73edv6qqj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

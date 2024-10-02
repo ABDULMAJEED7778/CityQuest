@@ -4,7 +4,12 @@ public class City {
     private String CityName;
     private int BackgroundDrawable;
     private String CountryName;
+    private String CityImageUrl;
+
     private String CityRating;
+    private String CityDescription;
+
+
 
 
     public City() {
@@ -15,6 +20,12 @@ public class City {
         BackgroundDrawable = backgroundDrawable;
         CountryName = countryName;
         CityRating = cityRating;
+    }
+
+    public City(String cityName, String cityImageUrl, String cityDescription) {
+        CityName = cityName;
+        CityImageUrl = cityImageUrl;
+        CityDescription = cityDescription;
     }
 
     public City(String cityName, String countryName) {
@@ -58,7 +69,20 @@ public class City {
         return "City{name='" + getCityName() + "', imageResId=" + getBackgroundDrawable() + ", country='" + getCountryName() + "', rating='" + getCityRating() + "'}";
     }
 
+    public String getCityImageUrl() {
+        return CityImageUrl;
+    }
 
+    public void setCityImageUrl(String cityImageUrl) {
+        CityImageUrl = cityImageUrl;
+    }
 
+    public String getCityDescription() {
+        return CityDescription;
+    }
+
+    public void setCityDescription(String cityDescription) {
+        CityDescription = cityDescription;
+    }
 }
 

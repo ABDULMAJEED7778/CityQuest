@@ -11,6 +11,6 @@
 
     <!-- Inner circle for the center of the pin -->
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="@color/transparent_bg"
         android:pathData="M12,11.5 C10.62,11.5 9.5,10.38 9.5,9 C9.5,7.62 10.62,6.5 12,6.5 C13.38,6.5 14.5,7.62 14.5,9 C14.5,10.38 13.38,11.5 12,11.5 Z" />
 </vector>

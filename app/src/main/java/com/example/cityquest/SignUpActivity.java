@@ -110,7 +110,9 @@ public class SignUpActivity extends AppCompatActivity {
                                             });
                                 } else {
                                     String errorMessage = task.getException().getMessage();
-                                    Toast.makeText(SignUpActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+
+                                    Log.e("signUpError", "Errorrr: " + errorMessage);
+                                    Toast.makeText(SignUpActivity.this, "Errorrrr: " + errorMessage, Toast.LENGTH_LONG).show();
                                 }
                             }
                         });

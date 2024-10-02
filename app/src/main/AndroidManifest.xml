@@ -18,24 +18,24 @@
         android:theme="@style/Theme.CityQuest"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:name=".searchInExploreActivity"
             android:exported="false"
-            />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".DestinationDetailsActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".ReadyPlanDetailsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ExploreAroundActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
@@ -57,11 +57,11 @@
         <activity
             android:name=".DestinationActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".SignInActivity"
             android:exported="true"
@@ -75,7 +75,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value= "@string/google_maps_api_key" />
+            android:value="@string/google_maps_api_key" />
     </application>
 
 </manifest>

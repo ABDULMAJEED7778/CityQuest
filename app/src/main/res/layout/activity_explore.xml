@@ -8,212 +8,362 @@
     android:fillViewport="true"
     android:background="@color/background_color">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+       >
+
+        <FrameLayout
+            android:id="@+id/frameLayout_Top"
             android:layout_width="match_parent"
-            android:layout_height="123dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/design_default_color_background"
-            android:backgroundTint="@color/background_color"
-            app:cardElevation="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp">
+            android:layout_height="230dp"
+            android:layout_alignParentTop="true"> <!-- Align to the top of the parent -->
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="177dp"
-                android:layout_height="52dp"
-                app:srcCompat="@drawable/applogo"
-                tools:layout_editor_absoluteX="-1dp"
-                tools:layout_editor_absoluteY="2dp" />
 
-            <AutoCompleteTextView
-                android:id="@+id/search_input"
+
+            <!-- ViewPager2 as the background -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="68dp"
-                android:background="@drawable/search_bar_desing"
-                android:focusable="true"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="Search your next adventure!!"
-                android:importantForAccessibility="yes"
-                android:includeFontPadding="false"
-                android:padding="16dp"
-                android:paddingStart="45dp"
-                android:textColor="@android:color/black"
-                android:textColorHint="#EFE9E9"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
-                tools:layout_editor_absoluteX="16dp" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="43dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="75dp"
-                app:srcCompat="@android:drawable/ic_menu_search" />
 
-        </androidx.cardview.widget.CardView>
+                android:layout_height="match_parent"/>
 
-        <!-- ScrollView content for cards starts here -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/circled_image"
+                android:layout_marginRight="16dp"
 
-            <!-- Explore Scroll Cards -->
+                android:layout_marginTop="18dp"
+                android:src="@drawable/bell_icon"
+                android:layout_gravity="end"
+                />
+
+
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginTop="24dp">
+                android:id="@+id/your_city_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                <TextView
+                android:gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start"
+                >
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="28dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_location_pin"
+                    android:layout_marginRight="6dp"
+                    />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Let's Quest Bengaluru Together!!"
-                    android:textAllCaps="false"
-                    android:textColor="@color/primary_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="9dp"
+                        android:text="Your City"/>
+                    <TextView
+                        android:textColor="@android:color/white"
+                        android:id="@+id/location_city_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bangaluru"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@drawable/fade_out_line"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp" />
+                </LinearLayout>
 
             </LinearLayout>
 
-            <HorizontalScrollView
+
+            <!-- Search Bar -->
+
+
+            <LinearLayout
+                android:id="@+id/search_bar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
-
-                    <!-- Include explore scroll layouts -->
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="284dp"
-                        android:layout_marginEnd="16dp"
-                         />
-
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- One Day Outings Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="One Day Outings!"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_color"
-                android:textSize="16sp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/fade_out_line"
-                android:layout_marginTop="27dp"
-                android:layout_marginBottom="16dp" />
+                android:padding="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="60dp"
+                android:layout_gravity="start"
+                android:background="@drawable/semi_transparent_layout">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/search_icon"
+                    android:layout_marginRight="8dp"
+                    />
+                <TextView
+                    android:textColor="@android:color/white"
+                    android:id="@+id/exploreCityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find amazing road trip destinations..."/>
+            </LinearLayout>
 
-        </LinearLayout>
 
-            <HorizontalScrollView
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_below="@id/frameLayout_Top">
+
+
+            <LinearLayout
+                android:id="@+id/continue_planning_ll"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Countinue planning"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"/>
 
-                    <!-- Include outing scroll layouts -->
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="284dp"
-                        android:layout_marginEnd="16dp"
-                         />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See all"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:layout_gravity="end"
+                        android:textColor="@color/secondary_color"/>
 
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                        />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                        />
-
-                    <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="16dp"
-                         />
                 </LinearLayout>
-            </HorizontalScrollView>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+                    <ImageView
+                        android:id="@+id/place_image_adapter"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="end"
+                        android:background="@drawable/rounded_corners_for_image"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/bangalore" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/continue_tripName"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="wrap_content"
+                            android:text="Trip to Bangalore"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:textColor="@color/black"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/continue_tripDate"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:text="Jul 26-Aug 1 * "
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:id="@+id/continue_tripPlaces_number"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:text="6 places"
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:textColor="@color/black"/>
+
+
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- ScrollView content for cards starts here -->
+            <LinearLayout
+                android:layout_below="@+id/continue_planning_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                android:layout_marginTop="16dp">
+
+                <!-- Explore Scroll Cards Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Trending with travelers"
+                        android:textAllCaps="false"
+                        android:textColor="@color/primary_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/fade_out_line"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp" />
+                </LinearLayout>
+
+                <!-- Horizontal Scroll for Cards -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+
+                       >
+
+                        <!-- Include explore scroll layouts -->
+                        <include
+                            layout="@layout/explore_scroll_one"
+                            android:layout_width="250dp"
+                            android:layout_height="290dp"
+
+                            android:layout_marginEnd="16dp"/>
+
+                        <include
+                            layout="@layout/explore_scroll_one"
+                            android:layout_width="250dp"
+                            android:layout_height="290dp"
+
+                            android:layout_marginEnd="16dp"/>
+
+                        <include
+                        layout="@layout/explore_scroll_one"
+                        android:layout_width="250dp"
+                        android:layout_height="290dp"
+
+                        android:layout_marginEnd="16dp"/>
+
+                        <include
+                        layout="@layout/explore_scroll_one"
+                        android:layout_width="250dp"
+                        android:layout_height="290dp"
+
+                        android:layout_marginEnd="16dp"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!-- One Day Outings Section Header -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Weekend gateways"
+                        android:textAllCaps="false"
+                        android:textColor="@color/primary_color"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/fade_out_line"
+                        android:layout_marginTop="27dp"
+                        android:layout_marginBottom="16dp" />
+                </LinearLayout>
+
+                <!-- Horizontal Scroll for One Day Outings -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <!-- Include outing scroll layouts -->
+                        <include
+                            layout="@layout/weekend_trip_layout"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="16dp"/>
+
+                        <include
+                            layout="@layout/weekend_trip_layout"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="16dp"/>
+                        <include
+                            layout="@layout/weekend_trip_layout"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="16dp"/>
+                        <include
+                            layout="@layout/weekend_trip_layout"
+                            android:layout_width="150dp"
+                            android:layout_height="200dp"
+                            android:layout_marginEnd="16dp"/>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </RelativeLayout>
+
+</RelativeLayout>
+
 </ScrollView>

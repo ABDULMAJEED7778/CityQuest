@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -42,7 +41,7 @@ public class SignInActivity extends AppCompatActivity {
     Button signInBtn;
     FirebaseAuth mAuth;
 
-    
+
 
     AlertDialog progressDialog;
 
@@ -148,7 +147,7 @@ public class SignInActivity extends AppCompatActivity {
                                     finish();  // Finish the login activity
                                 } else {
                                     String errorMessage = task.getException().getMessage();
-                                    Log.e("errorrrr",errorMessage);
+                                    Log.e("signact", "Login failed: " + errorMessage);
                                     Toast.makeText(SignInActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                                 }
                             }

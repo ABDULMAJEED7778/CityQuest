@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background ImageView for the city photo -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewCity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bangalore"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_overlay" /> <!-- Adjust the alpha value for transparency -->
+
+    </FrameLayout>
+
+    <!-- TextView for city name and description -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/textViewExplore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Explore City Name"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:layout_marginBottom="4dp"
+            android:textStyle="bold" />
+
+        <!-- Divider line for separation -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="2dp"
+            android:background="@android:color/white"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/city_desc"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="Good city with a long history and many interesting places to visit"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- Button to explore city -->
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/explore_city_btn_bacckground">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/explore_icon"
+            android:layout_marginRight="8dp"
+            />
+        <TextView
+            android:textColor="@android:color/white"
+            android:id="@+id/exploreCityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Explore City"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
