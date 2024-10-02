@@ -77,8 +77,7 @@ public class DestinationActivity extends AppCompatActivity {
             return insets;
         });
 //
-//        FirestoreTripUploader tripUploader = new FirestoreTripUploader();
-//        tripUploader.generateAndStoreTrips();
+
 
         String apiKey = getString(R.string.google_maps_api_key);
         Places.initializeWithNewPlacesApiEnabled(this, apiKey);
@@ -160,10 +159,11 @@ public class DestinationActivity extends AppCompatActivity {
         recyclerViewCityPopular.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         List<City> cities = new ArrayList<>();
-        cities.add(new City("Bangalore", R.drawable.bangalore, "India", "4.8"));
-        cities.add(new City("Delhi", R.drawable.bangalore, "India", "4.5"));
-        cities.add(new City("Mumbai", R.drawable.bangalore, "India", "4.7"));
-        cities.add(new City("Chennai", R.drawable.bangalore, "India", "4.6"));
+        cities.add(new City("Bangalore", "India", "1", "https://images.pexels.com/photos/3573385/pexels-photo-3573385.jpeg", "4.8", "A vibrant city known for its technology industry and parks."));
+        cities.add(new City("Delhi", "India", "2", "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg", "4.5", "The capital city of India, known for its rich history and culture."));
+        cities.add(new City("Mumbai", "India", "3", "https://images.pexels.com/photos/618079/pexels-photo-618079.jpeg", "4.7", "A bustling metropolis known for Bollywood and the Gateway of India."));
+        cities.add(new City("Chennai", "India", "4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "4.6", "A coastal city famous for its cultural heritage and temples."));
+
 
         List<Filter> filters = new ArrayList<>();
         filters.add(new Filter("Historical", R.drawable.historical_icon));

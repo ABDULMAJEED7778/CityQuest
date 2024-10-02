@@ -8,7 +8,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
+
+
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,41 +25,99 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityPagerAdapter;
+import com.example.cityquest.adapter.TrendingCityAdapter;
+import com.example.cityquest.adapter.WeekendTripAdapter;
 import com.example.cityquest.model.City;
+import com.example.cityquest.utils.FirebaseUtils;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ExploreAroundFragment extends Fragment {
-    private ViewPager2 viewPager;
+
     private CityPagerAdapter cityPagerAdapter;
     LinearLayout exploreLayout; // Replace with your actual ID
 
-    // Load animations
+    private RecyclerView trendingCitiesRecyclerView, weekendTripRecyclerView, citiesRecyclerView;
+    private TrendingCityAdapter cityAdapter;
+    private WeekendTripAdapter weekendTripAdapter;
+
+    private List<City> cityList;
+    Timer timer;
+
+
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_explore, container, false);
 
-        viewPager = view.findViewById(R.id.viewPager);
+
         exploreLayout = view.findViewById(R.id.search_bar_layout); // Replace with your actual ID
         final Animation shrinkAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.shrink_animation);
         final Animation releaseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.release_animation);
 
 
 
-        // Sample data for cities
-        List<City> cities = new ArrayList<>();
-        cities.add(new City("Bengaluru", "https://images.pexels.com/photos/2529056/pexels-photo-2529056.jpeg", "Bengaluru, the Silicon Valley of India, is known for its beautiful parks, vibrant culture, and tech industry."));
-        cities.add(new City("Mumbai", "https://images.pexels.com/photos/2529056/pexels-photo-2529056.jpeg", "Mumbai, the financial capital of India, is famous for its bustling streets, Bollywood film industry, and diverse food scene."));
-        cities.add(new City("Delhi", "https://images.pexels.com/photos/2529056/pexels-photo-2529056.jpeg", "Delhi, the capital city of India, is known for its rich history, stunning architecture, and vibrant markets."));
 
-        // Add more cities as needed
+        // Initialize the city list
+        cityList = new ArrayList<>();
 
-        cityPagerAdapter = new CityPagerAdapter(requireActivity(), cities);
-        viewPager.setAdapter(cityPagerAdapter);
+        // Set up trendingCities RecyclerView
+        trendingCitiesRecyclerView = view.findViewById(R.id.recycler_view_city); // Your RecyclerView ID
+        trendingCitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        cityAdapter = new TrendingCityAdapter(getContext(),cityList);
+
+        //this is used to achieve horizontal paging as in viewPager
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        trendingCitiesRecyclerView.setAdapter(cityAdapter);
+
+        citiesRecyclerView = view.findViewById(R.id.recyclerView_CitiesPhotos_Explore); // Your RecyclerView ID
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        citiesRecyclerView.setLayoutManager(layoutManager);
+        cityPagerAdapter = new CityPagerAdapter(getContext(),cityList);
+        snapHelper.attachToRecyclerView(citiesRecyclerView);
+        citiesRecyclerView.setAdapter(cityPagerAdapter);
+
+        // Set up trendingCities RecyclerView
+        weekendTripRecyclerView = view.findViewById(R.id.recycler_view_weekendTrip); // Your RecyclerView ID
+        weekendTripRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        weekendTripAdapter = new WeekendTripAdapter(getContext(),cityList);
+        weekendTripRecyclerView.setAdapter(weekendTripAdapter);
+
+        // automatic scrolling of cities
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                requireActivity().runOnUiThread(() -> {
+                    int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                    if (lastVisibleItemPosition < cityAdapter.getItemCount() - 1) {
+                        // Scroll to the next item
+                        layoutManager.smoothScrollToPosition(citiesRecyclerView, new RecyclerView.State(), lastVisibleItemPosition + 1);
+                    } else {
+                        // If the last item is reached, scroll back to the first item
+                        layoutManager.smoothScrollToPosition(citiesRecyclerView, new RecyclerView.State(), 0);
+                    }
+                });
+            }
+        }, 0, 4000);
+
+        // Fetch cities data from Firestore
+        fetchCitiesFromFirestore();
+
+
+
+
+
 
         exploreLayout.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -75,6 +141,10 @@ public class ExploreAroundFragment extends Fragment {
         });
 
 
+
+
+
+
         return view;
     }
 
@@ -88,6 +158,33 @@ public class ExploreAroundFragment extends Fragment {
             return insets;
         });
     }
+
+    private void fetchCitiesFromFirestore() {
+        FirebaseUtils.getCitiesCollection()
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            City city = document.toObject(City.class);  // Convert document to City object
+                            cityList.add(city);
+                        }
+
+                        // Notify RecyclerView adapter about data changes
+                        cityAdapter.notifyDataSetChanged();
+                        weekendTripAdapter.notifyDataSetChanged();
+                        cityPagerAdapter.notifyDataSetChanged();
+
+//                        // Now initialize the ViewPager adapter after data is fetched
+//                        cityPagerAdapter = new CityPagerAdapter(requireActivity(), cityList);
+//                        viewPager.setAdapter(cityPagerAdapter);
+
+                    } else {
+                        Log.d("CityActivity", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+
 }
 
 

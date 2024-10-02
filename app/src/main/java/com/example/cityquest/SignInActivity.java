@@ -19,6 +19,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.cityquest.utils.FirestoreCityUploader;
+import com.example.cityquest.utils.FirestoreTripUploader;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -36,6 +38,7 @@ public class SignInActivity extends AppCompatActivity {
 
     //change from skipBtn to exploreBtn
     Button exploreBtn;
+    Button upload;
     TextView signupTv;
     EditText emailET, passwordET;
     Button signInBtn;
@@ -86,8 +89,23 @@ public class SignInActivity extends AppCompatActivity {
 
 
         exploreBtn = findViewById(R.id.explore_around_btn);
+        upload = findViewById(R.id.upload_to_firestore_btn);
 
         signupTv = findViewById(R.id.signUpTXT);
+
+        upload.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                FirestoreTripUploader tripUploader = new FirestoreTripUploader();
+                tripUploader.generateAndStoreTrips();
+
+                FirestoreCityUploader cityUploader = new FirestoreCityUploader();
+                cityUploader.uploadCities();
+
+            }
+        });
 
         exploreBtn.setOnClickListener(new View.OnClickListener() {
 

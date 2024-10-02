@@ -5,16 +5,26 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="20dp"
     >
-    <RelativeLayout
-        android:id="@+id/city_item_rl"
+    <FrameLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bangalore"
-        android:paddingBottom="10dp">
+
+        >
+
+        <ImageView
+            android:id="@+id/city_image_city_category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bangalore"
+            android:scaleType="centerCrop"/>
 
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
@@ -83,7 +93,7 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </FrameLayout>
 
 
 </androidx.cardview.widget.CardView>

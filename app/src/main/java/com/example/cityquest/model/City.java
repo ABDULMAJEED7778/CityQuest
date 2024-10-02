@@ -2,35 +2,27 @@ package com.example.cityquest.model;
 
 public class City {
     private String CityName;
-    private int BackgroundDrawable;
+
     private String CountryName;
+    private String cityId;
+
+
     private String CityImageUrl;
 
     private String CityRating;
     private String CityDescription;
 
 
-
-
     public City() {
     }
 
-    public City(String cityName, int backgroundDrawable, String countryName, String cityRating) {
+    public City(String cityName, String countryName, String cityId, String cityImageUrl, String cityRating, String cityDescription) {
         CityName = cityName;
-        BackgroundDrawable = backgroundDrawable;
         CountryName = countryName;
-        CityRating = cityRating;
-    }
-
-    public City(String cityName, String cityImageUrl, String cityDescription) {
-        CityName = cityName;
+        this.cityId = cityId;
         CityImageUrl = cityImageUrl;
+        CityRating = cityRating;
         CityDescription = cityDescription;
-    }
-
-    public City(String cityName, String countryName) {
-        CityName = cityName;
-        CountryName = countryName;
     }
 
     public String getCityName() {
@@ -41,14 +33,6 @@ public class City {
         CityName = cityName;
     }
 
-    public int getBackgroundDrawable() {
-        return BackgroundDrawable;
-    }
-
-    public void setBackgroundDrawable(int backgroundDrawable) {
-        BackgroundDrawable = backgroundDrawable;
-    }
-
     public String getCountryName() {
         return CountryName;
     }
@@ -57,16 +41,12 @@ public class City {
         CountryName = countryName;
     }
 
-    public String getCityRating() {
-        return CityRating;
+    public String getCityId() {
+        return cityId;
     }
 
-    public void setCityRating(String cityRating) {
-        CityRating = cityRating;
-    }
-
-    public String toString() {
-        return "City{name='" + getCityName() + "', imageResId=" + getBackgroundDrawable() + ", country='" + getCountryName() + "', rating='" + getCityRating() + "'}";
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
     public String getCityImageUrl() {
@@ -75,6 +55,14 @@ public class City {
 
     public void setCityImageUrl(String cityImageUrl) {
         CityImageUrl = cityImageUrl;
+    }
+
+    public String getCityRating() {
+        return CityRating;
+    }
+
+    public void setCityRating(String cityRating) {
+        CityRating = cityRating;
     }
 
     public String getCityDescription() {

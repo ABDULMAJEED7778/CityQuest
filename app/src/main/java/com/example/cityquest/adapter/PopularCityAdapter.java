@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
 import com.example.cityquest.model.City;
 
@@ -38,8 +40,8 @@ public class PopularCityAdapter extends RecyclerView.Adapter<PopularCityAdapter.
         holder.textViewCountryName.setText(city.getCountryName());
         holder.textViewCityRating.setText(city.getCityRating());
         // Assume you have a method to load images
-        //Glide.with(holder.imageViewCity.getContext()).load(city.getImageUrl()).into(holder.imageViewCity);
-        holder.relativeLayout.setBackgroundResource(city.getBackgroundDrawable());
+        Glide.with(holder.cityImage.getContext()).load(city.getCityImageUrl()).into(holder.cityImage);
+
 
     }
 
@@ -49,12 +51,12 @@ public class PopularCityAdapter extends RecyclerView.Adapter<PopularCityAdapter.
     }
 
     public static class CityViewHolder extends RecyclerView.ViewHolder {
-        RelativeLayout relativeLayout;
+        ImageView cityImage;
         TextView textViewCityName, textViewCountryName,textViewCityRating;
 
         public CityViewHolder(@NonNull View itemView) {
             super(itemView);
-            relativeLayout = itemView.findViewById(R.id.city_item_popular_rl);
+            cityImage = itemView.findViewById(R.id.city_image_popular_cities);
             textViewCityName = itemView.findViewById(R.id.CityName_popular_cities);
             textViewCountryName = itemView.findViewById(R.id.CountryName_popular_cities);
             textViewCityRating = itemView.findViewById(R.id.rating_popular_cities);

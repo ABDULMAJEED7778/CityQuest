@@ -22,13 +22,16 @@
 
 
 
-            <!-- ViewPager2 as the background -->
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_CitiesPhotos_Explore"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
 
 
-                android:layout_height="match_parent"/>
+                />
 
             <ImageButton
                 android:layout_width="35dp"
@@ -255,112 +258,51 @@
                 </LinearLayout>
 
                 <!-- Horizontal Scroll for Cards -->
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_city"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scrollbars="none">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-
-                       >
-
-                        <!-- Include explore scroll layouts -->
-                        <include
-                            layout="@layout/explore_scroll_one"
-                            android:layout_width="250dp"
-                            android:layout_height="290dp"
-
-                            android:layout_marginEnd="16dp"/>
-
-                        <include
-                            layout="@layout/explore_scroll_one"
-                            android:layout_width="250dp"
-                            android:layout_height="290dp"
-
-                            android:layout_marginEnd="16dp"/>
-
-                        <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="290dp"
-
-                        android:layout_marginEnd="16dp"/>
-
-                        <include
-                        layout="@layout/explore_scroll_one"
-                        android:layout_width="250dp"
-                        android:layout_height="290dp"
-
-                        android:layout_marginEnd="16dp"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                     />
 
                 <!-- One Day Outings Section Header -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="17dp"
+                        android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="Weekend gateways"
+                        android:text="Weekend Gateway"
                         android:textAllCaps="false"
                         android:textColor="@color/primary_color"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@drawable/fade_out_line"
-                        android:layout_marginTop="27dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
 
                 <!-- Horizontal Scroll for One Day Outings -->
-                <HorizontalScrollView
+                <!-- Horizontal Scroll for Cards -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_weekendTrip"
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:scrollbars="none">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="8dp">
-
-                        <!-- Include outing scroll layouts -->
-                        <include
-                            layout="@layout/weekend_trip_layout"
-                            android:layout_width="150dp"
-                            android:layout_height="200dp"
-                            android:layout_marginEnd="16dp"/>
-
-                        <include
-                            layout="@layout/weekend_trip_layout"
-                            android:layout_width="150dp"
-                            android:layout_height="200dp"
-                            android:layout_marginEnd="16dp"/>
-                        <include
-                            layout="@layout/weekend_trip_layout"
-                            android:layout_width="150dp"
-                            android:layout_height="200dp"
-                            android:layout_marginEnd="16dp"/>
-                        <include
-                            layout="@layout/weekend_trip_layout"
-                            android:layout_width="150dp"
-                            android:layout_height="200dp"
-                            android:layout_marginEnd="16dp"/>
-
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    />
             </LinearLayout>
         </RelativeLayout>
 
