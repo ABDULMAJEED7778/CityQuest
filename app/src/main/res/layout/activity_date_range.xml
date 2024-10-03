@@ -78,24 +78,24 @@
         android:background="@color/background_color"
         app:cardBackgroundColor="@color/background_color">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
+        <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:mcv_selectionColor="@color/primary_color"
-            app:mcv_showOtherDates="none"
-            app:mcv_headerTextAppearance="@style/CustomHeaderText"
-            app:mcv_weekDayTextAppearance="@style/CustomWeekdayText"
-            app:mcv_dateTextAppearance="@style/CustomDateText"
-            app:mcv_tileWidth="42dp"
-            app:mcv_tileHeight="42dp" />
+            android:layout_marginTop="16dp"
+            app:disable_date_color="#ABABAB"
+            app:range_color="@color/primary_color"
+            app:selected_date_circle_color="@color/secondary_color"
+            app:title_color="@color/primary_color"
+            app:header_bg="@color/background_color"
+            app:current_date_color="@color/primary_light_color"
+            app:weekday_color="@color/primary_color"/>
 
     </androidx.cardview.widget.CardView>
 
 
     <Button
         android:id="@+id/reset_dateRange_btn"
-        android:layout_below="@id/calendar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/reset_btn_background"
