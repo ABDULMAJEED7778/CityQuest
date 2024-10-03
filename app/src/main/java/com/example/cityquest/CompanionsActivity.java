@@ -1,60 +1,108 @@
 package com.example.cityquest;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.cityquest.adapter.CityAdapter;
+import androidx.core.content.ContextCompat;
 
 import com.example.cityquest.adapter.CompanionAdapter;
-import com.example.cityquest.adapter.FilterAdapter;
-import com.example.cityquest.adapter.PopularCityAdapter;
-import com.example.cityquest.model.City;
-import com.example.cityquest.model.Companion;
-import com.example.cityquest.model.Filter;
 import com.example.cityquest.model.Trips;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CompanionsActivity extends AppCompatActivity {
 
     Button nextBtn,backBtn;
     Trips trip;
     CompanionAdapter adapter;
+    private CardView selectedCard;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_companions);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.primary_color));
+
+        CardView soloCard = findViewById(R.id.going_solo_card);
+        CardView partnerCard = findViewById(R.id.partner_card);
+        CardView familyCard = findViewById(R.id.family_card);
+        CardView friendsCard = findViewById(R.id.friends_card);
+
+        TextView soloCardText = findViewById(R.id.solo_card_text);
+        TextView partnerCardText = findViewById(R.id.partner_card_text);
+        TextView familyCardText = findViewById(R.id.family_card_text);
+        TextView friendsCardText = findViewById(R.id.firends_card_text);
+        // Set click listeners for each card
+
+
+        Shader textShader = new LinearGradient(
+                0, 0, 0, soloCardText.getTextSize(),
+                new int[]{
+                        Color.parseColor("#f5bd45"),
+                        Color.parseColor("#D6A53C")
+                }, null, Shader.TileMode.CLAMP);
+        // Apply the shader to the text
+        soloCardText.getPaint().setShader(textShader);
+        partnerCardText.getPaint().setShader(textShader);
+        familyCardText.getPaint().setShader(textShader);
+        friendsCardText.getPaint().setShader(textShader);
+
+
+        // Apply the touch animation method to all cards
+        applyTouchAnimation(soloCard);
+        applyTouchAnimation(friendsCard);
+        applyTouchAnimation(familyCard);
+        applyTouchAnimation(partnerCard);
+
+
+
+
+        // Apply the shader to the text
+        soloCardText.getPaint().setShader(textShader);
+
+
+        soloCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCard(soloCard);
+            }
         });
 
+        partnerCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCard(partnerCard);
+            }
+        });
 
+        familyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCard(familyCard);
+            }
+        });
 
-
-
-
-
-
+        friendsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectCard(friendsCard);
+            }
+        });
 
 
         trip = getIntent().getParcelableExtra("trip");
@@ -84,29 +132,36 @@ public class CompanionsActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
 
-
-
-
-
-        GridView gridView = findViewById(R.id.gridView);
-
-        List<Companion> companions = new ArrayList<>();
-        companions.add(new Companion(R.drawable.solo_photo, "Going Solo"));
-        companions.add(new Companion(R.drawable.solo_photo, "Partner"));
-        companions.add(new Companion(R.drawable.solo_photo, "Family"));
-        companions.add(new Companion(R.drawable.solo_photo, "Friends"));
-
-        adapter = new CompanionAdapter(this, companions);
-        gridView.setAdapter(adapter);
-
-
-
-
-
-
-
-
-
-
     }
+
+    // Method to handle card selection
+    private void selectCard(CardView cardView) {
+        if (selectedCard != null) {
+            // Remove foreground from the previously selected card
+            selectedCard.setForeground(null);
+        }
+
+        // Set foreground for the newly selected card
+        cardView.setForeground(ContextCompat.getDrawable(this, R.drawable.companions_selected_background));
+
+        // Update the selected card
+        selectedCard = cardView;
+    }
+
+    private void applyTouchAnimation(CardView cardView) {
+        cardView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Start scale-down animation
+                    v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shrink_animation));
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    // Start scale-up animation
+                    v.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.release_animation));
+                }
+                return false;
+            }
+        });
+    }
+
 }

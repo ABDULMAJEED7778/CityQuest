@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,9 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
 
 
 
+        if(position == (places.size() - 1) || places.size() == 1) {
+            holder.commuteInfoLayout.setVisibility(View.GONE);
+        }
         // Load the image using Glide or any other image loading library
         Glide.with(context).load(place.getPhotoUrl()).into(holder.placeImage);
     }
@@ -59,6 +63,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
         TextView placeOverview;
         ImageView placeImage;
         TextView placeNumber;
+        LinearLayout commuteInfoLayout;
 
         public PlacesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +71,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
             placeOverview = itemView.findViewById(R.id.place_overview_adapter);
             placeImage = itemView.findViewById(R.id.place_image_adapter);
             placeNumber = itemView.findViewById(R.id.place_number);
+            commuteInfoLayout = itemView.findViewById(R.id.commute_info_layout);
         }
     }
 }

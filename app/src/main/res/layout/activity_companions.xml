@@ -1,111 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@color/background_color"
-    android:id="@+id/main"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="64dp"
+    android:paddingBottom="16dp"
     tools:context=".CompanionsActivity">
 
-    <Button
-        android:id="@+id/nextBtn_comp"
-        android:layout_width="115dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/rounded_corner_next_btn"
-        android:drawableEnd="@drawable/right_arrow"
-        android:text="Next"
-        android:textSize="20dp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:paddingRight="15dp"/>
 
-    <Button
-        android:id="@+id/backBtn_comp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="back"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/secondary_color"/>
+    <ImageView
+        android:id="@+id/App_logo_destination"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_gravity="start"
+        app:srcCompat="@drawable/logo" />
 
-    <LinearLayout
-        android:id="@+id/logo_dest_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-        <ImageView
-            android:id="@+id/App_logo_destination"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/applogoicon"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitCenter"
-            android:layout_marginRight="10dp"/>
 
-        <ImageView
-            android:id="@+id/cityquest_destination"
-            android:layout_width="115dp"
-            android:layout_height="36dp"
-            android:src="@drawable/cityquesticon"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitCenter" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/who_is_txt"
-        android:layout_below="@id/logo_dest_ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Who is"
-
-        android:layout_marginTop="32dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppins_light"
-        android:textColor="@color/primary_color"
-
-        />
     <TextView
         android:id="@+id/coming_with_you_txt"
-        android:layout_below="@id/who_is_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coming with you?"
-        android:textSize="32sp"
-        android:textStyle="bold"
+        android:layout_gravity="start"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:fontFamily="@font/poppins_semibold"
+        android:text="Coming with you?"
         android:textColor="@color/primary_color"
+        android:textSize="32sp" />
 
-        />
-
-
-    <GridView
-    android:id="@+id/gridView"
-    android:layout_below="@id/coming_with_you_txt"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:numColumns="2"
-    android:columnWidth="170dp"
-    android:verticalSpacing="19dp"
-    android:horizontalSpacing="36dp"
-    android:padding="10dp"
-    android:stretchMode="columnWidth">
+    <androidx.gridlayout.widget.GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:columnCount="2"
+        app:rowCount="2">
 
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/going_solo_card"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="25dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/solo_photo" />
+
+            <TextView
+                android:id="@+id/solo_card_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/barlowsemicondensed_bold"
+                android:text="Going Solo"
+                android:textColor="@color/secondary_color"
+                android:textSize="24sp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/partner_card"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="25dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/partner_photo" />
+
+            <TextView
+                android:id="@+id/partner_card_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/barlowsemicondensed_bold"
+                android:text="Partner"
+                android:textColor="@color/secondary_color"
+                android:textSize="24sp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/family_card"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+
+            app:cardCornerRadius="25dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/family_photo" />
+
+            <TextView
+                android:id="@+id/family_card_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/barlowsemicondensed_bold"
+                android:text="Family"
+                android:textColor="@color/secondary_color"
+                android:textSize="24sp" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/friends_card"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="25dp"
+            app:layout_columnWeight="1"
+            app:layout_rowWeight="1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/friends_photo" />
+
+            <TextView
+                android:id="@+id/firends_card_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/barlowsemicondensed_bold"
+                android:text="Friends"
+                android:textColor="@color/secondary_color"
+                android:textSize="24sp" />
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/backBtn_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@drawable/companions_selected_background"
+            android:elevation="0dp"
+            android:fontFamily="@font/barlowsemicondensed_medium"
+            android:padding="16dp"
+            android:text="back"
+            android:textColor="@color/primary_color"
+            android:textSize="18sp" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/nextBtn_comp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/rounded_corner_next_btn"
+            android:drawableEnd="@drawable/right_arrow"
+            android:drawableTint="@color/background_color"
+            android:fontFamily="@font/barlowsemicondensed_bold"
+            android:padding="12dp"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/background_color"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 
-</GridView>
-
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>
 
 
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -160,7 +161,7 @@ public class SignInActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
                                     Toast.makeText(SignInActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignInActivity.this, DestinationActivity.class);
+                                    Intent intent = new Intent(SignInActivity.this, CompanionsActivity.class);
                                     startActivity(intent);
                                     finish();  // Finish the login activity
                                 } else {

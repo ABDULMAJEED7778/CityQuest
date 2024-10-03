@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new ExploreAroundFragment();
                     break;
                 case R.id.nav_itinerary:
-                    selectedFragment = new TripsActivity();
+                    selectedFragment = new TripsFragment();
                     break;
                 case R.id.nav_community:
                     selectedFragment = new CommunityActivity();

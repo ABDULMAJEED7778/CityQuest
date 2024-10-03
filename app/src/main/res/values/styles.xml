@@ -9,4 +9,12 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+            <!-- Customize your theme here -->
+            <item name="android:statusBarColor">@color/primary_color</item>
+            <!-- To set the color -->
+            <item name="android:windowLightStatusBar">false</item>
+            <!-- true if you want dark status bar icons (for light backgrounds) -->
+    </style>
+
 </resources>

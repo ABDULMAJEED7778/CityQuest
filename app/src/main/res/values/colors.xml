@@ -4,6 +4,7 @@
     <color name="primary_color_light">#BCC8C1</color>
     <color name="primary_color_background">#E6EBEA</color>
     <color name="secondary_color">#f5bd45</color>
+    <color name="secondary_color_dark">#D6A53C</color>
     <color name="light_gray">#E6E6E6</color>
     <color name="hintTextColor">#87846a</color>
     <color name="background_color">#FFF7E6</color>
