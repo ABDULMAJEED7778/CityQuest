@@ -1,6 +1,7 @@
 package com.example.cityquest;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,6 +25,7 @@ import com.example.cityquest.model.Trips;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DateRangeActivity extends AppCompatActivity {
 
@@ -36,15 +40,15 @@ public class DateRangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_date_range);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.secondary_color_dark));
 
         dateRangET = findViewById(R.id.date_range_et);
-        calendar = findViewById(R.id.calendar);
+        calendar = findViewById(R.id.calendar_date_picker);
+
+
+
+        calendar.setFonts(Objects.requireNonNull(ResourcesCompat.getFont(this, R.font.poppins_medium)));
         trip = getIntent().getParcelableExtra("trip");
         if (trip == null) {
             trip = new Trips();
@@ -86,6 +90,7 @@ public class DateRangeActivity extends AppCompatActivity {
 
                 // Update the EditText hint with the new date range
                 dateRangET.setHint(todayFormattedDate + " -> " + endFormattedDate);
+                resetBtn.setVisibility(View.INVISIBLE);
 
 
 
@@ -107,6 +112,7 @@ public class DateRangeActivity extends AppCompatActivity {
                 String startFormattedDate = DATE_FORMAT.format(startDate.getTime());
                 String endFormattedDate = DATE_FORMAT.format(endDate.getTime());
                 dateRangET.setText(startFormattedDate+" -> "+endFormattedDate);
+                resetBtn.setVisibility(View.VISIBLE);
             }
         });
         // Set selectable date range

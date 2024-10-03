@@ -36,7 +36,7 @@ public class CompanionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_companions);
 
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.primary_color));
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.secondary_color_dark));
 
         CardView soloCard = findViewById(R.id.going_solo_card);
         CardView partnerCard = findViewById(R.id.partner_card);
