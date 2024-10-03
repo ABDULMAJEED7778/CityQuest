@@ -1,10 +1,10 @@
 package com.example.cityquest.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,15 +18,18 @@ import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
     private List<City> cityList;
+    private Context context;
 
-    public CityAdapter(List<City> cityList) {
+
+    public CityAdapter(List<City> cityList, Context context) {
         this.cityList = cityList;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itme_city, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_city, parent, false);
         return new CityViewHolder(view);
     }
 
@@ -37,7 +40,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         holder.textViewCountryName.setText(city.getCountryName());
         holder.textViewCityRating.setText(city.getCityRating());
         // Assume you have a method to load images
-        Glide.with(holder.cityImage.getContext()).load(city.getCityImageUrl()).into(holder.cityImage);
+        Glide.with(context).load(city.getCityImageUrl()).into(holder.cityImage);
 
 
     }

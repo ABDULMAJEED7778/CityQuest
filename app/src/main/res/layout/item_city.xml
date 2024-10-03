@@ -1,99 +1,95 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="170dp"
-    android:layout_height="160dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="20dp"
-    >
-    <FrameLayout
+    app:cardCornerRadius="20dp">
 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         >
 
         <ImageView
             android:id="@+id/city_image_city_category"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/bangalore"
-            android:scaleType="centerCrop"/>
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bangalore" />
 
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@color/transparent_bg"
             android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:background="@drawable/rounded_corner_city_info"
-
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"  >
+            >
 
 
             <TextView
                 android:id="@+id/CityName_city_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Bangalore"
                 android:textColor="@color/white"
-                android:fontFamily="@font/poppins_regular"
+                android:textSize="14sp"
 
                 />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/location_icon_city_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/location_icon"
-                    android:layout_centerVertical="true"/>
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/location_icon" />
+
                 <TextView
                     android:id="@+id/CountryName_city_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text="India"
-                    android:layout_toRightOf="@id/location_icon_city_category"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_regular"
-                    android:layout_gravity="start"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:layout_toRightOf="@id/location_icon_city_category"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="India"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
 
                     />
+
                 <TextView
                     android:id="@+id/rating_city_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/poppins_regular"
                     android:text="4.8"
                     android:textColor="@color/white"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/poppins_regular"
-                    android:layout_centerVertical="true"
-                    />
+                    android:textSize="12sp" />
+
                 <ImageView
                     android:id="@+id/star_icon_city_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/star_icon"
                     android:layout_toLeftOf="@id/rating_city_category"
                     android:paddingTop="2dp"
+                    android:src="@drawable/star_icon"
 
-                   />
+                    />
             </RelativeLayout>
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

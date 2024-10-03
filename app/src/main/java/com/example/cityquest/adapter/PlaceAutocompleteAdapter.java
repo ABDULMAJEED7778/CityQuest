@@ -1,9 +1,11 @@
 package com.example.cityquest.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,7 +37,22 @@ public class PlaceAutocompleteAdapter extends RecyclerView.Adapter<PlaceAutocomp
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AutocompletePrediction prediction = predictions.get(position);
-        holder.textView.setText(prediction.getFullText(null).toString());
+        String predictionString = prediction.getFullText(null).toString();
+
+        // Find the index of the comma
+        int index = predictionString.indexOf(',');
+
+        if (index != -1) {
+            // Slice the string before the comma
+            String placeName = predictionString.substring(0, index);
+            // Slice the string after the comma
+            String countryName = predictionString.substring(index + 1);
+
+            holder.placeNameTextView.setText(placeName);
+            holder.countryNameTextView.setText(countryName);
+        } else {
+            holder.placeNameTextView.setText(predictionString);
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {
@@ -62,11 +79,15 @@ public class PlaceAutocompleteAdapter extends RecyclerView.Adapter<PlaceAutocomp
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView placeNameTextView;
+        TextView countryNameTextView;
+        ImageView placeImageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.place_name);
+            placeNameTextView = itemView.findViewById(R.id.CityName_search_suggestion);
+            countryNameTextView = itemView.findViewById(R.id.CountryName_search_suggestion);
+            placeImageView = itemView.findViewById(R.id.city_image_search_suggestion);
         }
     }
 

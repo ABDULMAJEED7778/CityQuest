@@ -98,7 +98,7 @@ public class ExploreAroundFragment extends Fragment {
         // Set up trendingCities RecyclerView
         trendingCitiesRecyclerView = view.findViewById(R.id.recycler_view_city); // Your RecyclerView ID
         trendingCitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        cityAdapter = new TrendingCityAdapter(getContext(),cityList);
+        cityAdapter = new TrendingCityAdapter(getContext(), cityList);
 
         //this is used to achieve horizontal paging as in viewPager
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -107,7 +107,7 @@ public class ExploreAroundFragment extends Fragment {
         citiesRecyclerView = view.findViewById(R.id.recyclerView_CitiesPhotos_Explore); // Your RecyclerView ID
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         citiesRecyclerView.setLayoutManager(layoutManager);
-        cityPagerAdapter = new CityPagerAdapter(getContext(),cityList);
+        cityAdapter = new TrendingCityAdapter(getContext(),cityList);
         snapHelper.attachToRecyclerView(citiesRecyclerView);
         citiesRecyclerView.setAdapter(cityPagerAdapter);
 
@@ -138,17 +138,6 @@ public class ExploreAroundFragment extends Fragment {
         }, 0, 3000);
         // Fetch cities data from Firestore
         fetchCitiesFromFirestore();
-
-
-
-
-
-
-//
-
-
-
-
 
 
         return view;

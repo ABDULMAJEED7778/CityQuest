@@ -1,120 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/background_color"
     android:id="@+id/main"
-    tools:context=".DestinationActivity">
-
-    <Button
-        android:id="@+id/skipBtn_dest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="skip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/secondary_color"/>
-
-    <Button
-        android:id="@+id/backBtn_dest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="back"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/secondary_color"/>
-    <Button
-        android:id="@+id/mapBtn_dest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="map"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/backBtn_dest"
-        android:background="@color/gray"/>
-
-    <LinearLayout
-        android:id="@+id/logo_dest_ll"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:gravity="center_vertical">
-        <ImageView
-            android:id="@+id/userPhoto"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-
-            android:scaleType="centerCrop"
-            android:src="@drawable/user_placholer_icon" />
-
-        <TextView
-
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello, "
-
-
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_light"
-            android:textColor="@color/primary_color"
-
-            />
-
-        <TextView
-            android:id="@+id/userName_Destination"
-            android:layout_below="@id/logo_dest_ll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ghassan"
-
-
-            android:textSize="24sp"
-            android:fontFamily="@font/poppins_light"
-            android:textColor="@color/secondary_color"
-
-            />
-        <Button
-            android:id="@+id/logoutBtn_dest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="logout"
-            android:background="@color/red"
-            android:layout_marginLeft="20dp"
-            />
+    tools:context=".DestinationActivity"
+    android:background="@color/background_color"
+    android:paddingBottom="16dp"
+    android:paddingTop="64dp"
+    android:paddingHorizontal="16dp"
 
 
 
-    </LinearLayout>
+    >
 
-    <TextView
-        android:id="@+id/Where_would_txt"
-        android:layout_below="@id/logo_dest_ll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Where would"
 
-        android:layout_marginTop="32dp"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/poppins_light"
-        android:textColor="@color/primary_color"
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/logo_dest_ll"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="70dp"-->
+        <!--        android:gravity="center_vertical">-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/userPhoto"-->
+        <!--            android:layout_width="50dp"-->
+        <!--            android:layout_height="50dp"-->
+        <!--            android:layout_gravity="center"-->
 
-        />
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:src="@drawable/user_placholer_icon" />-->
+
+        <!--        <TextView-->
+
+
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Hello, "-->
+
+
+        <!--            android:textSize="24sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:fontFamily="@font/poppins_light"-->
+        <!--            android:textColor="@color/primary_color"-->
+
+        <!--            />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/userName_Destination"-->
+        <!--            android:layout_below="@id/logo_dest_ll"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Ghassan"-->
+
+
+        <!--            android:textSize="24sp"-->
+        <!--            android:fontFamily="@font/poppins_light"-->
+        <!--            android:textColor="@color/secondary_color"-->
+
+        <!--            />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/logoutBtn_dest"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="logout"-->
+        <!--            android:background="@color/red"-->
+        <!--            android:layout_marginLeft="20dp"-->
+        <!--            />-->
+
+
+
+        <!--    </LinearLayout>-->
+
+    <ImageView
+        android:id="@+id/App_logo_destination"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_gravity="start"
+        app:srcCompat="@drawable/logo" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/Where_would_txt"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Where would"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:textSize="32sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:fontFamily="@font/poppins_light"-->
+<!--            android:textColor="@color/primary_color"-->
+<!--            />-->
+
     <TextView
         android:id="@+id/want_to_go_txt"
-        android:layout_below="@id/Where_would_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="you want to go ?"
-        android:textSize="32sp"
+        android:layout_marginTop="32dp"
+        android:text="Where do you want to go ?"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/primary_color"
-
         />
 
     <!--<EditText-->
@@ -135,76 +121,118 @@
 
     <AutoCompleteTextView
         android:id="@+id/search_input"
-        android:layout_below="@id/want_to_go_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:importantForAccessibility="yes"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:background="@android:color/white"
-        android:textColor="@android:color/black"/>
+        android:textColor="@color/primary_color"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_vertical|start"
+        android:drawablePadding="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Search a city, a place or a country"
+        android:textColorHint="@color/hintTextColor"
+        android:background="@drawable/rounded_corner_et"
+        android:drawableStart="@drawable/search_icon"
+        android:drawableTint="@color/primary_color"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_search_suggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_input"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/search_suggestion_background"
         android:elevation="4dp"
-
+        android:visibility="gone"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="16dp"
         android:scrollbars="horizontal" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp">
 
+        <TextView
+            android:id="@+id/popular_cities_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Popular Cities"
+            android:textColor="@color/primary_color"
+            android:textSize="24sp"
+            />
 
-
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="4dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@drawable/fade_right_to_left_line" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFilters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_input"
         android:layout_marginTop="8dp"
         android:clipToPadding="false"
-
         android:scrollbars="horizontal" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_city_category"
-        android:layout_below="@+id/recyclerViewFilters"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="horizontal"/>
-
-    <TextView
-        android:id="@+id/popular_cities_text"
-        android:layout_below="@id/recyclerView_city_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="popular cities"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/primary_color"
-
-        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_city_popular"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_below="@+id/popular_cities_text"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scrollbars="vertical" />
 
-        android:layout_marginTop="10dp"
-        android:clipToPadding="false"
-        android:scrollbars="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/skipBtn_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/secondary_color"
+            android:text="skip" />
+
+        <Button
+            android:id="@+id/backBtn_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/secondary_color"
+            android:text="back" />
+
+        <Button
+            android:id="@+id/mapBtn_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="map" />
+
+        <Button
+                    android:id="@+id/logoutBtn_dest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="logout"
+                    android:background="@color/red"
+                    android:layout_marginLeft="20dp"
+                    />
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

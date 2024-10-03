@@ -1,5 +1,7 @@
 package com.example.cityquest;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +20,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cityquest.adapter.CityAdapter;
@@ -42,6 +45,9 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,9 +64,11 @@ public class DestinationActivity extends AppCompatActivity {
     private AutoCompleteTextView searchET;
 
     private TextView usernameTV;
-    private RecyclerView recyclerView;
+    private RecyclerView searchRecyclerView;
 
+    private PopularCityAdapter popularCityAdapter;
     private PlacesClient placesClient;
+    private List<City> cities;
 
     private PlaceAutocompleteAdapter suggestionAdapter;
 
@@ -71,25 +79,23 @@ public class DestinationActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_destination);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left + 24, systemBars.top + 30, systemBars.right, systemBars.bottom + 30);
-            return insets;
-        });
-//
 
+        // Change icon color
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        decorView.setSystemUiVisibility(uiOptions);
 
         String apiKey = getString(R.string.google_maps_api_key);
         Places.initializeWithNewPlacesApiEnabled(this, apiKey);
         placesClient = Places.createClient(this);
 
         // Initialize RecyclerView for showing autocomplete results
-        recyclerView = findViewById(R.id.recyclerView_search_suggestion);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        searchRecyclerView = findViewById(R.id.recyclerView_search_suggestion);
+        searchRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize Autocomplete Adapter
         suggestionAdapter = new PlaceAutocompleteAdapter(this, new ArrayList<>());
-        recyclerView.setAdapter(suggestionAdapter);
+        searchRecyclerView.setAdapter(suggestionAdapter);
 
         suggestionAdapter.setOnItemClickListener(position -> {
             AutocompletePrediction selectedPrediction = suggestionAdapter.getItemAt(position);
@@ -106,13 +112,12 @@ public class DestinationActivity extends AppCompatActivity {
 
 
         searchET = findViewById(R.id.search_input);
-        searchET.setContentDescription("Search for a city or place");
 
         mapBtn = findViewById(R.id.mapBtn_dest);
         backBtn = findViewById(R.id.backBtn_dest);
         skipBtn = findViewById(R.id.skipBtn_dest);
         logOutBtn = findViewById(R.id.logoutBtn_dest);
-        usernameTV = findViewById(R.id.userName_Destination);
+//        usernameTV = findViewById(R.id.userName_Destination);
 
 
 
@@ -152,17 +157,24 @@ public class DestinationActivity extends AppCompatActivity {
         }
 
         // Initialize RecyclerViews
-        RecyclerView recyclerViewCityCategory = findViewById(R.id.recyclerView_city_category);
+
         RecyclerView recyclerViewCityPopular = findViewById(R.id.recyclerView_city_popular);
 
-        recyclerViewCityCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewCityPopular.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        List<City> cities = new ArrayList<>();
-        cities.add(new City("Bangalore", "India", "1", "https://images.pexels.com/photos/3573385/pexels-photo-3573385.jpeg", "4.8", "A vibrant city known for its technology industry and parks."));
-        cities.add(new City("Delhi", "India", "2", "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg", "4.5", "The capital city of India, known for its rich history and culture."));
-        cities.add(new City("Mumbai", "India", "3", "https://images.pexels.com/photos/618079/pexels-photo-618079.jpeg", "4.7", "A bustling metropolis known for Bollywood and the Gateway of India."));
-        cities.add(new City("Chennai", "India", "4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "4.6", "A coastal city famous for its cultural heritage and temples."));
+        cities = new ArrayList<>();
+        popularCityAdapter = new PopularCityAdapter(cities);
+        Log.e("gjgj","htdgdht");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewCityPopular.setLayoutManager(layoutManager);
+        recyclerViewCityPopular.setAdapter(popularCityAdapter);
+        // Fetch cities data from Firestore
+        fetchCitiesFromFirestore();
+
+//        cities.add(new City("Bangalore", "India", "1", "https://images.pexels.com/photos/3573385/pexels-photo-3573385.jpeg", "4.8", "A vibrant city known for its technology industry and parks."));
+//        cities.add(new City("Delhi", "India", "2", "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg", "4.5", "The capital city of India, known for its rich history and culture."));
+//        cities.add(new City("Mumbai", "India", "3", "https://images.pexels.com/photos/618079/pexels-photo-618079.jpeg", "4.7", "A bustling metropolis known for Bollywood and the Gateway of India."));
+//        cities.add(new City("Chennai", "India", "4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "4.6", "A coastal city famous for its cultural heritage and temples."));
 
 
         List<Filter> filters = new ArrayList<>();
@@ -174,11 +186,6 @@ public class DestinationActivity extends AppCompatActivity {
         recyclerViewFilters.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         FilterAdapter adapter3 = new FilterAdapter(filters, this);
         recyclerViewFilters.setAdapter(adapter3);
-
-        CityAdapter adapter = new CityAdapter(cities);
-        PopularCityAdapter adapter2 = new PopularCityAdapter(cities);
-        recyclerViewCityCategory.setAdapter(adapter);
-        recyclerViewCityPopular.setAdapter(adapter2);
 
 
 
@@ -197,6 +204,7 @@ public class DestinationActivity extends AppCompatActivity {
                     // Clear the predictions if input is too short
 
                     suggestionAdapter.updateData(new ArrayList<>());
+                    searchRecyclerView.setVisibility(View.GONE);
                 }
             }
 
@@ -220,6 +228,29 @@ public class DestinationActivity extends AppCompatActivity {
 //        });
     }
 
+    private void fetchCitiesFromFirestore() {
+        FirebaseUtils.getCitiesCollection()
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            City city = document.toObject(City.class);  // Convert document to City object
+                            cities.add(city);
+                        }
+
+                        // Notify RecyclerView adapter about data changes
+                        popularCityAdapter.notifyDataSetChanged();
+
+//                        // Now initialize the ViewPager adapter after data is fetched
+//                        cityPagerAdapter = new CityPagerAdapter(requireActivity(), cityList);
+//                        viewPager.setAdapter(cityPagerAdapter);
+
+                    } else {
+                        Log.d("CityActivity", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
     private void setUserInfo(String userId) {
         DocumentReference userRef = FirebaseUtils.getUserDocument(userId);
 
@@ -229,7 +260,7 @@ public class DestinationActivity extends AppCompatActivity {
                 if (document.exists()) {
                     User user = document.toObject(User.class);
                     if (user != null) {
-                        usernameTV.setText(user.getUserName());
+//                        usernameTV.setText(user.getUserName());
                         // Optionally, load profile picture using Glide or Picasso
 //                        if (user.getProfilePictureUrl() != null) {
 //                            Glide.with(DestinationActivity.this)
@@ -260,10 +291,14 @@ public class DestinationActivity extends AppCompatActivity {
                     List<AutocompletePrediction> predictions = response.getAutocompletePredictions();
                     // Update adapter with the new list of predictions
                     suggestionAdapter.updateData(predictions);
+                    searchRecyclerView.setVisibility(View.VISIBLE);
                 })
                 .addOnFailureListener(exception -> {
                     Log.e("PlaceError", "Error fetching place predictions: " + exception.getMessage());
                 });
+
+
+
     }
 
 //    private void fetchPlaceDetails(String placeId) {
