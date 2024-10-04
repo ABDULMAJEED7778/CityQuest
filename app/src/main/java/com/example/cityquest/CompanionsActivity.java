@@ -112,17 +112,17 @@ public class CompanionsActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.nextBtn_comp);
         nextBtn.setOnClickListener(v -> {
-            String selectedCompanion = adapter.getSelectedCompanion();
-            if (selectedCompanion != null) {
-                trip.setCompanion(selectedCompanion); // Store selected companion in trip
+//            String selectedCompanion = adapter.getSelectedCompanion();
+//            if (selectedCompanion != null) {
+//                trip.setCompanion(selectedCompanion); // Store selected companion in trip
                 Intent intent = new Intent(CompanionsActivity.this, InterestsActivity.class);
                 intent.putExtra("trip", trip); // Pass trip object to next activity
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            } else {
-                // Optionally show a message that no companion is selected
-                Toast.makeText(this, "Please select a companion.", Toast.LENGTH_SHORT).show();
-            }
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            } else {
+//                // Optionally show a message that no companion is selected
+//                Toast.makeText(this, "Please select a companion.", Toast.LENGTH_SHORT).show();
+//            }
 
         });
         backBtn = findViewById(R.id.backBtn_comp);

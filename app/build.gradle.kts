@@ -61,7 +61,8 @@ dependencies {
 
     //implementation(files("libs/Places-sdk-2.3.6.jar"))
 
-    
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+
 
     // Testing
     testImplementation("junit:junit:4.13.2")
@@ -70,7 +71,6 @@ dependencies {
 
     // Additional Libraries
     implementation("io.github.architshah248.calendar:awesome-calendar:2.0.0")
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
 //    // Ola Maps SDK

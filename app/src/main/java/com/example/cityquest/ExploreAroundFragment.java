@@ -123,9 +123,6 @@ public class ExploreAroundFragment extends Fragment {
         }
 
 
-
-
-
         // Initialize the city list
         cityList = new ArrayList<>();
 

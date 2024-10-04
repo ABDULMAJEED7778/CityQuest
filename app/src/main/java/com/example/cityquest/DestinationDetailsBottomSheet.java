@@ -49,9 +49,11 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
     private static final String ARG_PLACE_ID = "place_id";
     private static final String ARG_CITY_NAME = "city_name";
     private RecyclerView recyclerView;
-     Button selectBtn,viewOnMap;
-     TextView cityNameTextView,aboutCityNameTextView,CityOverfiewTextView;
+    private Button selectBtn, viewOnMap;
+    private TextView cityNameTextView, CityOverfiewTextView;
     private PhotoAdapter photosAdapter;
+    private PlacesClient placesClient; // Declare PlacesClient here
+
 
 
     public static DestinationDetailsBottomSheet newInstance(String placeId, String cityName) {
@@ -63,6 +65,11 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         return fragment;
     }
 
+    @NonNull
+    @Override
+    public int getTheme() {
+        return R.style.MyBottomSheetDialogTheme; // Use the defined theme here
+    }
 
 
     @Nullable
@@ -74,20 +81,14 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         recyclerView = view.findViewById(R.id.recyclerView_CityDetails);
         selectBtn = view.findViewById(R.id.select_btn_detail);
         cityNameTextView = view.findViewById(R.id.city_name_txt);
-        aboutCityNameTextView = view.findViewById(R.id.about_city_txt);
         CityOverfiewTextView = view.findViewById(R.id.city_details);
-
         photosAdapter = new PhotoAdapter(new ArrayList<>());
-
-
         recyclerView.setLayoutManager(new CarouselLayoutManager());
-
-
-
-
-
-
         recyclerView.setAdapter(photosAdapter);
+
+
+        // Initialize PlacesClient
+        placesClient = Places.createClient(requireContext());
 
 
         Bundle args = getArguments();
@@ -98,10 +99,6 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
             Trips trip = new Trips(); // Create a new Trip object
             trip.setDestination(cityName); // Set the destination
             trip.setTripId(placeId);
-
-
-            // Pass the trip object to the next activity
-
 
 
             fetchPlacePhotos(placeId);
@@ -126,15 +123,12 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
 
         final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, fields);
 
-        PlacesClient placesClient = Places.createClient(requireContext());
         placesClient.fetchPlace(placeRequest).addOnSuccessListener((response) -> {
             final Place place = response.getPlace();
-
             // Get the city name (DISPLAY_NAME)
             String displayName = place.getName();
             if (displayName != null) {
                 cityNameTextView.setText(displayName);
-                aboutCityNameTextView.setText("About " + displayName); // Set the text to "About {city name}"
             }
 
             // Get the city overview (EDITORIAL_SUMMARY)
@@ -178,15 +172,5 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
 
 }

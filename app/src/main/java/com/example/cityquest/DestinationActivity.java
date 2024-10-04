@@ -104,7 +104,7 @@ public class DestinationActivity extends AppCompatActivity {
                 String cityName = selectedPrediction.getPrimaryText(null).toString();
                 Log.e("placeId",placeId);
                 DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId,cityName);
-                bottomSheet.show(getSupportFragmentManager(), "DestinationDetailsBottomSheet");
+                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
 
 //                fetchPlaceDetails(placeId);
             }
