@@ -100,6 +100,9 @@ dependencies {
 
     implementation ("com.google.android.libraries.places:places:3.5.0")
 
+    implementation ("com.google.maps:google-maps-services:2.2.0")
+    implementation ("org.slf4j:slf4j-simple:1.7.25")
+
 
 
 

@@ -1,0 +1,45 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/companion_item_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="6dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="30dp"
+            app:tint="@color/primary_color"
+
+            android:src="@drawable/location_icon"
+
+            />
+        <TextView
+            android:id="@+id/cityName_changeLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:fontFamily="@font/poppins_medium"
+            android:text="Chennai"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_color"
+            android:textSize="14sp"
+            />
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

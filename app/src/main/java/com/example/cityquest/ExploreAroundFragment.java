@@ -1,6 +1,7 @@
 package com.example.cityquest;
 
 import android.content.Intent;
+import android.location.Geocoder;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,17 +27,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityPagerAdapter;
 import com.example.cityquest.adapter.TrendingCityAdapter;
 import com.example.cityquest.adapter.WeekendTripAdapter;
 import com.example.cityquest.model.City;
+import com.example.cityquest.model.LocationViewModel;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,11 +55,23 @@ public class ExploreAroundFragment extends Fragment {
     private TrendingCityAdapter cityAdapter;
     private WeekendTripAdapter weekendTripAdapter;
 
+    private TextView yourLocationCityTV;
+    LocationViewModel locationViewModel;
+
     private List<City> cityList;
     Timer timer;
 
 
 
+    private static final String ARG_CITY_NAME = "city_name";
+
+    public static ExploreAroundFragment newInstance(String cityName) {
+        ExploreAroundFragment fragment = new ExploreAroundFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_CITY_NAME, cityName); // Put the city name in the arguments
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Nullable
@@ -61,7 +80,9 @@ public class ExploreAroundFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_explore, container, false);
 
 
-        searchButton = view.findViewById(R.id.search_bar_btn); // Replace with your actual ID
+        searchButton = view.findViewById(R.id.search_bar_btn);
+        yourLocationCityTV = view.findViewById(R.id.location_city_name);
+
         final Animation shrinkAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.shrink_animation);
         final Animation releaseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.release_animation);
 
@@ -80,7 +101,7 @@ public class ExploreAroundFragment extends Fragment {
                     // Check if the touch is within the button bounds before navigating
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         // Navigate to the new activity
-                        Intent intent = new Intent(getContext(), searchInExploreActivity.class);
+                        Intent intent = new Intent(getContext(), ChangeLocationCityActivity.class);
                         startActivity(intent);
                     }
                     return true;
@@ -90,6 +111,19 @@ public class ExploreAroundFragment extends Fragment {
             }
         });
 
+        // Retrieve the city name from arguments
+        if (getArguments() != null) {
+            String cityName = getArguments().getString(ARG_CITY_NAME);
+            if(cityName.equals("city not selected")){
+
+                setCityNameOfUserLocation();
+            }else {
+                yourLocationCityTV.setText(cityName);
+            }
+        }
+
+
+
 
 
         // Initialize the city list
@@ -98,7 +132,7 @@ public class ExploreAroundFragment extends Fragment {
         // Set up trendingCities RecyclerView
         trendingCitiesRecyclerView = view.findViewById(R.id.recycler_view_city); // Your RecyclerView ID
         trendingCitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        cityAdapter = new TrendingCityAdapter(getContext(), cityList);
+        cityAdapter = new TrendingCityAdapter(getContext(),cityList);
 
         //this is used to achieve horizontal paging as in viewPager
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -107,7 +141,7 @@ public class ExploreAroundFragment extends Fragment {
         citiesRecyclerView = view.findViewById(R.id.recyclerView_CitiesPhotos_Explore); // Your RecyclerView ID
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         citiesRecyclerView.setLayoutManager(layoutManager);
-        cityAdapter = new TrendingCityAdapter(getContext(),cityList);
+        cityPagerAdapter = new CityPagerAdapter(getContext(),cityList);
         snapHelper.attachToRecyclerView(citiesRecyclerView);
         citiesRecyclerView.setAdapter(cityPagerAdapter);
 
@@ -140,7 +174,33 @@ public class ExploreAroundFragment extends Fragment {
         fetchCitiesFromFirestore();
 
 
+
+
+
+
+//
+
+
+
+
+
+
         return view;
+    }
+
+    private void setCityNameOfUserLocation() {
+
+         locationViewModel = new ViewModelProvider(requireActivity()).get(LocationViewModel.class);
+
+        locationViewModel.getLocation().observe(getViewLifecycleOwner(), location -> {
+            if (location != null) {
+                String cityName = getCityName(location.getLatitude(), location.getLongitude());
+                yourLocationCityTV.setText(cityName);
+            }
+        });
+
+
+
     }
 
     @Override
@@ -197,6 +257,23 @@ public class ExploreAroundFragment extends Fragment {
             timer = null; // Avoid memory leaks
         }
     }
+    private String getCityName(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+        String cityName = null;
+
+        try {
+            List<android.location.Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                cityName = addresses.get(0).getLocality(); // Get the city name
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return cityName != null ? cityName : "Delhi";
+    }
+
 
 
 

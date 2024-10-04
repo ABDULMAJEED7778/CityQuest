@@ -18,9 +18,13 @@
         android:theme="@style/Theme.CityQuest"
         tools:targetApi="31">
         <activity
+            android:name=".ChangeLocationCityActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
             android:name=".searchInExploreActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="false"

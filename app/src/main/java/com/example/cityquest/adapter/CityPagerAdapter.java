@@ -25,6 +25,7 @@ public class CityPagerAdapter extends RecyclerView.Adapter<CityPagerAdapter.City
     }
 
     @NonNull
+
     @Override
     public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.explore_item_view_pager, parent, false);
