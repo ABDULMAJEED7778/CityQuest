@@ -1,5 +1,6 @@
 package com.example.cityquest;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.example.cityquest.adapter.DaysDetailsAdapter;
 import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ItineraryPlace;
 import com.example.cityquest.model.TripDay;
+import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -93,7 +95,6 @@ public class ItineraryFragment extends Fragment {
 
         fetchTripDays(tripId);
 
-        // Add scroll listener to track the visible day and update TabLayout
 //        daysRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
 //            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -111,6 +112,49 @@ public class ItineraryFragment extends Fragment {
 //                }
 //            }
 //        });
+
+        dayTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int dayPosition = tab.getPosition();
+
+                // Expand the selected day card
+                if (daysDetailsAdapter != null) {
+                    daysDetailsAdapter.expandDay(dayPosition);
+                }
+
+////                 Just smooth scroll without offset for testing
+//                daysRecyclerView.smoothScrollToPosition(dayPosition);
+
+                // Smooth scroll to the selected day
+                daysRecyclerView.post(() -> {
+                    // Scroll smoothly to the selected position
+                    daysRecyclerView.smoothScrollToPosition(dayPosition);
+
+                    // Delay the exact positioning to allow for smooth scrolling
+                    daysRecyclerView.postDelayed(() -> {
+                        // Get the ViewHolder for the selected position
+                        RecyclerView.ViewHolder viewHolder = daysRecyclerView.findViewHolderForAdapterPosition(dayPosition);
+                        if (viewHolder != null) {
+                            // Get the top position of the view
+                            int topOffset = viewHolder.itemView.getTop();
+                            // Smoothly scroll to the precise top position of that item
+                            daysRecyclerView.smoothScrollBy(0, topOffset);
+                        }
+                    }, 0); // Adjust the delay as necessary
+                });
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Optional: handle tab unselection if needed
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Optional: handle tab reselection if needed
+            }
+        });
 
     }
 
@@ -197,5 +241,6 @@ public class ItineraryFragment extends Fragment {
             daysDetailsAdapter.updateDays(days); // If necessary, update the adapter with new data
         }
     }
+
 
 }

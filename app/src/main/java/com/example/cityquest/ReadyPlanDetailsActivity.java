@@ -13,6 +13,7 @@ import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ReadyTrips;
 import com.example.cityquest.model.ItineraryPlace;
 import com.example.cityquest.model.TripDay;
+import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -47,7 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
-    private NestedScrollView scrollView;
+    private NonScrollableScrollView scrollView;
     private TabLayout detailsTabLayout;
     private TextView overviewSection;
     private LinearLayout exploreSection;
@@ -69,6 +70,8 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ready_plan_page);
 
+
+
         // Initialize UI elements
         detailsTabLayout = findViewById(R.id.tab_layout_details);
         overviewSection = findViewById(R.id.overview_section);
@@ -85,6 +88,8 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         companion = findViewById(R.id.companion_type);
         itineraryFragmentContainer = findViewById(R.id.itinerary_fragment_container);
 
+        scrollView.setScrollable(true);
+
         // Get trip ID from intent
         tripId = getIntent().getStringExtra("tripId");
 
@@ -100,10 +105,12 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                               overviewSection.setVisibility(View.VISIBLE);
                               removeItineraryFragment();
                               exploreSection.setVisibility(View.GONE);
+                              itineraryFragmentContainer.setVisibility(View.GONE);
                               break;
 
                           case 1: // Second Tab (Itinerary)
                               overviewSection.setVisibility(View.GONE);
+                              itineraryFragmentContainer.setVisibility(View.VISIBLE);
                               loadItineraryFragment(new ItineraryLoadCallback() {
                                   @Override
                                   public void onItineraryLoaded() {
@@ -112,16 +119,20 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                                   }
                               });
                               exploreSection.setVisibility(View.GONE);
+                              scrollView.setScrollable(false);
+
                               break;
 
                           case 2: // Third Tab (Explore)
                               overviewSection.setVisibility(View.GONE);
+                              itineraryFragmentContainer.setVisibility(View.GONE);
                               removeItineraryFragment();
                               exploreSection.setVisibility(View.VISIBLE);
                               setupDiningRecommendation();
 
                               // Scroll to the Explore Section
                               scrollView.smoothScrollTo(0, overviewSection.getHeight() + detailsTabLayout.getHeight() + itineraryFragmentContainer.getHeight());
+
                               break;
                       }
                   });
@@ -130,11 +141,17 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
               @Override
               public void onTabUnselected(TabLayout.Tab tab) {
+                  if (tab.getPosition() == 1) {
+                      scrollView.setScrollable(true);
+                  }
 
               }
 
               @Override
               public void onTabReselected(TabLayout.Tab tab) {
+                  if (tab.getPosition() == 1) {
+                      scrollView.setScrollable(false);
+                  }
 
               }
           }
@@ -202,7 +219,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
         numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
         // Calculate the number of days between the start and end date
-        noOfDays.setText(String.format("%d Days", numberOfDays));
+        noOfDays.setText(String.format("%d \nDays", numberOfDays));
     }
 
     // Fetch all trip days and their details from Firestore
@@ -286,7 +303,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 ////        }
 //    }
 
-    private void smoothScrollToView(NestedScrollView scrollView, View view) {
+    private void smoothScrollToView(NonScrollableScrollView scrollView, View view) {
         int y = view.getTop(); // Get the top position of the view
         ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
         animator.setDuration(1000); // Adjust the duration for smoother scrolling

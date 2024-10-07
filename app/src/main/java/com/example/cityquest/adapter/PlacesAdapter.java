@@ -18,6 +18,7 @@ import com.example.cityquest.model.ItineraryPlace;
 
 import java.util.List;
 
+
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesViewHolder> {
 
     private Context context;

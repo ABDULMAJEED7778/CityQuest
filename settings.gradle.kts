@@ -4,6 +4,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
 
+
     }
 }
 dependencyResolutionManagement {
@@ -17,3 +18,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CityQuest"
 include(":app")
+

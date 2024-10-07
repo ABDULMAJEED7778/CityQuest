@@ -5,6 +5,8 @@ import java.util.List;
 public class TripDay {
     private int dayNumber; // e.g., "Day1", "Day2"
     private List<ItineraryPlace> places; // List of places visited on this day
+    private boolean isExpanded = false; // Add this flag to handle the expansion state
+
 
     // Empty constructor required for Firestore
     public TripDay() {
@@ -29,5 +31,13 @@ public class TripDay {
 
     public void setPlaces(List<ItineraryPlace> places) {
         this.places = places;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
     }
 }
