@@ -1,5 +1,7 @@
 package com.example.cityquest.adapter;
 
+import static java.lang.System.load;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.cityquest.R;
 import com.example.cityquest.model.ItineraryPlace;
 
@@ -50,7 +54,11 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
             holder.commuteInfoLayout.setVisibility(View.GONE);
         }
         // Load the image using Glide or any other image loading library
-        Glide.with(context).load(place.getPhotoUrl()).into(holder.placeImage);
+//        Glide.with(context).load(place.getPhotoUrl()).into(holder.placeImage);
+        Glide.with(context)
+                .load(place.getPhotoUrl())
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(16))) // Change radius as needed
+                .into(holder.placeImage);
     }
 
     @Override

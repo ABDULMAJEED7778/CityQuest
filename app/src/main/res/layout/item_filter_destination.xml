@@ -2,8 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="54dp"
-    android:layout_margin="4dp"
+    android:layout_marginBottom="8dp"
     app:cardCornerRadius="20dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="8dp"
     app:cardElevation="2dp">
 
     <RelativeLayout
@@ -11,13 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="2dp"
-        android:paddingTop="2dp"
-        android:paddingRight="6dp"
-        android:paddingBottom="2dp"
-
+        android:paddingEnd="8dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/primary_color"
+        android:background="@color/primary_color_light"
         android:gravity="center_vertical">
 
         <TextView
@@ -25,8 +23,9 @@
             android:layout_toRightOf="@+id/filter_icon_rl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
             android:layout_centerVertical="true"
-            android:textColor="@color/background_color"
+            android:textColor="@color/primary_color"
             android:text="Filter Name"
             android:textSize="14sp"
             android:layout_marginStart="6dp"
@@ -34,7 +33,7 @@
 
         <RelativeLayout
             android:id="@+id/filter_icon_rl"
-            android:layout_width="40dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/filter_icon_background"
             >

@@ -39,6 +39,8 @@ import java.util.List;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -116,6 +118,21 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                                   public void onItineraryLoaded() {
                                       // Use post to ensure the layout is updated before scrolling
                                       smoothScrollToView(scrollView, detailsTabLayout);
+                                      detailsTabLayout.setBackgroundResource(R.color.primary_color_light);
+                                      detailsTabLayout.setSelectedTabIndicatorColor(
+                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
+                                      );
+                                      // Set the text color for unselected and selected tabs
+                                      detailsTabLayout.setTabTextColors(
+                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()), // Unselected
+                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
+                                      );
+
+//                                      // Set background color for the itinerary tab
+//                                      tab.view.setBackgroundColor(
+//                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
+//                                      );
+                                      getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
                                   }
                               });
                               exploreSection.setVisibility(View.GONE);
@@ -143,6 +160,22 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
               public void onTabUnselected(TabLayout.Tab tab) {
                   if (tab.getPosition() == 1) {
                       scrollView.setScrollable(true);
+                      // Reset background and tab indicator colors
+                      detailsTabLayout.setBackgroundColor(
+                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
+                      );
+                      detailsTabLayout.setSelectedTabIndicatorColor(
+                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
+                      );
+
+                      // Set the text color for unselected and selected tabs
+                      detailsTabLayout.setTabTextColors(
+                              ResourcesCompat.getColor(getResources(), R.color.gray, getTheme()), // Unselected
+                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
+                      );
+
+                      // Reset the status bar color
+                      getWindow().setStatusBarColor(getColor(R.color.transparent));
                   }
 
               }
@@ -306,7 +339,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private void smoothScrollToView(NonScrollableScrollView scrollView, View view) {
         int y = view.getTop(); // Get the top position of the view
         ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
-        animator.setDuration(1000); // Adjust the duration for smoother scrolling
+        animator.setDuration(500); // Adjust the duration for smoother scrolling
         animator.start();    }
 
 

@@ -8,11 +8,41 @@
     android:fillViewport="true"
     android:background="@color/background_color">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-       >
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color">
+
+<!--            <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--                android:id="@+id/progress_circular"-->
+<!--                android:indeterminate="true"-->
+<!--                style="@style/progressCircleStyle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:progress="@integer/google_play_services_version"-->
+<!--                />-->
+<!--            -->
+<!--            <VideoView-->
+<!--                android:id="@+id/loading_anim_explore_page"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:tint="@color/background_color"-->
+<!--                android:layout_gravity="center" />-->
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/loading_anim_explore_page"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/paper_plane_animation_60f" />
+
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/frameLayout_Top"
@@ -21,48 +51,32 @@
             android:layout_alignParentTop="true"> <!-- Align to the top of the parent -->
 
 
-
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_CitiesPhotos_Explore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-
-
                 />
-
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/circled_image"
-                android:layout_marginRight="16dp"
-
-                android:layout_marginTop="18dp"
-                android:src="@drawable/bell_icon"
-                android:layout_gravity="end"
-                />
-
 
 
             <LinearLayout
                 android:id="@+id/your_city_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="start"
                 >
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="28dp"
+                    android:contentDescription="TODO"
                     app:tint="@color/white"
                     android:src="@drawable/ic_location_pin"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginEnd="6dp"
                     />
 
                 <LinearLayout
@@ -73,7 +87,7 @@
                         android:textColor="@android:color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="9dp"
+                        android:textSize="11sp"
                         android:text="Your City"/>
                     <TextView
                         android:textColor="@android:color/white"
@@ -83,6 +97,21 @@
                         android:text="Bangaluru"/>
 
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/circled_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/bell_icon"
+                    android:layout_gravity="end"
+                    />
 
             </LinearLayout>
 
@@ -104,35 +133,26 @@
                 android:drawableStart="@drawable/search_icon"
                 android:drawableTint="@color/white"
                 android:fontFamily="@font/poppins_regular"
-
-
-
                 android:text="Find amazing road trip destinations..."
-
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"/>
-
-
-
-
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                />
 
         </FrameLayout>
 
         <RelativeLayout
+            android:id="@+id/explore_page_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_below="@id/frameLayout_Top"
             >
-
-
             <LinearLayout
                 android:id="@+id/continue_planning_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -220,16 +240,9 @@
                                 android:textSize="12dp"
                                 android:textColor="@color/black"/>
 
-
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <!-- ScrollView content for cards starts here -->
@@ -238,7 +251,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-
                 android:layout_marginTop="16dp">
 
                 <!-- Explore Scroll Cards Header -->
@@ -314,7 +326,6 @@
                     />
             </LinearLayout>
         </RelativeLayout>
-
 </RelativeLayout>
 
 </ScrollView>

@@ -7,7 +7,7 @@
     <style name="details_tap_ready_plan_page" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
             <!-- Customize your theme here -->
@@ -46,4 +46,17 @@
         <item name="backgroundTint">@color/background_color</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
+
+    <style name="progressCircleStyle" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <!-- Primary theme colors for M2 -->
+        <item name="trackThickness">5dp</item>
+        <item name="indicatorSize">50dp</item>
+        <item name="trackColor">@color/primary_color_light</item>
+        <item name="indicatorColor">@color/primary_color</item>
+        <item name="trackCornerRadius">4dp</item>
+
+
+
+    </style>
+
 </resources>

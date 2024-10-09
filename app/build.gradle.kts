@@ -45,6 +45,8 @@ dependencies {
     implementation("androidx.activity:activity:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.core:core-ktx:1.10.1")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.29")
+
 
     // Material Design
     implementation("com.google.android.material:material:1.12.0")
@@ -101,7 +103,6 @@ dependencies {
 
     implementation ("com.google.maps:google-maps-services:2.2.0")
     implementation ("org.slf4j:slf4j-simple:1.7.25")
-
 
 
 

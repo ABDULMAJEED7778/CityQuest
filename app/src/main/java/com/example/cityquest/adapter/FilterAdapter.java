@@ -48,11 +48,11 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.FilterView
             public void onClick(View v) {
 
                 if (isSelected) {
-                    holder.textViewFilterName.setTextColor(ContextCompat.getColor(context, R.color.gray));
-                    holder.relativeLayoutFilter.setBackgroundColor(ContextCompat.getColor(context, R.color.background_color));
-                } else {
                     holder.textViewFilterName.setTextColor(ContextCompat.getColor(context, R.color.background_color));
                     holder.relativeLayoutFilter.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_color));
+                } else {
+                    holder.textViewFilterName.setTextColor(ContextCompat.getColor(context, R.color.primary_color));
+                    holder.relativeLayoutFilter.setBackgroundColor(ContextCompat.getColor(context, R.color.primary_color_light));
                 }
 
                 isSelected = !isSelected;

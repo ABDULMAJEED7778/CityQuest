@@ -30,9 +30,9 @@
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".DestinationDetailsActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".DestinationDetailsActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ReadyPlanDetailsActivity"
             android:exported="false"

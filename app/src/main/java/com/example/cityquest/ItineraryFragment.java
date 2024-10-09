@@ -1,6 +1,7 @@
 package com.example.cityquest;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,7 +38,6 @@ public class ItineraryFragment extends Fragment {
     private RecyclerView daysRecyclerView;
     private DaysDetailsAdapter daysDetailsAdapter;
     private String tripId;// Add tripId if you want to fetch data based on trip ID
-//    private ImageView commuteTypeBtn;
     private TabLayout dayTabLayout;
     private LinearLayoutManager layoutManager;
 
@@ -118,31 +118,39 @@ public class ItineraryFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 int dayPosition = tab.getPosition();
 
-                // Expand the selected day card
-                if (daysDetailsAdapter != null) {
-                    daysDetailsAdapter.expandDay(dayPosition);
+                if (dayPosition < numberOfDays) {
+                    // Expand the selected day card
+                    if (daysDetailsAdapter != null) {
+                        daysDetailsAdapter.expandDay(dayPosition);
+                    }
+
+                    // Smooth scroll to the selected day
+                    daysRecyclerView.post(() -> {
+                        // Scroll smoothly to the selected position
+                        daysRecyclerView.smoothScrollToPosition(dayPosition);
+
+                        // Adjust the height of the RecyclerView after scrolling
+                        daysRecyclerView.postDelayed(() -> {
+                            RecyclerView.ViewHolder viewHolder = daysRecyclerView.findViewHolderForAdapterPosition(dayPosition);
+                            if (viewHolder != null) {
+                                // Measure the height of the RecyclerView based on the current visible items
+                                int totalHeight = 0;
+                                for (int i = 0; i < daysRecyclerView.getChildCount(); i++) {
+                                    View child = daysRecyclerView.getChildAt(i);
+                                    totalHeight += child.getHeight();
+                                }
+
+                                totalHeight = totalHeight - numberOfDays*120;
+                                // Adjust RecyclerView height to wrap its content
+                                ViewGroup.LayoutParams params = daysRecyclerView.getLayoutParams();
+                                params.height = totalHeight;  // Set height to the total content height
+                                daysRecyclerView.setLayoutParams(params);
+                            }
+                        }, 100); // Adjust the delay as necessary
+                    });
+                }else {
+                    showAddDayDialog();
                 }
-
-////                 Just smooth scroll without offset for testing
-//                daysRecyclerView.smoothScrollToPosition(dayPosition);
-
-                // Smooth scroll to the selected day
-                daysRecyclerView.post(() -> {
-                    // Scroll smoothly to the selected position
-                    daysRecyclerView.smoothScrollToPosition(dayPosition);
-
-                    // Delay the exact positioning to allow for smooth scrolling
-                    daysRecyclerView.postDelayed(() -> {
-                        // Get the ViewHolder for the selected position
-                        RecyclerView.ViewHolder viewHolder = daysRecyclerView.findViewHolderForAdapterPosition(dayPosition);
-                        if (viewHolder != null) {
-                            // Get the top position of the view
-                            int topOffset = viewHolder.itemView.getTop();
-                            // Smoothly scroll to the precise top position of that item
-                            daysRecyclerView.smoothScrollBy(0, topOffset);
-                        }
-                    }, 0); // Adjust the delay as necessary
-                });
             }
 
             @Override
@@ -190,48 +198,30 @@ public class ItineraryFragment extends Fragment {
                 daysTab.setText("Day " + tripDay.getDayNumber());
                 dayTabLayout.addTab(daysTab);
             }
+            // Add the "+" tab
+            TabLayout.Tab addTab = dayTabLayout.newTab();
+            addTab.setText("+");
+            dayTabLayout.addTab(addTab);
 
-            dayTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    int dayNumber = tab.getPosition();
-                    // Use post to ensure that the UI is updated before attempting to scroll
-                    daysRecyclerView.post(() -> {
-                        // Scroll to the selected day in the RecyclerView
-                        daysRecyclerView.smoothScrollToPosition(dayNumber);
-                    });
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {}
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });
         }
     }
 
-    private void fetchDayItinerary(int dayNumber) {
-        if (dayItineraryCache.containsKey(dayNumber)) {
-            // Use cached data
-            updateItinerarySection(Arrays.asList(dayItineraryCache.get(dayNumber)));
-        } else {
-            // Fetch from Firestore if not in cache
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("readyTrips").document(tripId).collection("itinerary")
-                    .document(String.valueOf(dayNumber))
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            TripDay tripDay = documentSnapshot.toObject(TripDay.class);
-                            dayItineraryCache.put(dayNumber, tripDay);
-                            updateItinerarySection(Arrays.asList(tripDay));
-                        }
-                    });
-        }
+    // Show a dialog to add a new day
+    private void showAddDayDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Add New Day")
+                .setMessage("Enter details for the new day:")
+                .setPositiveButton("Add", (dialog, which) -> {
+                    numberOfDays++; // Increment the day count
+                    TripDay newTripDay = new TripDay(numberOfDays, new ArrayList<>()); // Create a new TripDay
+                    dayItineraryCache.put(numberOfDays, newTripDay); // Cache it
+                    updateItinerarySection(new ArrayList<>(dayItineraryCache.values())); // Update the RecyclerView
+                    setupDayTabs(new ArrayList<>(dayItineraryCache.values())); // Update the tabs
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
+
 
     private void updateItinerarySection(List<TripDay> days) {
         if (daysDetailsAdapter == null) {

@@ -1,7 +1,10 @@
 package com.example.cityquest;
 
+import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
+
 import android.content.Intent;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,10 +30,16 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
 import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityPagerAdapter;
 import com.example.cityquest.adapter.TrendingCityAdapter;
@@ -37,6 +47,7 @@ import com.example.cityquest.adapter.WeekendTripAdapter;
 import com.example.cityquest.model.City;
 import com.example.cityquest.model.LocationViewModel;
 import com.example.cityquest.utils.FirebaseUtils;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.io.IOException;
@@ -45,6 +56,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class ExploreAroundFragment extends Fragment {
 
@@ -59,6 +72,10 @@ public class ExploreAroundFragment extends Fragment {
     LocationViewModel locationViewModel;
 
     private List<City> cityList;
+    private GifImageView loadingAnim;
+    private FrameLayout topLayout;
+    private RelativeLayout bottomLayout;
+
     Timer timer;
 
 
@@ -82,6 +99,10 @@ public class ExploreAroundFragment extends Fragment {
 
         searchButton = view.findViewById(R.id.search_bar_btn);
         yourLocationCityTV = view.findViewById(R.id.location_city_name);
+        topLayout = view.findViewById(R.id.frameLayout_Top);
+        bottomLayout = view.findViewById(R.id.explore_page_bottom_layout);
+
+        loadingAnim = view.findViewById(R.id.loading_anim_explore_page);
 
         final Animation shrinkAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.shrink_animation);
         final Animation releaseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.release_animation);
@@ -173,15 +194,6 @@ public class ExploreAroundFragment extends Fragment {
 
 
 
-
-
-//
-
-
-
-
-
-
         return view;
     }
 
@@ -212,6 +224,9 @@ public class ExploreAroundFragment extends Fragment {
     }
 
     private void fetchCitiesFromFirestore() {
+        topLayout.setVisibility(View.GONE);
+        bottomLayout.setVisibility(View.GONE);
+        loadingAnim.setVisibility(View.VISIBLE);
         FirebaseUtils.getCitiesCollection()
                 .get()
                 .addOnCompleteListener(task -> {
@@ -233,6 +248,10 @@ public class ExploreAroundFragment extends Fragment {
                     } else {
                         Log.d("CityActivity", "Error getting documents: ", task.getException());
                     }
+                    loadingAnim.setVisibility(View.GONE); // Hide the loading indicator after fetching data
+                    topLayout.setVisibility(View.VISIBLE);
+                    bottomLayout.setVisibility(View.VISIBLE);
+
                 });
     }
     // Helper method to check if the touch is inside the view bounds
