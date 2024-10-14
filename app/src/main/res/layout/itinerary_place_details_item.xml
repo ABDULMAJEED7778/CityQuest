@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/poppins_light"
-            android:text="31 min (1.6 miles)"
+            android:text="helllllll"
             android:layout_marginHorizontal="4dp"
             android:textColor="@color/hintTextColor" />
 

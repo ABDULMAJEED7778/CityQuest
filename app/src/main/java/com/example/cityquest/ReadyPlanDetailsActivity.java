@@ -12,6 +12,7 @@ import android.animation.ObjectAnimator;
 import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ReadyTrips;
 import com.example.cityquest.model.ItineraryPlace;
+import com.example.cityquest.model.TravelInfo;
 import com.example.cityquest.model.TripDay;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -64,6 +65,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private int numberOfDays;
     private String tripId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         tripType = findViewById(R.id.trip_type);
         companion = findViewById(R.id.companion_type);
         itineraryFragmentContainer = findViewById(R.id.itinerary_fragment_container);
+
 
         // Get trip ID from intent
         tripId = getIntent().getStringExtra("tripId");

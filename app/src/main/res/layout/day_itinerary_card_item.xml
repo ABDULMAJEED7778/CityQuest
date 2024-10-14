@@ -34,7 +34,7 @@
                 android:padding="0dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/right_arrow_icon_vector"
-                android:tint="@color/primary_color" />
+                app:tint="@color/primary_color" />
 
             <!-- Day Name -->
             <TextView

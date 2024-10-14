@@ -104,22 +104,42 @@ public class FirestoreTripUploader {
     private void storeItinerary(String tripId) {
         List<TripDay> itinerary = new ArrayList<>();
 
-        // Example: Adding a basic itinerary for demonstration purposes
+        // Example: Adding an itinerary with five places each day
         itinerary.add(new TripDay(1, Arrays.asList(
-                new ItineraryPlace("Gateway of India", "https://example.com/gateway_of_india.jpg", "An iconic arch monument in Mumbai."),
-                new ItineraryPlace("Marine Drive", "https://example.com/marine_drive.jpg", "A famous promenade along the coast.")
+                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai."),
+                new ItineraryPlace("Mahatma Gandhi Park", "ChIJUXbUGHsWrjsRmUwSArERj1E", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A famous promenade along the coast."),
+                new ItineraryPlace("Lalbagh", "ChIJHdPykcEVrjsRIr4v35kLEY4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "Ancient rock-cut temples on an island.")
+//                new ItineraryPlace("Shri Gavi", "ChIJh6gk5PUVrjsRT9dhFc5-nrI", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A vibrant street market."),
+//                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai.")
+
         )));
         itinerary.add(new TripDay(2, Arrays.asList(
-                new ItineraryPlace("Elephanta Caves", "https://example.com/elephanta_caves.jpg", "Ancient rock-cut temples on an island."),
-                new ItineraryPlace("Colaba Causeway", "https://example.com/colaba_causeway.jpg", "A vibrant street market.")
+
+                new ItineraryPlace("Lalbagh", "ChIJHdPykcEVrjsRIr4v35kLEY4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "Ancient rock-cut temples on an island."),
+                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai."),
+                new ItineraryPlace("Mahatma Gandhi Park", "ChIJUXbUGHsWrjsRmUwSArERj1E", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A famous promenade along the coast.")
+//                new ItineraryPlace("Shri Gavi", "ChIJh6gk5PUVrjsRT9dhFc5-nrI", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A vibrant street market."),
+//                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai.")
+
         )));
+        itinerary.add(new TripDay(3, Arrays.asList(
+                new ItineraryPlace("Mahatma Gandhi Park", "ChIJUXbUGHsWrjsRmUwSArERj1E", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A famous promenade along the coast."),
+                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai."),
+
+                new ItineraryPlace("Lalbagh", "ChIJHdPykcEVrjsRIr4v35kLEY4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "Ancient rock-cut temples on an island.")
+//                new ItineraryPlace("Shri Gavi", "ChIJh6gk5PUVrjsRT9dhFc5-nrI", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "A vibrant street market."),
+//                new ItineraryPlace("Bengaluru Palace", "ChIJN1ZKKUkWrjsRzxIVM363-LE", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "An iconic arch monument in Mumbai.")
+
+        )));
+
+
 
         // Store each day in the itinerary collection
         for (TripDay day : itinerary) {
             db.collection("readyTrips").document(tripId)
-                    .collection("itinerary").document(day.getDayNumber()+"").set(day)
-                    .addOnSuccessListener(aVoid -> Log.e("tripadd","Day itinerary added for " + tripId + " - " + day.getDayNumber()))
-                    .addOnFailureListener(e -> Log.e("tripadd","Error adding itinerary: " + e.getMessage()));
+                    .collection("itinerary").document(day.getDayNumber() + "").set(day)
+                    .addOnSuccessListener(aVoid -> Log.e("tripadd", "Day itinerary added for " + tripId + " - " + day.getDayNumber()))
+                    .addOnFailureListener(e -> Log.e("tripadd", "Error adding itinerary: " + e.getMessage()));
         }
     }
 

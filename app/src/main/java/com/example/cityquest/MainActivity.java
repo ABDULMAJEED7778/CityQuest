@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cityquest.model.LocationViewModel;
+import com.example.cityquest.model.TravelInfo;
+import com.example.cityquest.utils.GoogleMapsAPIsUtils;
 import com.example.cityquest.utils.LocationPermissionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private boolean locationPermissionGranted;
     LocationViewModel locationViewModel;
+    private GoogleMapsAPIsUtils googleMapsAPIsUtils;
 
 
     @Override
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
-        String selectedCity =  getIntent().getStringExtra("selected_city") != null ? getIntent().getStringExtra("selected_city") : "city not selected";
+        String selectedCity = getIntent().getStringExtra("selected_city") != null ? getIntent().getStringExtra("selected_city") : "city not selected";
 
 
         // Request location permission
@@ -93,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_explore);
         }
-    }
 
+
+    }
 
 
 
@@ -144,5 +148,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 }

@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
 import com.example.cityquest.model.ItineraryPlace;
+import com.example.cityquest.model.TravelInfo;
 import com.example.cityquest.model.TripDay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter.DaysViewHolder>{
@@ -28,11 +30,18 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
     private Context context;
     private List<TripDay> days;
     private List<Boolean> expandedStates; // To track expanded/collapsed states for each day
+    private String currentTravelMode; // To track the current travel mode
+   // Shared cache across all PlacesAdapters
+
 
 
     public DaysDetailsAdapter (Context context, List<TripDay> days) {
         this.context = context;
         this.days = days;
+
+
+
+
 
         // Initialize expanded state to false for all days
         this.expandedStates = new ArrayList<>();
@@ -55,6 +64,7 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
 
         // Set up the PlacesAdapter for the nested RecyclerView
         PlacesAdapter placesAdapter = new PlacesAdapter(context, day.getPlaces());
+
         holder.placesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.placesRecyclerView.setAdapter(placesAdapter);
 
@@ -122,17 +132,30 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
     }
 
     public void updateDays(List<TripDay> newDays) {
-        // Update the current list of days
-        this.days = newDays;
-
-        // Reset the expanded states (if you want them to collapse after update)
-        expandedStates.clear();
-        for (int i = 0; i < newDays.size(); i++) {
-            expandedStates.add(false);
+        // Check if newDays is not the same as the current list (optional)
+        if (newDays == null || newDays.isEmpty()) {
+            return; // No need to update if the new list is empty or null
         }
 
-        // Notify the adapter that the data has changed
-        notifyDataSetChanged();
+        // Optionally, you could compare newDays with the current list (days)
+        // If they are the same, return early to avoid unnecessary updates
+        if (this.days.equals(newDays)) {
+            return; // No changes, so no need to update
+        }
+
+        // Replace the current list of days with the new list
+        this.days.clear();
+        this.days.addAll(newDays);
+
+        // Reset the expanded states if needed
+        expandedStates.clear();
+        for (int i = 0; i < newDays.size(); i++) {
+            expandedStates.add(false); // Assuming you want them collapsed after the update
+        }
+
+        // Instead of notifyDataSetChanged, use more specific notifications
+        notifyItemRangeChanged(0, newDays.size());  // Notify that the data has been updated
     }
+
 
 }

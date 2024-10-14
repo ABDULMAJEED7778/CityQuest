@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cityquest.adapter.DaysDetailsAdapter;
 import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ItineraryPlace;
+import com.example.cityquest.model.TravelInfo;
 import com.example.cityquest.model.TripDay;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,6 +38,7 @@ public class ItineraryFragment extends Fragment {
     private String tripId;// Add tripId if you want to fetch data based on trip ID
 //    private ImageView commuteTypeBtn;
     private TabLayout dayTabLayout;
+
     private LinearLayoutManager layoutManager;
 
     public interface LoadCompleteListener {
@@ -46,6 +48,7 @@ public class ItineraryFragment extends Fragment {
 
     // Cache to store itinerary data for each day
     private HashMap<Integer, TripDay> dayItineraryCache = new HashMap<>();
+
     private int numberOfDays;
 
 
@@ -89,7 +92,8 @@ public class ItineraryFragment extends Fragment {
         dayTabLayout = view.findViewById(R.id.dayTabLayout);
 
         layoutManager = new LinearLayoutManager(getContext());
-        daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        daysRecyclerView.setLayoutManager(layoutManager);
+
 
         fetchTripDays(tripId);
 
@@ -116,6 +120,12 @@ public class ItineraryFragment extends Fragment {
 
     // Fetch trip days and their details from Firestore
     private void fetchTripDays(String tripId) {
+        if (!dayItineraryCache.isEmpty()) {  // Check if cache already has data
+            updateItinerarySection(new ArrayList<>(dayItineraryCache.values()));
+            setupDayTabs(new ArrayList<>(dayItineraryCache.values()));
+            return; // Exit to avoid unnecessary Firestore call
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("readyTrips").document(tripId).collection("itinerary")
                 .get()
@@ -129,15 +139,14 @@ public class ItineraryFragment extends Fragment {
                             dayItineraryCache.put(dayNumber, tripDay);
                             tripDays.add(tripDay);
                         }
-                        // Set the number of days based on the fetched data
                         numberOfDays = tripDays.size();
-
-                        updateItinerarySection(tripDays); // Update the RecyclerView with the days and their places
+                        updateItinerarySection(tripDays);
                         onDataLoaded();
                         setupDayTabs(tripDays);
                     }
                 });
     }
+
 
     private void setupDayTabs(List<TripDay> tripDays) {
         if (numberOfDays > 0) {
@@ -151,11 +160,9 @@ public class ItineraryFragment extends Fragment {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int dayNumber = tab.getPosition();
-                    // Use post to ensure that the UI is updated before attempting to scroll
-                    daysRecyclerView.post(() -> {
-                        // Scroll to the selected day in the RecyclerView
-                        daysRecyclerView.smoothScrollToPosition(dayNumber);
-                    });
+                    if (layoutManager.findFirstVisibleItemPosition() != dayNumber) {  // Only scroll if necessary
+                        daysRecyclerView.post(() -> daysRecyclerView.smoothScrollToPosition(dayNumber));
+                    }
                 }
 
                 @Override
