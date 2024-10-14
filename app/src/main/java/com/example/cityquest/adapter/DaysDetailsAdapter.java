@@ -2,12 +2,10 @@ package com.example.cityquest.adapter;
 
 import android.content.Context;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,33 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
-import com.example.cityquest.model.ItineraryPlace;
-import com.example.cityquest.model.TravelInfo;
 import com.example.cityquest.model.TripDay;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter.DaysViewHolder>{
+public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.DaysViewHolder> {
 
     private Context context;
     private List<TripDay> days;
-    private List<Boolean> expandedStates; // To track expanded/collapsed states for each day
-    private String currentTravelMode; // To track the current travel mode
-   // Shared cache across all PlacesAdapters
+    private List<Boolean> expandedStates; // Track expanded/collapsed states for each day
 
-
-
-    public DaysDetailsAdapter (Context context, List<TripDay> days) {
+    public DaysDetailsAdapter(Context context, List<TripDay> days) {
         this.context = context;
         this.days = days;
-
-
-
-
 
         // Initialize expanded state to false for all days
         this.expandedStates = new ArrayList<>();
@@ -64,7 +50,6 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
 
         // Set up the PlacesAdapter for the nested RecyclerView
         PlacesAdapter placesAdapter = new PlacesAdapter(context, day.getPlaces());
-
         holder.placesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         holder.placesRecyclerView.setAdapter(placesAdapter);
 
@@ -74,36 +59,36 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
 
         // Change the arrow direction based on the expanded state
         holder.toggleButton.setImageResource(isExpanded ? R.drawable.down_arrow_icon_vector : R.drawable.right_arrow_icon_vector);
-
         holder.editButton.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
-        // Handle the click on the toggle button
-        holder.dayNameLinearLayout.setOnClickListener(v -> {
-            boolean currentlyExpanded = expandedStates.get(position);
+        // Handle clicks to expand/collapse the card
+        holder.dayNameLinearLayout.setOnClickListener(v -> toggleDayExpansion(holder, position));
+        holder.toggleButton.setOnClickListener(v -> toggleDayExpansion(holder, position));
+    }
 
-            // Toggle the expanded state
-            expandedStates.set(position, !currentlyExpanded);
+    // Toggle the expansion of a specific day card
+    private void toggleDayExpansion(DaysViewHolder holder, int position) {
+        boolean currentlyExpanded = expandedStates.get(position);
 
-            // Animate the layout changes
-            TransitionManager.beginDelayedTransition((ViewGroup) holder.itemView);
+        // Toggle the expanded state
+        expandedStates.set(position, !currentlyExpanded);
 
-            // Notify the adapter to refresh the item (to rebind and apply changes)
-            notifyItemChanged(position);
-        });
+        // Animate the layout changes
+        TransitionManager.beginDelayedTransition((ViewGroup) holder.itemView);
 
-        // Handle the click on the toggle button
-        holder.toggleButton.setOnClickListener(v -> {
-            boolean currentlyExpanded = expandedStates.get(position);
+        // Notify the adapter to refresh the item
+        notifyItemChanged(position);
+    }
 
-            // Toggle the expanded state
-            expandedStates.set(position, !currentlyExpanded);
+    // Method to programmatically expand a specific day (called when a tab is selected)
+    public void expandDay(int dayPosition) {
+        // Collapse all other days
+        for (int i = 0; i < expandedStates.size(); i++) {
+            expandedStates.set(i, i == dayPosition); // Only expand the selected day
+        }
 
-            // Animate the layout changes
-            TransitionManager.beginDelayedTransition((ViewGroup) holder.itemView);
-
-            // Notify the adapter to refresh the item (to rebind and apply changes)
-            notifyItemChanged(position);
-        });
+        // Notify the adapter to update all items
+        notifyDataSetChanged();
     }
 
     @Override
@@ -119,43 +104,27 @@ public class DaysDetailsAdapter extends  RecyclerView.Adapter<DaysDetailsAdapter
         LinearLayout dayNameLinearLayout;
         ImageButton editButton;
 
-        public DaysViewHolder (@NonNull View itemView) {
+        public DaysViewHolder(@NonNull View itemView) {
             super(itemView);
             dayNumber = itemView.findViewById(R.id.day_name);
             placesRecyclerView = itemView.findViewById(R.id.places_recycler_view);
             toggleButton = itemView.findViewById(R.id.toggle_button);
             dayNameLinearLayout = itemView.findViewById(R.id.day_name_linear_layout);
             editButton = itemView.findViewById(R.id.itinerary_edit_btn);
-
-
         }
     }
 
     public void updateDays(List<TripDay> newDays) {
-        // Check if newDays is not the same as the current list (optional)
-        if (newDays == null || newDays.isEmpty()) {
-            return; // No need to update if the new list is empty or null
-        }
+        // Update the current list of days
+        this.days = newDays;
 
-        // Optionally, you could compare newDays with the current list (days)
-        // If they are the same, return early to avoid unnecessary updates
-        if (this.days.equals(newDays)) {
-            return; // No changes, so no need to update
-        }
-
-        // Replace the current list of days with the new list
-        this.days.clear();
-        this.days.addAll(newDays);
-
-        // Reset the expanded states if needed
+        // Reset the expanded states
         expandedStates.clear();
         for (int i = 0; i < newDays.size(); i++) {
-            expandedStates.add(false); // Assuming you want them collapsed after the update
+            expandedStates.add(false);
         }
 
-        // Instead of notifyDataSetChanged, use more specific notifications
-        notifyItemRangeChanged(0, newDays.size());  // Notify that the data has been updated
+        // Notify the adapter that the data has changed
+        notifyDataSetChanged();
     }
-
-
 }

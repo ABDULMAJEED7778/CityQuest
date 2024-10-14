@@ -9,13 +9,13 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">14sp</item>
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-            <!-- Customize your theme here -->
-            <item name="android:statusBarColor">@color/primary_color</item>
-            <!-- To set the color -->
-            <item name="android:windowLightStatusBar">false</item>
-            <!-- true if you want dark status bar icons (for light backgrounds) -->
-    </style>
+<!--    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">-->
+<!--            &lt;!&ndash; Customize your theme here &ndash;&gt;-->
+<!--            <item name="android:statusBarColor">@color/primary_color</item>-->
+<!--            &lt;!&ndash; To set the color &ndash;&gt;-->
+<!--            <item name="android:windowLightStatusBar">false</item>-->
+<!--            &lt;!&ndash; true if you want dark status bar icons (for light backgrounds) &ndash;&gt;-->
+<!--    </style>-->
 
     <style name="InterestsPage" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here -->
@@ -26,6 +26,12 @@
         <item name="colorOnSecondary">@color/background_color</item>
         <!-- Add other theme attributes as needed -->
     </style>
+
+    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
 
     <style name="CustomChipTextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/primary_color</item>

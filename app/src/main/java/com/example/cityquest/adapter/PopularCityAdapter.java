@@ -26,6 +26,11 @@ public class PopularCityAdapter extends RecyclerView.Adapter<PopularCityAdapter.
         this.cityList = cityList;
     }
 
+    public void updateCityList(List<City> newCities) {
+        this.cityList = newCities;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public CityViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -62,13 +62,12 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
         ItineraryPlace place = places.get(position);
         holder.placeName.setText(place.getPlaceName());
         holder.placeOverview.setText(place.getOverview());
-        holder.placeNumber.setText(String.valueOf(position + 1));
+        int placeNo = (int) (position + 1);
+        holder.placeNumber.setText(placeNo+"");
 
         // Hide commute info for the last item or when only one place is present
         holder.commuteInfoLayout.setVisibility((position == (places.size() - 1) || places.size() == 1) ? View.GONE : View.VISIBLE);
 
-        // Load the image using Glide
-        Glide.with(context).load(place.getPhotoUrl()).placeholder(R.drawable.bangalore).into(holder.placeImage);
 
         // Commute button click listener for mode change
         holder.commuteTypeBtn.setOnClickListener(v -> showCommuteOptionsMenu(holder));

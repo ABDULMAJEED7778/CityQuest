@@ -12,7 +12,6 @@ import android.animation.ObjectAnimator;
 import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ReadyTrips;
 import com.example.cityquest.model.ItineraryPlace;
-import com.example.cityquest.model.TravelInfo;
 import com.example.cityquest.model.TripDay;
 import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
@@ -40,6 +39,8 @@ import java.util.List;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -49,7 +50,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
-    private NestedScrollView scrollView;
+    private NonScrollableScrollView scrollView;
     private TabLayout detailsTabLayout;
     private TextView overviewSection;
     private LinearLayout exploreSection;
@@ -65,7 +66,6 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private FrameLayout itineraryFragmentContainer;
     private int numberOfDays;
     private String tripId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +252,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
         numberOfDays = (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
         // Calculate the number of days between the start and end date
-        noOfDays.setText(String.format("%d Days", numberOfDays));
+        noOfDays.setText(String.format("%d \nDays", numberOfDays));
     }
 
     // Fetch all trip days and their details from Firestore
@@ -336,10 +336,10 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 ////        }
 //    }
 
-    private void smoothScrollToView(NestedScrollView scrollView, View view) {
+    private void smoothScrollToView(NonScrollableScrollView scrollView, View view) {
         int y = view.getTop(); // Get the top position of the view
         ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
-        animator.setDuration(1000); // Adjust the duration for smoother scrolling
+        animator.setDuration(500); // Adjust the duration for smoother scrolling
         animator.start();    }
 
 
