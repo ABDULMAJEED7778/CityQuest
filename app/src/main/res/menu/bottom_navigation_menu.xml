@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/nav_explore"
-        android:icon="@drawable/explore_page"
-        android:title="Explore" />
+        android:icon="@drawable/explore_icon"
+        android:title="Explore"
+        app:showAsAction="always"
+        app:iconTint="@color/primary_color" />
+
     <item
         android:id="@+id/nav_itinerary"
         android:icon="@drawable/itinerary_page_inactive"
-        android:title="Itinerary" />
+        android:title="Itinerary"
+        app:showAsAction="always"
+        app:iconTint="@color/primary_color" />
+
     <item
         android:id="@+id/nav_community"
-        android:icon="@drawable/community"
-        android:title="Community" />
+        android:icon="@drawable/groups_icon"
+        android:title="Community"
+        app:showAsAction="always"
+        app:iconTint="@color/primary_color" />
+
     <item
         android:id="@+id/nav_saved"
         android:icon="@drawable/saved_page"
-        android:title="Saved" />
+        android:title="My Trips"
+        app:showAsAction="always"
+        app:iconTint="@color/primary_color" />
 </menu>

@@ -1,57 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        android:layout_height="80dp">
+    android:layout_height="wrap_content"
+    android:paddingVertical="16dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/bangalore"
-        android:scaleType="centerCrop"
-        android:background="@drawable/circled_image"
-        android:clipToOutline="true" />
+            android:layout_height="60dp"
+            android:background="@drawable/circled_image"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bangalore" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
-            android:layout_height="match_parent">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/search_item_cityName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="6dp"
+                android:text="Bangalore"
+                android:textColor="@color/black"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                android:text="Bangalore"/>
+                android:textStyle="bold" />
 
-                <TextView
+            <TextView
 
-                    android:layout_weight="1"
                 android:id="@+id/search_item_countryName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
-                android:text="India"/>
+                android:layout_weight="1"
+                android:text="India" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
 
-                android:background="@drawable/rounded_corner_line_seperator"
-                 />
+                android:background="@drawable/rounded_corner_line_seperator" />
 
         </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -6,12 +6,19 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +27,7 @@ import com.example.cityquest.utils.LocationPermissionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
@@ -33,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private boolean locationPermissionGranted;
     LocationViewModel locationViewModel;
+    private BottomNavigationView bottomNavigationView;
 
 
     @Override
@@ -40,11 +49,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (view, insets) -> {
+            Insets systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets gestureInsets = insets.getInsets(WindowInsetsCompat.Type.systemGestures());
+
+            int defaultNavHeight = getResources().getDimensionPixelSize(R.dimen.bottom_nav_height);
+            ViewGroup.LayoutParams layoutParams = bottomNavigationView.getLayoutParams();
+
+
+            if (systemBarsInsets.bottom > 0 && gestureInsets.bottom > 0) {
+                // 3-button navigation mode or gesture mode with bottom bar
+                layoutParams.height = defaultNavHeight + systemBarsInsets.bottom;
+            } else {
+                // Gesture navigation without bottom bar
+                layoutParams.height = defaultNavHeight;
+            }
+
+            bottomNavigationView.setLayoutParams(layoutParams);
+
+            return insets;
+        });
+
         locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
 
         String selectedCity =  getIntent().getStringExtra("selected_city") != null ? getIntent().getStringExtra("selected_city") : "city not selected";
@@ -64,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
                 case R.id.nav_explore:

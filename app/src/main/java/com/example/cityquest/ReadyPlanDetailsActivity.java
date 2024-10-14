@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -66,6 +67,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private FrameLayout itineraryFragmentContainer;
     private int numberOfDays;
     private String tripId;
+    private Button addToMyTripsBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,11 +91,16 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         tripType = findViewById(R.id.trip_type);
         companion = findViewById(R.id.companion_type);
         itineraryFragmentContainer = findViewById(R.id.itinerary_fragment_container);
+        addToMyTripsBtn = findViewById(R.id.add_to_my_trips_btn);
 
         scrollView.setScrollable(true);
 
         // Get trip ID from intent
         tripId = getIntent().getStringExtra("tripId");
+
+        if(addToMyTripsBtn.getVisibility() == View.GONE) {
+            addToMyTripsBtn.setVisibility(View.VISIBLE);
+        }
 
         // Fetch trip details from Firestore
         fetchTripDetails(tripId);
@@ -189,6 +196,17 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
               }
           }
         );
+
+        addToMyTripsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddedToMyTripsFragment addedToMyTripsFragment = new AddedToMyTripsFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.ready_plan_page_main_layout, addedToMyTripsFragment);
+                transaction.commit();
+                addToMyTripsBtn.setVisibility(View.GONE);
+            }
+        });
     }
 
     // Function to load Itinerary Fragment

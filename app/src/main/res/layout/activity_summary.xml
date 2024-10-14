@@ -312,7 +312,7 @@
 
         <Button
             android:id="@+id/backBtn_sum"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/secondaryButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_gravity="start"
@@ -322,10 +322,11 @@
             android:elevation="0dp"
             android:fontFamily="@font/barlowsemicondensed_bold"
             android:paddingStart="8dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="16dp"
-            android:text="back"
+            android:text="Back"
             android:textColor="@color/background_color"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="wrap_content"

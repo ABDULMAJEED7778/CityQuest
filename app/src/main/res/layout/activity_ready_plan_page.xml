@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ready_plan_page_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color">
@@ -433,10 +434,11 @@
                                         android:layout_marginBottom="8dp"
                                         android:backgroundTint="@color/primary_color_light"
                                         android:fontFamily="@font/poppins_light"
-                                        android:text="Add to Itinerary"
-                                        android:textColor="@color/primary_color"
+                                        android:paddingLeft="16dp"
+                                        android:paddingRight="16dp"
 
-                                        />
+                                        android:text="Add to Itinerary"
+                                        android:textColor="@color/primary_color" />
 
                                     <!-- Button to Open in Google Maps -->
                                     <Button
@@ -521,10 +523,11 @@
                                         android:layout_marginBottom="8dp"
                                         android:backgroundTint="@color/primary_color_light"
                                         android:fontFamily="@font/poppins_light"
-                                        android:text="Add to Itinerary"
-                                        android:textColor="@color/primary_color"
+                                        android:paddingLeft="16dp"
+                                        android:paddingRight="16dp"
 
-                                        />
+                                        android:text="Add to Itinerary"
+                                        android:textColor="@color/primary_color" />
 
                                     <!-- Button to Open in Google Maps -->
                                     <Button
@@ -610,10 +613,11 @@
                                         android:layout_marginBottom="8dp"
                                         android:backgroundTint="@color/primary_color_light"
                                         android:fontFamily="@font/poppins_light"
-                                        android:text="Add to Itinerary"
-                                        android:textColor="@color/primary_color"
+                                        android:paddingLeft="16dp"
+                                        android:paddingRight="16dp"
 
-                                        />
+                                        android:text="Add to Itinerary"
+                                        android:textColor="@color/primary_color" />
 
                                     <!-- Button to Open in Google Maps -->
                                     <Button
@@ -699,10 +703,11 @@
                                         android:layout_marginBottom="8dp"
                                         android:backgroundTint="@color/primary_color_light"
                                         android:fontFamily="@font/poppins_light"
-                                        android:text="Add to Itinerary"
-                                        android:textColor="@color/primary_color"
+                                        android:paddingLeft="16dp"
+                                        android:paddingRight="16dp"
 
-                                        />
+                                        android:text="Add to Itinerary"
+                                        android:textColor="@color/primary_color" />
 
                                     <!-- Button to Open in Google Maps -->
                                     <Button
@@ -729,15 +734,16 @@
     </com.example.cityquest.utils.NonScrollableScrollView>
 
     <Button
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_gravity="bottom"
-    android:text="ADD TO MY TRIPS"
-    android:fontFamily="@font/barlowsemicondensed_bold"
-    android:background="@drawable/add_to_my_trip_button"
-    android:textColor="@color/background_color"
-    android:textSize="18sp"
-        />
+        android:id="@+id/add_to_my_trips_btn"
+        style="@style/ThirdButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/add_to_my_trip_button"
+        android:fontFamily="@font/barlowsemicondensed_bold"
+        android:text="ADD TO MY TRIPS"
+        android:textColor="@color/background_color"
+        android:textSize="18sp" />
 
 </FrameLayout>
 

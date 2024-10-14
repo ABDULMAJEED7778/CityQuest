@@ -21,11 +21,10 @@
 
     <TextView
         android:id="@+id/what_is_txt"
-        android:layout_below="@id/logo_dest_ll"
+        android:layout_below="@id/App_logo_destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="What's your"
-
         android:layout_marginTop="32dp"
         android:textSize="32sp"
         android:textStyle="bold"

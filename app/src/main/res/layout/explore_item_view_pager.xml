@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp">
+    android:layout_height="360dp">
 
     <!-- Background ImageView for the city photo -->
     <FrameLayout
@@ -63,30 +63,6 @@
     </LinearLayout>
 
     <!-- Button to explore city -->
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
-        android:background="@drawable/explore_city_btn_bacckground"
-        android:padding="8dp">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/explore_icon" />
-
-        <TextView
-            android:id="@+id/exploreCityTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Explore City"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
 
 
 </RelativeLayout>
