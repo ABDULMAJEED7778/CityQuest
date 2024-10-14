@@ -7,7 +7,7 @@
     <style name="details_tap_ready_plan_page" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
             <!-- Customize your theme here -->
@@ -15,6 +15,48 @@
             <!-- To set the color -->
             <item name="android:windowLightStatusBar">false</item>
             <!-- true if you want dark status bar icons (for light backgrounds) -->
+    </style>
+
+    <style name="InterestsPage" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color_light</item>
+        <item name="colorOnPrimary">@color/background_color</item>
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorOnSecondary">@color/background_color</item>
+        <!-- Add other theme attributes as needed -->
+    </style>
+
+    <style name="CustomChipTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="MyBottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="backgroundTint">@color/background_color</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
+    </style>
+
+    <style name="progressCircleStyle" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <!-- Primary theme colors for M2 -->
+        <item name="trackThickness">5dp</item>
+        <item name="indicatorSize">50dp</item>
+        <item name="trackColor">@color/primary_color_light</item>
+        <item name="indicatorColor">@color/primary_color</item>
+        <item name="trackCornerRadius">4dp</item>
+
+
+
     </style>
 
 </resources>

@@ -142,7 +142,7 @@
         android:id="@+id/recyclerView_search_suggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginVertical="16dp"
         android:background="@drawable/search_suggestion_background"
         android:elevation="4dp"
         android:visibility="gone"

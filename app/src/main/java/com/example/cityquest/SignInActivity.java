@@ -1,6 +1,7 @@
 package com.example.cityquest;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,9 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.cityquest.utils.FirestoreCityUploader;
 import com.example.cityquest.utils.FirestoreTripUploader;
@@ -61,11 +60,8 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sign_in);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -92,7 +88,7 @@ public class SignInActivity extends AppCompatActivity {
         exploreBtn = findViewById(R.id.explore_around_btn);
         upload = findViewById(R.id.upload_to_firestore_btn);
 
-        signupTv = findViewById(R.id.signUpTXT);
+        signupTv = findViewById(R.id.signInTXT);
 
         upload.setOnClickListener(new View.OnClickListener() {
 

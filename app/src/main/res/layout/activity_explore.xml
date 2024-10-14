@@ -8,61 +8,75 @@
     android:fillViewport="true"
     android:background="@color/background_color">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-       >
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background_color">
+
+<!--            <com.google.android.material.progressindicator.CircularProgressIndicator-->
+<!--                android:id="@+id/progress_circular"-->
+<!--                android:indeterminate="true"-->
+<!--                style="@style/progressCircleStyle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:progress="@integer/google_play_services_version"-->
+<!--                />-->
+<!--            -->
+<!--            <VideoView-->
+<!--                android:id="@+id/loading_anim_explore_page"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:tint="@color/background_color"-->
+<!--                android:layout_gravity="center" />-->
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/loading_anim_explore_page"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/paper_plane_animation_60f" />
+
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/frameLayout_Top"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"> <!-- Align to the top of the parent -->
-
-
-
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_CitiesPhotos_Explore"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-
-
                 />
-
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="@drawable/circled_image"
-                android:layout_marginRight="16dp"
-
-                android:layout_marginTop="18dp"
-                android:src="@drawable/bell_icon"
-                android:layout_gravity="end"
-                />
-
 
 
             <LinearLayout
                 android:id="@+id/your_city_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="16dp"
-
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="start"
                 >
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="28dp"
+                    android:contentDescription="TODO"
                     app:tint="@color/white"
                     android:src="@drawable/ic_location_pin"
-                    android:layout_marginRight="6dp"
+                    android:layout_marginEnd="6dp"
                     />
 
                 <LinearLayout
@@ -73,7 +87,7 @@
                         android:textColor="@android:color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="9dp"
+                        android:textSize="11sp"
                         android:text="Your City"/>
                     <TextView
                         android:textColor="@android:color/white"
@@ -83,6 +97,21 @@
                         android:text="Bangaluru"/>
 
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/circled_image"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="18dp"
+                    android:src="@drawable/bell_icon"
+                    android:layout_gravity="end"
+                    />
 
             </LinearLayout>
 
@@ -97,39 +126,33 @@
                 android:gravity="center_vertical|start"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="76dp"
                 android:paddingStart="20dp"
+                android:drawablePadding="16dp"
                 android:background="@drawable/semi_transparent_layout"
                 android:drawableStart="@drawable/search_icon"
                 android:drawableTint="@color/white"
-
-
-
+                android:fontFamily="@font/poppins_regular"
                 android:text="Find amazing road trip destinations..."
-
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"/>
-
-
-
-
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                />
 
         </FrameLayout>
 
         <RelativeLayout
+            android:id="@+id/explore_page_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:layout_below="@id/frameLayout_Top">
-
-
+            android:layout_below="@id/frameLayout_Top"
+            >
             <LinearLayout
                 android:id="@+id/continue_planning_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,23 +173,29 @@
                         android:text="See all"
                         android:textStyle="bold"
                         android:textSize="16dp"
+                        android:fontFamily="@font/poppins_regular"
                         android:layout_gravity="end"
-                        android:textColor="@color/secondary_color"/>
+                        android:textColor="@color/secondary_color_dark"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    >
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_corners_for_image"
+                        >
                     <ImageView
                         android:id="@+id/place_image_adapter"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_gravity="end"
-                        android:background="@drawable/rounded_corners_for_image"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/bangalore" />
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -179,6 +208,7 @@
                             android:id="@+id/continue_tripName"
                             android:layout_width="wrap_content"
                             android:layout_marginTop="16dp"
+                            android:fontFamily="@font/poppins_regular"
                             android:layout_height="wrap_content"
                             android:text="Trip to Bangalore"
                             android:textStyle="bold"
@@ -193,7 +223,7 @@
                             <TextView
                                 android:id="@+id/continue_tripDate"
                                 android:layout_width="wrap_content"
-
+                                android:fontFamily="@font/poppins_regular"
                                 android:layout_height="wrap_content"
                                 android:text="Jul 26-Aug 1 * "
                                 android:textStyle="bold"
@@ -202,23 +232,17 @@
                             <TextView
                                 android:id="@+id/continue_tripPlaces_number"
                                 android:layout_width="wrap_content"
-
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+
                                 android:text="6 places"
                                 android:textStyle="bold"
                                 android:textSize="12dp"
                                 android:textColor="@color/black"/>
 
-
-
-
                         </LinearLayout>
-
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <!-- ScrollView content for cards starts here -->
@@ -227,19 +251,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-
                 android:layout_marginTop="16dp">
 
                 <!-- Explore Scroll Cards Header -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="Trending with travelers"
                         android:textAllCaps="false"
@@ -251,8 +276,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@drawable/fade_out_line"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp" />
+                        />
                 </LinearLayout>
 
                 <!-- Horizontal Scroll for Cards -->
@@ -270,12 +294,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp">
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:fontFamily="@font/poppins_medium"
                         android:text="Weekend Gateway"
                         android:textAllCaps="false"
@@ -287,8 +311,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@drawable/fade_out_line"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp" />
+                        />
                 </LinearLayout>
 
                 <!-- Horizontal Scroll for One Day Outings -->
@@ -303,7 +326,6 @@
                     />
             </LinearLayout>
         </RelativeLayout>
-
 </RelativeLayout>
 
 </ScrollView>
