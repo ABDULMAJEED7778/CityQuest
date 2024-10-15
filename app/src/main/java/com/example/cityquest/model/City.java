@@ -4,6 +4,7 @@ public class City {
     private String CityName;
 
     private String CountryName;
+    private String cityType;
     private String cityId;
 
 
@@ -16,9 +17,10 @@ public class City {
     public City() {
     }
 
-    public City(String cityName, String countryName, String cityId, String cityImageUrl, String cityRating, String cityDescription) {
+    public City(String cityName, String countryName, String cityType, String cityId, String cityImageUrl, String cityRating, String cityDescription) {
         CityName = cityName;
         CountryName = countryName;
+        this.cityType = cityType;
         this.cityId = cityId;
         CityImageUrl = cityImageUrl;
         CityRating = cityRating;
@@ -39,6 +41,14 @@ public class City {
 
     public void setCountryName(String countryName) {
         CountryName = countryName;
+    }
+
+    public String getCityType() {
+        return cityType;
+    }
+
+    public void setCityType(String cityType) {
+        this.cityType = cityType;
     }
 
     public String getCityId() {
@@ -71,6 +81,14 @@ public class City {
 
     public void setCityDescription(String cityDescription) {
         CityDescription = cityDescription;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "CityName='" + CityName + '\'' +
+                ", cityType='" + cityType + '\'' +
+                '}';
     }
 }
 

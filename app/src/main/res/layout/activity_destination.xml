@@ -178,14 +178,65 @@
             android:background="@drawable/fade_right_to_left_line" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFilters"
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        android:scrollbars="horizontal" />
+        android:padding="8dp"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        >
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_historical"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:padding="8dp"
+
+            android:text="Historical"
+            android:textSize="12sp"
+            app:chipMinTouchTargetSize="48dp"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_Cultural"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:text="Cultural"
+            android:textSize="12dp"
+            app:chipMinTouchTargetSize="48dp"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_Modern"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:text="Modern"
+            android:textSize="12dp"
+            app:chipMinTouchTargetSize="48dp"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_coastal"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+
+            android:padding="8dp"
+            android:text="Coastal"
+            android:textSize="12dp"
+
+
+            app:chipMinTouchTargetSize="48dp"
+            app:ensureMinTouchTargetSize="true" />
+
+    </com.google.android.material.chip.ChipGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_city_popular"

@@ -64,7 +64,7 @@
 //
 //        placesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 //
-//        fetchTripDays(tripId);
+//        dfetchTripDays(tripId);
 //
 //        // Set up the commute type button click listener
 //        commuteTypeBtn.setOnClickListener(v -> showCommutePopup(v));

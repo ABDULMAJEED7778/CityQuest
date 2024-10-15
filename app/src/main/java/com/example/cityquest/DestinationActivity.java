@@ -42,6 +42,8 @@ import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -68,7 +70,9 @@ public class DestinationActivity extends AppCompatActivity {
 
     private PopularCityAdapter popularCityAdapter;
     private PlacesClient placesClient;
-    private List<City> cities;
+    public List<City> cities;
+    private ChipGroup chipGroup;
+    private List<String> selectedFilters = new ArrayList<>();
 
     private PlaceAutocompleteAdapter suggestionAdapter;
 
@@ -111,6 +115,24 @@ public class DestinationActivity extends AppCompatActivity {
         });
 
 
+
+        RecyclerView recyclerViewCityPopular = findViewById(R.id.recyclerView_city_popular);
+
+
+        cities = new ArrayList<>();
+        popularCityAdapter = new PopularCityAdapter(cities);
+        Log.e("gjgj","htdgdht");
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewCityPopular.setLayoutManager(layoutManager);
+        recyclerViewCityPopular.setAdapter(popularCityAdapter);
+
+
+
+
+        fetchCitiesFromFirestore();
+
+
         searchET = findViewById(R.id.search_input);
 
         mapBtn = findViewById(R.id.mapBtn_dest);
@@ -118,6 +140,25 @@ public class DestinationActivity extends AppCompatActivity {
         skipBtn = findViewById(R.id.skipBtn_dest);
         logOutBtn = findViewById(R.id.logoutBtn_dest);
 //        usernameTV = findViewById(R.id.userName_Destination);
+
+        chipGroup = findViewById(R.id.chipGroup_filters);
+        Chip defaultChip = findViewById(R.id.chip_historical); // Replace with your desired default chip
+        defaultChip.setChecked(true);
+
+        // Set the listener for chip selection changes
+        chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
+            // Ensure at least one chip is selected
+            if (checkedIds.isEmpty()) {
+                // Recheck the default chip if all are unchecked
+                defaultChip.setChecked(true);
+                Toast.makeText(DestinationActivity.this, "At least one chip must be selected", Toast.LENGTH_SHORT).show();
+                return; // Return early if no chips are selected
+            }
+
+            // Handle the selected chips
+            filterCitiesByType(checkedIds);
+        });
+
 
 
 
@@ -158,34 +199,22 @@ public class DestinationActivity extends AppCompatActivity {
 
         // Initialize RecyclerViews
 
-        RecyclerView recyclerViewCityPopular = findViewById(R.id.recyclerView_city_popular);
 
-
-        cities = new ArrayList<>();
-        popularCityAdapter = new PopularCityAdapter(cities);
-        Log.e("gjgj","htdgdht");
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerViewCityPopular.setLayoutManager(layoutManager);
-        recyclerViewCityPopular.setAdapter(popularCityAdapter);
         // Fetch cities data from Firestore
-        fetchCitiesFromFirestore();
-
-//        cities.add(new City("Bangalore", "India", "1", "https://images.pexels.com/photos/3573385/pexels-photo-3573385.jpeg", "4.8", "A vibrant city known for its technology industry and parks."));
-//        cities.add(new City("Delhi", "India", "2", "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg", "4.5", "The capital city of India, known for its rich history and culture."));
-//        cities.add(new City("Mumbai", "India", "3", "https://images.pexels.com/photos/618079/pexels-photo-618079.jpeg", "4.7", "A bustling metropolis known for Bollywood and the Gateway of India."));
-//        cities.add(new City("Chennai", "India", "4", "https://images.pexels.com/photos/5062343/pexels-photo-5062343.jpeg", "4.6", "A coastal city famous for its cultural heritage and temples."));
 
 
-        List<Filter> filters = new ArrayList<>();
-        filters.add(new Filter("Historical", R.drawable.historical_icon));
-        filters.add(new Filter("Cultural", R.drawable.historical_icon));
-        filters.add(new Filter("Modern", R.drawable.historical_icon));
 
-        RecyclerView recyclerViewFilters = findViewById(R.id.recyclerViewFilters);
-        recyclerViewFilters.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        FilterAdapter adapter3 = new FilterAdapter(filters, this);
-        recyclerViewFilters.setAdapter(adapter3);
+
+
+//        List<Filter> filters = new ArrayList<>();
+//        filters.add(new Filter("Historical", R.drawable.historical_icon));
+//        filters.add(new Filter("Cultural", R.drawable.historical_icon));
+//        filters.add(new Filter("Modern", R.drawable.historical_icon));
+
+//        RecyclerView recyclerViewFilters = findViewById(R.id.recyclerViewFilters);
+//        recyclerViewFilters.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        FilterAdapter adapter3 = new FilterAdapter(filters, this);
+//        recyclerViewFilters.setAdapter(adapter3);
 
 
 
@@ -229,10 +258,12 @@ public class DestinationActivity extends AppCompatActivity {
     }
 
     private void fetchCitiesFromFirestore() {
+        Log.e("filter","fetch");
         FirebaseUtils.getCitiesCollection()
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        cities.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             City city = document.toObject(City.class);  // Convert document to City object
                             cities.add(city);
@@ -245,6 +276,7 @@ public class DestinationActivity extends AppCompatActivity {
 //                        cityPagerAdapter = new CityPagerAdapter(requireActivity(), cityList);
 //                        viewPager.setAdapter(cityPagerAdapter);
 
+                        filterCitiesByType(chipGroup.getCheckedChipIds());
                     } else {
                         Log.d("CityActivity", "Error getting documents: ", task.getException());
                     }
@@ -300,6 +332,54 @@ public class DestinationActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+private void filterCitiesByType(List<Integer> checkedIds) {
+    // Process the selected chip IDs
+    List<String> selectedTypes = new ArrayList<>();
+
+    for (int chipId : checkedIds) {
+        switch (chipId) {
+            case R.id.chip_historical:
+                selectedTypes.add("Historical");
+                break;
+            case R.id.chip_Cultural:
+                selectedTypes.add("Cultural");
+                break;
+            case R.id.chip_Modern:
+                selectedTypes.add("Modern");
+                break;
+            case R.id.chip_coastal:
+                selectedTypes.add("Coastal");
+                break;
+        }
+    }
+
+    // Fetch and filter cities based on the selected types
+    filterCities(selectedTypes);
+}
+
+
+private void filterCities(List<String> selectedType) {
+        // Create a new list for filtered cities
+    List<City> filteredCities = new ArrayList<>();
+        for (City city : cities) {
+            // Check if the city type matches any selected filter
+            if (selectedType.isEmpty() || selectedType.contains(city.getCityType())) {
+                filteredCities.add(city); // Add city to filtered list if it matches
+            }
+        }
+        Log.e("filter","filtered cities"+filteredCities.toString());
+        Log.e("filter","filtered cities"+filteredCities.size());
+
+        // Update the adapter with filtered cities
+    // Update the adapter with the filtered list
+    popularCityAdapter.updateCityList(filteredCities);
+    popularCityAdapter.notifyDataSetChanged();
+    }
+
 
 //    private void fetchPlaceDetails(String placeId) {
 //        List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
