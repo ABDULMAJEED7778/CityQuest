@@ -1,10 +1,15 @@
 package com.example.cityquest;
 
 
+import static android.view.Gravity.START;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
@@ -17,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+import androidx.core.view.MenuHost;
+import androidx.core.view.MenuProvider;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.WindowInsetsCompat;
@@ -45,6 +52,8 @@ public class TripsFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private Button locationCityName;
     private LinearLayout filtersLayout;
+    private MenuItem filterMenuItem;
+
 
 
     @Nullable
@@ -72,6 +81,7 @@ public class TripsFragment extends Fragment {
         adapter = new TripAdapter(getContext(),trips);
         recyclerView.setAdapter(adapter);
 
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -82,21 +92,36 @@ public class TripsFragment extends Fragment {
 
                 locationCityName.setAlpha(1 - progress);
                 filtersLayout.setAlpha(1 - progress);
+                locationCityName.setVisibility(View.GONE);
                 // Check if the toolbar is fully collapsed
+                if(scrollPercentage > 0.9) {
+                    if (filterMenuItem != null) {
+                        filterMenuItem.setVisible(true);
+                        requireActivity().invalidateOptionsMenu();
+                        Log.e("iugiug","jgkgkj");
+                    }
+                }
                 if (scrollPercentage > 0.8) {
                     // Fully collapsed - show the element
-                    locationCityName.setVisibility(View.GONE);
                     filtersLayout.setVisibility(View.GONE);
                 } else if (scrollPercentage < 0.2){
                     // Expanded or in transition - hide the element
-//                    locationCityName.setVisibility(View.VISIBLE);
-//                    filtersLayout.setVisibility(View.VISIBLE);
+                    // Expanded or in transition - hide the menu item
+                    if (filterMenuItem != null) {
+                        filterMenuItem.setVisible(false);
+                        requireActivity().invalidateOptionsMenu();
+                    }
+                    locationCityName.setVisibility(View.VISIBLE);
+                    filtersLayout.setVisibility(View.VISIBLE);
 
                 }
             }
         });
 
         fetchTripsFromFirestore(); // Call method to fetch trips
+
+
+
 
         return view;
     }
@@ -133,14 +158,19 @@ public class TripsFragment extends Fragment {
             @Override
             public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                 // Apply insets for status bar
-                int statusBarHeight = WindowInsetsCompat.toWindowInsetsCompat(insets).getInsets(WindowInsetsCompat.Type.statusBars()).top;
+                WindowInsetsCompat insetsCompat = WindowInsetsCompat.toWindowInsetsCompat(insets);
+                int statusBarHeight = insetsCompat.getInsets(WindowInsetsCompat.Type.statusBars()).top;
 
                 appBarLayout.setPadding(
                         0,
-                        statusBarHeight+4,
+                        statusBarHeight,
                         0,
                         0
                 );
+
+                // Adjust CollapsingToolbarLayout to handle insets without interfering with the title
+                collapsingToolbarLayout.setPadding(0, 1, 0, 0);
+                collapsingToolbarLayout.setMinimumHeight(statusBarHeight);
                                 // Don't consume the insets
                 return insets;
             }
@@ -149,6 +179,30 @@ public class TripsFragment extends Fragment {
         view.requestApplyInsets();
 
 
+        MenuHost menuHost = requireActivity();
+
+        menuHost.addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.tool_bar_trips_activity, menu); // Inflate the menu
+                filterMenuItem = menu.findItem(R.id.filter); // Reference to the "edit" menu item
+                filterMenuItem.setVisible(false); // Initially hide the menu item
+                Log.i("oflsjdflihlsad",filterMenuItem+"erewrf");
+            }
+
+            @Override
+            public void onPrepareMenu(@NonNull Menu menu) {
+                // If you need to update the menu dynamically before it's shown, you can do it here
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                // Handle menu item clicks here if needed
+                return false;
+            }
+        }, getViewLifecycleOwner());
 
     }
+
+
 }
