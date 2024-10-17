@@ -30,6 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.cityquest.adapter.TripAdapter;
 import com.example.cityquest.model.ReadyTrips;
 import com.google.android.material.appbar.AppBarLayout;
@@ -53,6 +54,7 @@ public class TripsFragment extends Fragment {
     private Button locationCityName;
     private LinearLayout filtersLayout;
     private MenuItem filterMenuItem;
+    private LottieAnimationView loadingAnim;
 
 
 
@@ -76,6 +78,8 @@ public class TripsFragment extends Fragment {
         appBarLayout = view.findViewById(R.id.appBarLayout);
         locationCityName = view.findViewById(R.id.location_city_name);
         filtersLayout = view.findViewById(R.id.filters_layout);
+        loadingAnim = view.findViewById(R.id.loading_anim_trips_page);
+
 
         trips = new ArrayList<>();
         adapter = new TripAdapter(getContext(),trips);
@@ -127,6 +131,8 @@ public class TripsFragment extends Fragment {
     }
 
     private void fetchTripsFromFirestore() {
+        recyclerView.setVisibility(View.GONE);
+        loadingAnim.setVisibility(View.VISIBLE);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("readyTrips") // Collection name in Firestore
                 .get()
@@ -142,6 +148,8 @@ public class TripsFragment extends Fragment {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }
                 });
+        loadingAnim.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

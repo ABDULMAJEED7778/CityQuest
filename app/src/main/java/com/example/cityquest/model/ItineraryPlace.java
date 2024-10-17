@@ -1,6 +1,9 @@
 package com.example.cityquest.model;
 
-public class ItineraryPlace {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ItineraryPlace implements Parcelable {
     private String placeName; // Name of the place
     private String placeId; // Unique identifier for the place
     private String photoUrl; // Photo URL of the place
@@ -15,6 +18,40 @@ public class ItineraryPlace {
         this.photoUrl = photoUrl;
         this.overview = overview;
     }
+
+    // Parcelable implementation
+    protected ItineraryPlace(Parcel in) {
+        placeName = in.readString();
+        placeId = in.readString();
+        photoUrl = in.readString();
+        overview = in.readString();
+    }
+
+    public static final Creator<ItineraryPlace> CREATOR = new Creator<ItineraryPlace>() {
+        @Override
+        public ItineraryPlace createFromParcel(Parcel in) {
+            return new ItineraryPlace(in);
+        }
+
+        @Override
+        public ItineraryPlace[] newArray(int size) {
+            return new ItineraryPlace[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(placeName);
+        parcel.writeString(placeId);
+        parcel.writeString(photoUrl);
+        parcel.writeString(overview);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
 
     public String getPlaceName() {
         return placeName;

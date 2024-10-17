@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.CityQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="materialButtonStyle">@style/primaryButtonStyle</item>
+        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
 
 
         <!-- Primary brand color. -->

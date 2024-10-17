@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ready_plan_page_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_color">
 
     <com.example.cityquest.utils.NonScrollableScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_columnWeight="0.4"
-        android:background="@color/background_color"
-        android:id="@+id/scrollview">
+        android:background="@color/background_color">
 
 
         <LinearLayout
@@ -23,30 +23,31 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="450dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/bangalore_image"
 
-                />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="450dp"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/bangalore_image"
 
-            <TextView
-                android:id="@+id/no_of_days"
-                android:layout_width="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/no_of_days_background"
-                android:alpha="0.9"
-                android:fontFamily="@font/poppins_semibold"
-                android:paddingVertical="10dp"
-                android:paddingHorizontal="16dp"
-                android:text="8 \nDays"
-                android:textAlignment="center"
-                android:textColor="@color/primary_color"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                    />
+
+                <TextView
+                    android:id="@+id/no_of_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:alpha="0.9"
+                    android:background="@drawable/no_of_days_background"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:text="8 \nDays"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
 
@@ -54,8 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/plan_name"
@@ -73,9 +73,9 @@
                     android:id="@+id/imageView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="36dp"
-                    app:srcCompat="@drawable/star"
-                    android:layout_gravity="center_vertical"/>
+                    app:srcCompat="@drawable/star" />
 
                 <TextView
                     android:id="@+id/plan_rating"
@@ -118,8 +118,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_gravity="start"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
@@ -127,8 +127,8 @@
                     android:id="@+id/imageView7"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:tint="@color/secondary_color"
-                    app:srcCompat="@drawable/sun" />
+                    app:srcCompat="@drawable/sun"
+                    app:tint="@color/secondary_color" />
 
                 <TextView
                     android:id="@+id/weather_condation"
@@ -306,8 +306,8 @@
             <FrameLayout
                 android:id="@+id/itinerary_fragment_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -367,8 +367,8 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="220dp"
-                            android:padding="2dp"
                             android:layout_margin="8dp"
+                            android:padding="2dp"
                             app:layout_columnWeight="1"
                             app:layout_rowWeight="1">
 
@@ -457,8 +457,8 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="220dp"
-                            android:padding="2dp"
                             android:layout_margin="8dp"
+                            android:padding="2dp"
                             app:layout_columnWeight="1"
                             app:layout_rowWeight="1">
 
@@ -546,8 +546,8 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="220dp"
-                            android:padding="2dp"
                             android:layout_margin="8dp"
+                            android:padding="2dp"
                             app:layout_columnWeight="1"
                             app:layout_rowWeight="1">
 
@@ -636,8 +636,8 @@
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="220dp"
-                            android:padding="2dp"
                             android:layout_margin="8dp"
+                            android:padding="2dp"
                             app:layout_columnWeight="1"
                             app:layout_rowWeight="1">
 
@@ -726,7 +726,6 @@
                     </androidx.gridlayout.widget.GridLayout>
                 </LinearLayout>
             </LinearLayout>
-
 
 
         </LinearLayout>

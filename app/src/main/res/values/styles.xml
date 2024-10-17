@@ -109,9 +109,32 @@
         <item name="trackColor">@color/primary_color_light</item>
         <item name="indicatorColor">@color/primary_color</item>
         <item name="trackCornerRadius">4dp</item>
+    </style>
 
+    <!-- Custom Popup Menu Style -->
+    <style name="CustomPopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:textColor">@color/background_color</item> <!-- Custom text color -->
+        <item name="indicatorColor">@color/light_gray</item>
+        <item name="popupMenuBackground">@color/transparent</item>
+        <item name="android:background">@drawable/popup_menu_background</item>
+        <item name="android:colorBackground">@color/transparent</item>
+        <item name="android:itemTextAppearance">@style/popupMenuTextAppearance</item>
+        <item name="checkboxStyle">@style/popupMenuCheckbox</item>
+    </style>
+
+    <style name="popupMenuTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/background_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/poppins_light</item>
+    </style>
+
+    <style name="popupMenuCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:backgroundTint">@color/primary_color</item>
+        <item name="buttonTint">@color/background_color</item>
 
 
     </style>
+
+
 
 </resources>

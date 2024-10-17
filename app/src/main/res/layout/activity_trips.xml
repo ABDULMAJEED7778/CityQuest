@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/main_layout_trips_page"
-    android:background="#CCDDE2C5"
+    android:background="@color/background_color"
     tools:context=".TripsActivity"
     >
 
@@ -132,7 +132,20 @@
         app:layout_anchorGravity="bottom"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:visibility="gone"
         />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim_trips_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="2"
+        app:lottie_rawRes="@raw/trips_page_skeleton_anim" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -12,6 +12,8 @@
 
         <item name="materialButtonStyle">@style/primaryButtonStyle</item>
         <!-- Status bar color. -->
+        <item name="popupMenuStyle">@style/CustomPopupMenu</item>
+
 
 
 
