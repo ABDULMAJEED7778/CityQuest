@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,26 +51,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         // Load the background image from the URL
         Glide.with(context)
                 .load(trip.getPhotoUrl())
-                .into(new CustomViewTarget<RelativeLayout, Drawable>(holder.tripItemLayout) {
-                    @Override
-                    protected void onResourceCleared(@Nullable Drawable placeholder) {
-                        // Clear any existing resources
-                        holder.tripItemLayout.setBackground(null);
-                    }
-
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        // Set the loaded image as the background of the RelativeLayout
-                        holder.tripItemLayout.setBackground(resource);
-                    }
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        // Handle the error scenario (optional)
-                        // Optionally set a default background
-                        holder.tripItemLayout.setBackground(errorDrawable);
-                    }
-                });
+                .into(holder.tripItemImageView);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ReadyPlanDetailsActivity.class);
@@ -84,7 +67,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     static class TripViewHolder extends RecyclerView.ViewHolder {
         TextView name, rating, startEndDate, companion;
-        RelativeLayout tripItemLayout; // Add an ImageView for the trip photo
+        ImageView tripItemImageView; // Add an ImageView for the trip photo
 
         public TripViewHolder(View itemView) {
             super(itemView);
@@ -92,7 +75,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             rating = itemView.findViewById(R.id.rating_trip_txt);
             startEndDate = itemView.findViewById(R.id.trip_date_range);
             companion = itemView.findViewById(R.id.trip_companion_txt);
-            tripItemLayout = itemView.findViewById(R.id.trip_item_rl);
+            tripItemImageView = itemView.findViewById(R.id.trip_image_view);
         }
     }
 }

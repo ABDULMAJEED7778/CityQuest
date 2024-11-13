@@ -22,26 +22,26 @@
         <activity
             android:name=".ChangeLocationCityActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            />
         <activity
             android:name=".searchInExploreActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+             />
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+             />
 <!--        <activity-->
 <!--            android:name=".DestinationDetailsActivity"-->
 <!--            android:exported="false" />-->
         <activity
             android:name=".ReadyPlanDetailsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+             />
         <activity
             android:name=".ExploreAroundActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
@@ -51,37 +51,41 @@
         <activity
             android:name=".InterestsActivity"
             android:exported="false"
-                android:theme="@style/InterestsPage"/>
+            android:theme="@style/InterestsPage"/>
         <activity
             android:name=".CompanionsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            />
         <activity
             android:name=".SummaryActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            />
         <activity
             android:name=".DateRangeActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            />
         <activity
             android:name=".DestinationActivity"
             android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+             />
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            />
+        <activity
+            android:name=".EditTripActivity"
+            android:exported="false"
+            />
         <activity
             android:name=".SignInActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

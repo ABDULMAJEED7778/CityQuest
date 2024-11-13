@@ -14,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -67,6 +68,9 @@ public class ChangeLocationCityActivity extends AppCompatActivity implements Cha
             return insets;
         });
 
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.primary_color_light));
+
+
         String apiKey = getString(R.string.google_maps_api_key);
         // Initialize the Places SDK
         if (!Places.isInitialized()) {
@@ -99,6 +103,7 @@ public class ChangeLocationCityActivity extends AppCompatActivity implements Cha
                 }
             });
         });
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

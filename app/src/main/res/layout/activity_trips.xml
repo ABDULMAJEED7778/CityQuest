@@ -1,53 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/main"
-    android:padding="16dp"
+    android:id="@+id/main_layout_trips_page"
     android:background="@color/background_color"
-    tools:context=".SummaryActivity">
+    tools:context=".TripsActivity"
+    >
 
-    <LinearLayout
-        android:id="@+id/logo_dest_ll"
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-        <ImageView
-            android:id="@+id/App_logo_destination"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/applogoicon"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitCenter"
-            android:layout_marginRight="10dp"/>
+        android:background="#CCDDE2C5"
+        android:elevation="0dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:elevation="0dp"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@id/recycler_view_trip">
 
-        <ImageView
-            android:id="@+id/cityquest_destination"
-            android:layout_width="115dp"
-            android:layout_height="36dp"
-            android:src="@drawable/cityquesticon"
-            android:layout_marginTop="16dp"
-            android:scaleType="fitCenter" />
-    </LinearLayout>
-    <!-- Header -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="23dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="Your Trip Summary"
-        android:textColor="@color/primary_color"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="16dp"/>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/CollapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:elevation="0dp"
+            app:collapsedTitleGravity="start"
+            app:collapsedTitleTextAppearance="@style/toolbarTextAppearance"
+            app:collapsedTitleTextColor="@color/primary_color"
+            app:expandedTitleGravity="center_vertical|start"
+            app:expandedTitleMarginBottom="48dp"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleTextAppearance="@style/toolbarExpandedTextAppearance"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:statusBarScrim="@color/transparent"
+            app:title="Explore Trips"
+            app:titleCollapseMode="fade"
+            app:contentScrim="@color/transparent"
+            app:titleEnabled="true"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Small"
+            app:titleTextColor="@color/primary_color"
+            app:toolbarId="@id/topAppBar"
+            >
+
+            <!-- Filters menu space -->
+            <LinearLayout
+                android:id="@+id/filters_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="56dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:padding="0dp"
+                android:visibility="invisible"> <!-- You can manage its visibility when collapsed -->
+
+                <!-- Filter buttons can go here -->
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="@color/light_gray"
+                    android:text="Filter 1" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_gray"
+                    android:text="Filter 2" />
+            </LinearLayout>
+
+            <!-- TopAppBar for actions and title -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_collapseMode="pin"
+                android:background="@color/transparent"
+                android:elevation="0dp"
+                android:fitsSystemWindows="true"
+                app:menu="@menu/tool_bar_trips_activity">
+
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="top">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_location_pin"
+                        app:tint="@color/primary_color" />
+
+                    <Button
+                        android:id="@+id/location_city_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/poppins_light"
+                        android:padding="0dp"
+                        android:paddingStart="24dp"
+                        android:text="Bangalore"
+                        android:textColor="@color/primary_color"
+                        android:visibility="visible" />
+
+                </FrameLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_trip"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:scrollbars="vertical"
+        app:layout_anchor="@id/appBarLayout"
+        android:background="@color/background_color"
+        android:foreground="@drawable/trips_page_background"
+        app:layout_anchorGravity="bottom"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:visibility="gone"
+        />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim_trips_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="2"
+        app:lottie_rawRes="@raw/trips_page_skeleton_anim" />
 
 
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

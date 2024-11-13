@@ -3,13 +3,19 @@ package com.example.cityquest;
 import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,10 +41,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bumptech.glide.Glide;
 import com.example.cityquest.adapter.CityAdapter;
 import com.example.cityquest.adapter.CityPagerAdapter;
@@ -72,9 +80,10 @@ public class ExploreAroundFragment extends Fragment {
     LocationViewModel locationViewModel;
 
     private List<City> cityList;
-    private GifImageView loadingAnim;
+    private LottieAnimationView loadingAnim;
     private FrameLayout topLayout;
     private RelativeLayout bottomLayout;
+    private ScrollView scrollView;
 
     Timer timer;
 
@@ -87,6 +96,7 @@ public class ExploreAroundFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(ARG_CITY_NAME, cityName); // Put the city name in the arguments
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -101,11 +111,44 @@ public class ExploreAroundFragment extends Fragment {
         yourLocationCityTV = view.findViewById(R.id.location_city_name);
         topLayout = view.findViewById(R.id.frameLayout_Top);
         bottomLayout = view.findViewById(R.id.explore_page_bottom_layout);
-
+        scrollView = view.findViewById(R.id.scrollView_explore_page);
         loadingAnim = view.findViewById(R.id.loading_anim_explore_page);
+
+
+
+        // Change the status bar color
+        if (getActivity() != null) {
+            EdgeToEdge.enable(getActivity());
+            WindowCompat.setDecorFitsSystemWindows(getActivity().getWindow(), false);
+        }
+
 
         final Animation shrinkAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.shrink_animation);
         final Animation releaseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.release_animation);
+
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                // Calculate the alpha value based on the scroll position
+                float alpha = Math.min(0.75f, (float) scrollY / 300); // Change 300 to adjust sensitivity
+                // Adjust alpha to ensure it decreases smoothly
+                if (scrollY < oldScrollY) {
+                    // Scrolling up - gradually reduce alpha
+                    alpha = Math.max(0f, alpha - 0.05f); // Decrease alpha value
+                }
+                // Ensure the alpha value stays within bounds
+                alpha = Math.max(0f, Math.min(0.75f, alpha));
+
+                int color = Color.argb((int) (alpha * 255), 221, 226, 197); // Change to desired color (black in this case)
+
+                // Change the status bar color
+                if (getActivity() != null) {
+                    // Set the status bar color
+                    getActivity().getWindow().setStatusBarColor(color);
+                    Log.i("dfasdfas",color + "dfsasdf");
+                }
+            }
+        });
 
         searchButton.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -218,9 +261,12 @@ public class ExploreAroundFragment extends Fragment {
 
         ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
             return insets;
+
+
         });
+
     }
 
     private void fetchCitiesFromFirestore() {

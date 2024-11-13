@@ -318,7 +318,26 @@
 
 
 
+                                    <!-- Restaurant Rating -->
+                                    <TextView
+                                        android:id="@+id/text_restaurant_rating1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins_light"
+                                        android:text="Rating: 4.5/5"
+                                        android:textColor="@color/hintTextColor"
+                                        android:textSize="14sp" />
 
+                                    <!-- Restaurant Cuisine Type -->
+                                    <TextView
+                                        android:id="@+id/text_cuisine_type1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins_light"
+                                        android:paddingBottom="8dp"
+                                        android:text="Cuisine: Italian"
+                                        android:textColor="@color/hintTextColor"
+                                        android:textSize="14sp" />
 
 
 
@@ -338,7 +357,6 @@
     android:background="@drawable/add_to_my_trip_button"
     android:textColor="@color/background_color"
     android:textSize="18sp"
-        android:visibility="gone"
         />
 
 </FrameLayout>

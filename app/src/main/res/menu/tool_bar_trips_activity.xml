@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filter"
+        android:title="filters"
+        android:icon="@drawable/filter_icon_filled"
+        android:contentDescription="filters"
+        app:iconSize="24dp"
+        app:iconTint="@color/primary_color"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/heart_icon_filled"
+        app:iconTint="@color/primary_color"
+        android:title="favorite"
+        app:iconSize="24dp"
+        android:contentDescription=""
+        app:showAsAction="ifRoom" />
+
+
+
+</menu>

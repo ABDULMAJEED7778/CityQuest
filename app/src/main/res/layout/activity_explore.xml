@@ -2,9 +2,11 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView_explore_page"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:fillViewport="true"
     android:background="@color/background_color">
 
@@ -36,11 +38,16 @@
 <!--                app:tint="@color/background_color"-->
 <!--                android:layout_gravity="center" />-->
 
-            <pl.droidsonroids.gif.GifImageView
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loading_anim_explore_page"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/paper_plane_animation_60f" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_speed="2"
+                app:lottie_rawRes="@raw/paper_plane_animation" />
 
         </FrameLayout>
 
@@ -64,9 +71,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="48dp"
                 android:layout_gravity="start"
                 >
 
@@ -76,7 +83,6 @@
                     android:contentDescription="TODO"
                     app:tint="@color/white"
                     android:src="@drawable/ic_location_pin"
-                    android:layout_marginEnd="6dp"
                     />
 
                 <LinearLayout
@@ -107,10 +113,8 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/circled_image"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="18dp"
                     android:src="@drawable/bell_icon"
-                    android:layout_gravity="end"
+                    android:layout_gravity="end|center_vertical"
                     />
 
             </LinearLayout>
@@ -123,20 +127,20 @@
                 android:id="@+id/search_bar_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="108dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="76dp"
-                android:paddingStart="20dp"
-                android:drawablePadding="16dp"
-                android:background="@drawable/semi_transparent_layout"
-                android:drawableStart="@drawable/search_icon"
-                android:drawableTint="@color/white"
+                android:foreground="@drawable/semi_transparent_layout"
+                android:backgroundTint="@color/transparent_bg"
+                app:icon="@drawable/search_icon"
+                app:iconPadding="16dp"
+                app:iconSize="20dp"
+                app:iconTint="@color/white"
                 android:fontFamily="@font/poppins_regular"
+                android:gravity="center_vertical|start"
                 android:text="Find amazing road trip destinations..."
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@android:color/white" />
 
         </FrameLayout>
 

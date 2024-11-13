@@ -21,13 +21,14 @@ import com.example.cityquest.model.TripDay;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.DaysViewHolder> {
+public class EditDaysDetailsAdapter extends RecyclerView.Adapter<EditDaysDetailsAdapter.EditDaysViewHolder> {
 
     private Context context;
     private List<TripDay> days;
     private List<Boolean> expandedStates; // Track expanded/collapsed states for each day
 
-    public DaysDetailsAdapter(Context context, List<TripDay> days) {
+
+    public EditDaysDetailsAdapter (Context context, List<TripDay> days) {
         this.context = context;
         this.days = days;
 
@@ -40,44 +41,37 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
 
     @NonNull
     @Override
-    public DaysViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.day_itinerary_card_item, parent, false);
-        return new DaysViewHolder(view);
+    public EditDaysViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.edit_page_day_card_item, parent, false);
+        return new EditDaysViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DaysViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EditDaysViewHolder holder, int position) {
         TripDay day = days.get(position);
         holder.dayNumber.setText("Day " + (position + 1));
 
         // Set up the PlacesAdapter for the nested RecyclerView
-        PlacesAdapter placesAdapter = new PlacesAdapter(context, day.getPlaces());
-        holder.placesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.placesRecyclerView.setAdapter(placesAdapter);
+        EditPlacesAdapter editPlacesAdapter = new EditPlacesAdapter(context, day.getPlaces());
+        holder.editPlacesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        holder.editPlacesRecyclerView.setAdapter(editPlacesAdapter);
 
         // Check if the current day is expanded or collapsed
         boolean isExpanded = expandedStates.get(position);
-        holder.placesRecyclerView.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.placesLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+
 
         // Change the arrow direction based on the expanded state
         holder.toggleButton.setImageResource(isExpanded ? R.drawable.down_arrow_icon_vector : R.drawable.right_arrow_icon_vector);
-        holder.editButton.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
 
         // Handle clicks to expand/collapse the card
         holder.dayNameLinearLayout.setOnClickListener(v -> toggleDayExpansion(holder, position));
         holder.toggleButton.setOnClickListener(v -> toggleDayExpansion(holder, position));
 
-        // Edit button click handler
-        holder.editButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, EditTripActivity.class);
-            intent.putExtra("clicked_day_position", position);
-            intent.putParcelableArrayListExtra("trip_days", new ArrayList<>(days));
-            context.startActivity(intent);
-        });
     }
 
     // Toggle the expansion of a specific day card
-    private void toggleDayExpansion(DaysViewHolder holder, int position) {
+    private void toggleDayExpansion(EditDaysViewHolder holder, int position) {
         boolean currentlyExpanded = expandedStates.get(position);
 
         // Toggle the expanded state
@@ -91,11 +85,14 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
     }
 
     // Method to programmatically expand a specific day (called when a tab is selected)
-    public void expandDay(int dayPosition) {
+    public void expandDay (int dayPosition) {
         // Collapse all other days
         for (int i = 0; i < expandedStates.size(); i++) {
             expandedStates.set(i, i == dayPosition); // Only expand the selected day
         }
+
+
+
 
         // Notify the adapter to update all items
         notifyDataSetChanged();
@@ -106,22 +103,27 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
         return days.size();
     }
 
-    public static class DaysViewHolder extends RecyclerView.ViewHolder {
+    public static class EditDaysViewHolder extends RecyclerView.ViewHolder {
 
         TextView dayNumber;
-        RecyclerView placesRecyclerView;
+        RecyclerView editPlacesRecyclerView;
         ImageButton toggleButton;
         LinearLayout dayNameLinearLayout;
-        ImageButton editButton;
+        ImageButton daysDeleteBtn;
+        ImageButton daysReorderBtn;
+        LinearLayout placesLayout;
 
-        public DaysViewHolder(@NonNull View itemView) {
+        public EditDaysViewHolder(@NonNull View itemView) {
             super(itemView);
             dayNumber = itemView.findViewById(R.id.day_name);
-            placesRecyclerView = itemView.findViewById(R.id.places_recycler_view);
+            editPlacesRecyclerView = itemView.findViewById(R.id.edit_places_recycler_view);
             toggleButton = itemView.findViewById(R.id.toggle_button);
             dayNameLinearLayout = itemView.findViewById(R.id.day_name_linear_layout);
-            editButton = itemView.findViewById(R.id.itinerary_edit_btn);
+            daysDeleteBtn = itemView.findViewById(R.id.days_delete_button);
+            daysReorderBtn = itemView.findViewById(R.id.days_reorder_button);
+            placesLayout = itemView.findViewById(R.id.places_layout);
         }
+
     }
 
     public void updateDays(List<TripDay> newDays) {

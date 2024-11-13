@@ -4,26 +4,32 @@
         <item
             android:id="@+id/walking"
             android:icon="@drawable/walk_icon"
-            android:title="Walk" />
+            android:title="Walk"
+            android:checkable="true"/>
         <item
             android:id="@+id/car"
             android:icon="@drawable/car_icon"
             android:title="Car"
-            android:iconTint="@color/hintTextColor"/>
+            android:iconTint="@color/hintTextColor"
+            android:checkable="true"
+            />
         <item
             android:id="@+id/metro"
             android:icon="@drawable/metro_icon"
             android:title="Metro"
-            android:iconTint="@color/hintTextColor"/>
+            android:iconTint="@color/hintTextColor"
+            android:checkable="true"/>
         <item
             android:id="@+id/bus"
             android:icon="@drawable/bus_icon"
             android:title="Bus"
-            android:iconTint="@color/hintTextColor"/>
+            android:iconTint="@color/hintTextColor"
+            android:checkable="true"/>
         <item
             android:id="@+id/bike"
             android:icon="@drawable/bike_icon"
             android:title="Bike"
-            android:iconTint="@color/hintTextColor"/>
+            android:iconTint="@color/hintTextColor"
+            android:checkable="true"/>
     </group>
 </menu>

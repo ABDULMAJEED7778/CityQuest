@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/save"
+        android:icon="@drawable/saved_page"
+        app:iconTint="@color/background_color"
+        android:title="Save"
+        app:iconSize="24dp"
+        android:contentDescription=""
+        app:showAsAction="ifRoom" />
+
+</menu>

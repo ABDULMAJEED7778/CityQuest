@@ -2,13 +2,18 @@ package com.example.cityquest.adapter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.view.MenuItem;
+import android.widget.PopupMenu;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -115,32 +120,62 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
     }
 
     private void showCommuteOptionsMenu(PlacesViewHolder holder) {
-        PopupMenu popupMenu = new PopupMenu(context, holder.commuteTypeBtn);
-        popupMenu.getMenuInflater().inflate(R.menu.commute_time_popup_menu, popupMenu.getMenu());
+        Context wrapper = new ContextThemeWrapper(context, R.style.CustomPopupMenu);
+        PopupMenu popup = new PopupMenu(wrapper, holder.commuteTypeBtn);
+        popup.getMenuInflater().inflate(R.menu.commute_time_popup_menu, popup.getMenu());
 
-        // Set the menu item click listener
-        popupMenu.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.walking:
-                    selectedTravelMode = "walking";
-                    break;
-                case R.id.car:
-                case R.id.bike:
-                    selectedTravelMode = "driving";
-                    break;
-                case R.id.metro: //TODO add metro option
-                case R.id.bus:
-                    selectedTravelMode = "transit";
-                    break;
-
-                default:
-                    return false;
+        // Set the previously selected item as checked
+        switch (selectedTravelMode) {
+            case "walking":
+                popup.getMenu().findItem(R.id.walking).setChecked(true);
+                break;
+            case "driving":
+                popup.getMenu().findItem(R.id.car).setChecked(true);
+                popup.getMenu().findItem(R.id.bike).setChecked(true); // if bike is selected
+                break;
+            case "transit":
+                popup.getMenu().findItem(R.id.metro).setChecked(true); // if metro is selected
+                popup.getMenu().findItem(R.id.bus).setChecked(true); // if bus is selected
+                break;
+        }
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                // Uncheck all items first
+                for (int i = 0; i < popup.getMenu().size(); i++) {
+                    popup.getMenu().getItem(i).setChecked(false);
+                }
+                // Handle the selected travel mode
+                switch (item.getItemId()) {
+                    case R.id.walking:
+                        selectedTravelMode = "walking";
+                        item.setChecked(true);
+                        break;
+                    case R.id.car:
+                        selectedTravelMode = "driving";
+                        item.setChecked(true);
+                        break;
+                    case R.id.bike:
+                        selectedTravelMode = "driving";
+                        item.setChecked(true);
+                        break;
+                    case R.id.metro:
+                        selectedTravelMode = "transit";
+                        item.setChecked(true);
+                        break;
+                    case R.id.bus:
+                        selectedTravelMode = "transit";
+                        item.setChecked(true);
+                        break;
+                    default:
+                        return false;
+                }
+                calculateDistancesForAllPlaces();
+                return true;
             }
-
-            calculateDistancesForAllPlaces();
-            return true;
         });
-        popupMenu.show();
+
+        popup.show();
     }
 
     // Method to calculate distances for all places using a single API call
@@ -177,7 +212,6 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
             }
         });
     }
-
 
 
 
