@@ -91,7 +91,7 @@ public class ItineraryFragment extends Fragment {
         dayTabLayout = view.findViewById(R.id.dayTabLayout);
 
         layoutManager = new LinearLayoutManager(getContext());
-        daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); //TODO change to linear layout manager
 
         fetchTripDays(tripId);
 

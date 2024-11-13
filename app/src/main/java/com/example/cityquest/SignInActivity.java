@@ -19,6 +19,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.cityquest.Database.AppDatabase;
+import com.example.cityquest.Database.ReadyTripsDao;
+import com.example.cityquest.model.ReadyTrips;
 import com.example.cityquest.utils.FirestoreCityUploader;
 import com.example.cityquest.utils.FirestoreTripUploader;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -100,6 +103,21 @@ public class SignInActivity extends AppCompatActivity {
 
                 FirestoreCityUploader cityUploader = new FirestoreCityUploader();
                 cityUploader.uploadCities();
+
+                // Assume you have a ReadyTrips object
+                ReadyTrips newTrip = new ReadyTrips("1", "to Paris", "photo_url", 4.5f,
+                        "Paris", "France", "Sunny", 25.0f, "Adventure", "Friends",
+                        "2024-10-10", "2024-10-15", "A wonderful trip to Paris");
+
+// Get the ReadyTripsDao from the AppDatabase
+                AppDatabase db = AppDatabase.getDatabase(SignInActivity.this);
+                ReadyTripsDao readyTripsDao = db.readyTripsDao();
+
+// Insert the trip into the database using ExecutorService
+                AppDatabase.databaseWriteExecutor.execute(() -> {
+                    readyTripsDao.insertTrip(newTrip);
+                });
+
 
             }
         });

@@ -136,6 +136,7 @@
         android:textColorHint="@color/hintTextColor"
         android:background="@drawable/rounded_corner_et"
         android:drawableStart="@drawable/search_icon"
+        android:singleLine="true"
         android:drawableTint="@color/primary_color"/>
 
     <androidx.recyclerview.widget.RecyclerView

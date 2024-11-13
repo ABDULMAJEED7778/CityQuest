@@ -1,0 +1,262 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="1000dp"
+    android:layout_marginTop="16dp"
+    android:background="@color/background_color"
+    android:orientation="vertical">
+
+
+    <AutoCompleteTextView
+        android:id="@+id/search_input_explore_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/primary_color"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_vertical|start"
+        android:drawablePadding="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Search a city, a place or a country"
+        android:textColorHint="@color/hintTextColor"
+        android:background="@drawable/rounded_corner_et"
+        android:drawableStart="@drawable/search_icon"
+        android:singleLine="true"
+        android:drawableTint="@color/primary_color"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_search_suggestion_explore_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/search_suggestion_background"
+        android:elevation="4dp"
+        android:visibility="gone"
+        android:paddingHorizontal="16dp"
+        app:layoutManager="LinearLayoutManager"
+        android:paddingVertical="16dp"
+        android:scrollbars="horizontal" />
+
+    <ScrollView
+        android:id="@+id/my_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:nestedScrollingEnabled="false"
+        android:background="@color/background_color">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:id="@+id/dining_rec_expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/title_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/dining_recommendation_listing_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/rounded_corner_dining_rec_btn"
+                            android:cropToPadding="false"
+                            android:paddingHorizontal="2dp"
+                            android:paddingVertical="2dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/down_arrow_icon_vector" />
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center_vertical"
+                            android:text="Dining Recommendation"
+                            android:textSize="20dp"
+                            android:textColor="@color/primary_color" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <!-- Dining RecyclerView with ProgressBar -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- ProgressBar for Dining -->
+                    <ProgressBar
+                        android:id="@+id/progress_bar_dining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"/>
+
+                    <!-- Dining RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dining_re_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/localEvents_fest_rec_expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/localEvents_fest_title_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/localEvents_fest_listing_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/rounded_corner_dining_rec_btn"
+                            android:cropToPadding="false"
+                            android:paddingHorizontal="2dp"
+                            android:paddingVertical="2dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/down_arrow_icon_vector" />
+
+                        <TextView
+                            android:id="@+id/localEvents_fest_TV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center_vertical"
+                            android:textSize="20dp"
+
+                            android:text="Local Events and Festivals"
+                            android:textColor="@color/primary_color" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- ProgressBar for Local Events -->
+                    <ProgressBar
+                        android:id="@+id/progress_bar_local_events"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"/>
+
+                    <!-- Local Events RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/localEvents_fest_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/shopping_rec_expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/shopping_title_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/shopping_listing_btn"
+                            android:layout_width="25dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/rounded_corner_dining_rec_btn"
+                            android:cropToPadding="false"
+                            android:paddingHorizontal="2dp"
+                            android:paddingVertical="2dp"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/down_arrow_icon_vector" />
+
+                        <TextView
+                            android:id="@+id/shopping_TV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="center_vertical"
+                            android:textSize="20dp"
+
+                            android:text="Shopping and Souvenirs"
+                            android:textColor="@color/primary_color" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- ProgressBar for Shopping -->
+                    <ProgressBar
+                        android:id="@+id/progress_bar_shopping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"/>
+
+                    <!-- Shopping RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/shopping_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"/>
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

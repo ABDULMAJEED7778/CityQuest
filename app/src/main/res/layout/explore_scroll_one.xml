@@ -11,12 +11,16 @@
         android:layout_height="match_parent"
        >
 
+
+
         <ImageView
             android:id="@+id/city_image_popularCity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/bangalore"
             android:scaleType="centerCrop"/>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

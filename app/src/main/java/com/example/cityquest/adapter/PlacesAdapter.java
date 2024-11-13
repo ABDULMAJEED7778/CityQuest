@@ -158,7 +158,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
             return;
         }
 
-        GoogleMapsAPIsUtils googleMapsAPIsUtils = new GoogleMapsAPIsUtils(context, context.getString(R.string.google_maps_api_key));
+        GoogleMapsAPIsUtils googleMapsAPIsUtils = new GoogleMapsAPIsUtils(context, context.getString(R.string.google_maps_api_key));//TODO add api key
 
         googleMapsAPIsUtils.getDistancesForDay(placeIds, selectedTravelMode, new GoogleMapsAPIsUtils.DistanceCallback() {
             @Override

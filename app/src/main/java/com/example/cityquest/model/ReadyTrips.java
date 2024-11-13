@@ -1,9 +1,18 @@
 package com.example.cityquest.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.HashMap;
 import java.util.Map;
 
+
+@Entity(tableName = "ready_trips")
 public class ReadyTrips {
+
+    @NonNull
+    @PrimaryKey
     private String tripId; // Firestore document ID
     private String name; // Name of the trip
     private String photoUrl; // Photo URL of the trip
@@ -143,4 +152,6 @@ public class ReadyTrips {
     public void setOverview(String overview) {
         this.overview = overview;
     }
+
+
 }

@@ -1,0 +1,87 @@
+<!-- dining_rec_item.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="220dp"
+    android:padding="2dp"
+    android:layout_margin="8dp"
+    app:layout_columnWeight="1"
+    app:layout_rowWeight="1">
+
+    <!-- Border Layer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dining_cardview" /> <!-- Set the border drawable -->
+
+    <!-- Dining Recommendation Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/hintTextColor_semi_transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Restaurant Name -->
+            <TextView
+                android:id="@+id/text_restaurant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
+                android:text="The 13th Floor"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp" />
+
+            <!-- Restaurant Rating -->
+            <TextView
+                android:id="@+id/text_restaurant_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:text="Rating: 4.5/5"
+                android:textColor="@color/hintTextColor"
+                android:textSize="14sp" />
+
+            <!-- Restaurant Cuisine Type -->
+            <TextView
+                android:id="@+id/text_cuisine_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_light"
+                android:paddingBottom="8dp"
+                android:text="Cuisine: Italian"
+                android:textColor="@color/hintTextColor"
+                android:textSize="14sp" />
+
+            <!-- Button to Add to Itinerary -->
+            <Button
+                android:id="@+id/button_add_itinerary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/primary_color_light"
+                android:fontFamily="@font/poppins_light"
+                android:text="Add to Itinerary"
+                android:textColor="@color/primary_color" />
+
+            <!-- Button to Open in Google Maps -->
+            <Button
+                android:id="@+id/button_open_google_maps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary_color"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Check Menu"
+                android:textColor="@color/background_color" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

@@ -90,7 +90,7 @@ public class DestinationActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
 
         String apiKey = getString(R.string.google_maps_api_key);
-        Places.initializeWithNewPlacesApiEnabled(this, apiKey);
+        //Places.initializeWithNewPlacesApiEnabled(this, apiKey);
         placesClient = Places.createClient(this);
 
         // Initialize RecyclerView for showing autocomplete results

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">CityQuest</string>
     <string name="api_key">ozhzO2oQ5p84lMQTaaQ9r8ikZLM2aEJ2xUqrwYvG</string>
-    <string name="google_maps_api_key">AIzaSyAJ4cR00WZuQo5uv405VNIdLDACbO2odug</string>
+    <string name="google_maps_api_key">AIzaSyARpRWILYhqfSV_mpEa92h_xYoyqLEiTgU</string>
     <string name="pexels_api_key">ChE59RaPboEbakgNFtRETjptNswhN9F0MDHmmezeTFYMF7JW16kqfYcD</string>
     <string name="search_input_description">Search for a city or place</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="default_web_client_id">105881031674-unodhvrnrjpf3r0srsieb1p73edv6qqj.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">653333581488-0c5fi5b9lmrl000gscuqs6c5f40ebn9o.apps.googleusercontent.com</string>
 
 </resources>

@@ -38,6 +38,7 @@ import java.util.List;
 
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -64,6 +65,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private ImageButton diningRecommendationBtn;
     private GridLayout diningRecommendationList;
     private FrameLayout itineraryFragmentContainer;
+    private FrameLayout exploreFragmentContainer;
     private int numberOfDays;
     private String tripId;
 
@@ -77,10 +79,10 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         // Initialize UI elements
         detailsTabLayout = findViewById(R.id.tab_layout_details);
         overviewSection = findViewById(R.id.overview_section);
-        exploreSection = findViewById(R.id.explore_section);
+       // exploreSection = findViewById(R.id.explore_section);
         scrollView = findViewById(R.id.scrollview);
-        diningRecommendationBtn = findViewById(R.id.dining_recommendation_listing_btn);
-        diningRecommendationList = findViewById(R.id.dining_recomendation_grid_layout);
+//        diningRecommendationBtn = findViewById(R.id.dining_recommendation_listing_btn);
+//        diningRecommendationList = findViewById(R.id.dining_recomendation_grid_layout);
         planName = findViewById(R.id.plan_name);
         noOfDays = findViewById(R.id.no_of_days);
         cityCountry = findViewById(R.id.city_location);
@@ -89,6 +91,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         tripType = findViewById(R.id.trip_type);
         companion = findViewById(R.id.companion_type);
         itineraryFragmentContainer = findViewById(R.id.itinerary_fragment_container);
+        exploreFragmentContainer = findViewById(R.id.explore_fragment_container);
 
         scrollView.setScrollable(true);
 
@@ -106,13 +109,17 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                           case 0: // First Tab (Overview)
                               overviewSection.setVisibility(View.VISIBLE);
                               removeItineraryFragment();
-                              exploreSection.setVisibility(View.GONE);
+                              removeExploreFragment();
+                             // exploreSection.setVisibility(View.GONE);
                               itineraryFragmentContainer.setVisibility(View.GONE);
+                              exploreFragmentContainer.setVisibility(View.GONE);
                               break;
 
                           case 1: // Second Tab (Itinerary)
                               overviewSection.setVisibility(View.GONE);
+                              removeExploreFragment();
                               itineraryFragmentContainer.setVisibility(View.VISIBLE);
+                              exploreFragmentContainer.setVisibility(View.GONE);
                               loadItineraryFragment(new ItineraryLoadCallback() {
                                   @Override
                                   public void onItineraryLoaded() {
@@ -135,7 +142,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                                       getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
                                   }
                               });
-                              exploreSection.setVisibility(View.GONE);
+                              //exploreSection.setVisibility(View.GONE);
                               scrollView.setScrollable(false);
 
                               break;
@@ -143,12 +150,37 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                           case 2: // Third Tab (Explore)
                               overviewSection.setVisibility(View.GONE);
                               itineraryFragmentContainer.setVisibility(View.GONE);
-                              removeItineraryFragment();
-                              exploreSection.setVisibility(View.VISIBLE);
-                              setupDiningRecommendation();
+                              exploreFragmentContainer.setVisibility(View.VISIBLE);
+                              removeItineraryFragment(); // Ensure any existing itinerary fragment is removed
+                             // exploreSection.setVisibility(View.VISIBLE);
+
+                              loadExploreFragment(new ExploreLoadCallback() {
+                                  @Override
+                                  public void onExploreLoaded() {
+                                      // Use post to ensure the layout is updated before scrolling
+                                      smoothScrollToView(scrollView, detailsTabLayout);
+
+                                      detailsTabLayout.setBackgroundResource(R.color.primary_color_light);
+                                      detailsTabLayout.setSelectedTabIndicatorColor(
+                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
+                                      );
+                                      // Set the text color for unselected and selected tabs
+                                      detailsTabLayout.setTabTextColors(
+                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()), // Unselected
+                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
+                                      );
+
+//                                      // Set background color for the itinerary tab
+//                                      tab.view.setBackgroundColor(
+//                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
+//                                      );
+                                      getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
+                                  }
+                              });
 
                               // Scroll to the Explore Section
-                              scrollView.smoothScrollTo(0, overviewSection.getHeight() + detailsTabLayout.getHeight() + itineraryFragmentContainer.getHeight());
+//                              scrollView.smoothScrollTo(0, overviewSection.getHeight() + detailsTabLayout.getHeight());
+                              scrollView.setScrollable(false);
 
                               break;
                       }
@@ -158,7 +190,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
               @Override
               public void onTabUnselected(TabLayout.Tab tab) {
-                  if (tab.getPosition() == 1) {
+                  if (tab.getPosition() == 1|| tab.getPosition() == 2) {
                       scrollView.setScrollable(true);
                       // Reset background and tab indicator colors
                       detailsTabLayout.setBackgroundColor(
@@ -176,16 +208,17 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
                       // Reset the status bar color
                       getWindow().setStatusBarColor(getColor(R.color.transparent));
+                      Toast.makeText(ReadyPlanDetailsActivity.this, "onTabUnselected"+tab.getPosition(), Toast.LENGTH_SHORT).show();
                   }
 
               }
 
               @Override
               public void onTabReselected(TabLayout.Tab tab) {
-                  if (tab.getPosition() == 1) {
+                  if (tab.getPosition() == 1|| tab.getPosition() == 2) {
                       scrollView.setScrollable(false);
                   }
-
+                  Toast.makeText(ReadyPlanDetailsActivity.this, "onTabReselected"+tab.getPosition(), Toast.LENGTH_SHORT).show();
               }
           }
         );
@@ -209,6 +242,33 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void loadExploreFragment(final ExploreLoadCallback callback) {
+        ExploreFragment exploreFragment = new ExploreFragment(); // Create the fragment
+
+        // Set the load complete listener before committing the transaction
+        exploreFragment.setLoadCompleteListener(new ExploreLoadCallback() {
+            @Override
+            public void onExploreLoaded() {
+                if (callback != null) {
+                    callback.onExploreLoaded(); // Notify the callback
+                }
+            }
+        });
+
+        // Begin the transaction
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.explore_fragment_container, exploreFragment); // Ensure correct container ID
+        transaction.commit(); // Commit the transaction
+    }
+
+
+
+
+    public interface ExploreLoadCallback {
+        void onExploreLoaded();
+    }
+
+
     public interface ItineraryLoadCallback {
         void onItineraryLoaded();
     }
@@ -221,6 +281,13 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().remove(itineraryFragment).commit();
         }
     }
+    private void removeExploreFragment() {
+        Fragment exploreFragment = getSupportFragmentManager().findFragmentById(R.id.explore_fragment_container); // Use the correct container ID
+        if (exploreFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(exploreFragment).commit();
+        }
+    }
+
     private void fetchTripDetails(String tripId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("readyTrips").document(tripId)
@@ -337,22 +404,31 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 //    }
 
     private void smoothScrollToView(NonScrollableScrollView scrollView, View view) {
-        int y = view.getTop(); // Get the top position of the view
-        ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
-        animator.setDuration(500); // Adjust the duration for smoother scrolling
-        animator.start();    }
+
+
+
+        if (view.getVisibility() == View.VISIBLE) {
+            int y = view.getTop(); // Get the top position of the view
+            ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
+            animator.setDuration(500); // Adjust the duration for smoother scrolling
+            animator.start();
+        }else{
+        Toast.makeText(this, "view not visible", Toast.LENGTH_SHORT).show();
+        }
+
+        }
 
 
     // Show dining recommendation section
-    private void setupDiningRecommendation() {
-        diningRecommendationBtn.setOnClickListener(v -> {
-            // Toggle visibility of dining recommendations
-            findViewById(R.id.dining_recomendation_grid_layout).setVisibility(
-                    findViewById(R.id.dining_recomendation_grid_layout).getVisibility() == View.VISIBLE
-                            ? View.GONE
-                            : View.VISIBLE
-            );
-        });
-    }
+//    private void setupDiningRecommendation() {
+//        diningRecommendationBtn.setOnClickListener(v -> {
+//            // Toggle visibility of dining recommendations
+//            findViewById(R.id.dining_recomendation_grid_layout).setVisibility(
+//                    findViewById(R.id.dining_recomendation_grid_layout).getVisibility() == View.VISIBLE
+//                            ? View.GONE
+//                            : View.VISIBLE
+//            );
+//        });
+//    }
 
 }
