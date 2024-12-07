@@ -8,6 +8,6 @@
         android:title="Save"
         app:iconSize="24dp"
         android:contentDescription=""
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>

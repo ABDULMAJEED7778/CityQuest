@@ -2,52 +2,38 @@ package com.example.cityquest;
 
 import static java.lang.Integer.parseInt;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.animation.ObjectAnimator;
 
-import com.example.cityquest.adapter.PlacesAdapter;
 import com.example.cityquest.model.ReadyTrips;
-import com.example.cityquest.model.ItineraryPlace;
-import com.example.cityquest.model.TripDay;
 import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import java.time.format.DateTimeFormatter;
 
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.gridlayout.widget.GridLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
@@ -73,6 +59,8 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ready_plan_page);
+        EdgeToEdge.enable(this);
+
 
 
 
@@ -101,87 +89,64 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         // Fetch trip details from Firestore
         fetchTripDetails(tripId);
 
+        AtomicInteger currentTabPosition = new AtomicInteger(0);
         detailsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            private boolean scrolled = false;
               @Override
               public void onTabSelected(@NonNull TabLayout.Tab tab) {
+                  int selectedTabPosition = tab.getPosition();
                   scrollView.post(() -> {
-                      switch (tab.getPosition()) {
+                      switch (selectedTabPosition) {
                           case 0: // First Tab (Overview)
+                              currentTabPosition.set(0);
                               overviewSection.setVisibility(View.VISIBLE);
-                              removeItineraryFragment();
-                              removeExploreFragment();
-                             // exploreSection.setVisibility(View.GONE);
                               itineraryFragmentContainer.setVisibility(View.GONE);
                               exploreFragmentContainer.setVisibility(View.GONE);
+                              resetTabLayoutStyles();
+                              removeItineraryFragment();
+                              removeExploreFragment();
+                              scrollView.setScrollable(true);
                               break;
 
                           case 1: // Second Tab (Itinerary)
                               overviewSection.setVisibility(View.GONE);
-                              removeExploreFragment();
+                              exploreFragmentContainer.setVisibility(View.INVISIBLE);
                               itineraryFragmentContainer.setVisibility(View.VISIBLE);
-                              exploreFragmentContainer.setVisibility(View.GONE);
+
                               loadItineraryFragment(new ItineraryLoadCallback() {
+
                                   @Override
                                   public void onItineraryLoaded() {
-                                      // Use post to ensure the layout is updated before scrolling
-                                      smoothScrollToView(scrollView, detailsTabLayout);
-                                      detailsTabLayout.setBackgroundResource(R.color.primary_color_light);
-                                      detailsTabLayout.setSelectedTabIndicatorColor(
-                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
-                                      );
-                                      // Set the text color for unselected and selected tabs
-                                      detailsTabLayout.setTabTextColors(
-                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()), // Unselected
-                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
-                                      );
-
-//                                      // Set background color for the itinerary tab
-//                                      tab.view.setBackgroundColor(
-//                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
-//                                      );
-                                      getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
+                                      if (currentTabPosition.get() == 0) {
+                                          smoothScrollToView(scrollView, detailsTabLayout);
+                                          updateTabLayoutStyles();
+                                          currentTabPosition.set(1);
+                                      }
+                                      scrollView.setScrollable(false);
                                   }
                               });
-                              //exploreSection.setVisibility(View.GONE);
-                              scrollView.setScrollable(false);
+                              removeExploreFragment();
 
                               break;
 
                           case 2: // Third Tab (Explore)
                               overviewSection.setVisibility(View.GONE);
-                              itineraryFragmentContainer.setVisibility(View.GONE);
+                              itineraryFragmentContainer.setVisibility(View.INVISIBLE);
                               exploreFragmentContainer.setVisibility(View.VISIBLE);
-                              removeItineraryFragment(); // Ensure any existing itinerary fragment is removed
-                             // exploreSection.setVisibility(View.VISIBLE);
 
                               loadExploreFragment(new ExploreLoadCallback() {
                                   @Override
                                   public void onExploreLoaded() {
-                                      // Use post to ensure the layout is updated before scrolling
-                                      smoothScrollToView(scrollView, detailsTabLayout);
-
-                                      detailsTabLayout.setBackgroundResource(R.color.primary_color_light);
-                                      detailsTabLayout.setSelectedTabIndicatorColor(
-                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
-                                      );
-                                      // Set the text color for unselected and selected tabs
-                                      detailsTabLayout.setTabTextColors(
-                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()), // Unselected
-                                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
-                                      );
-
-//                                      // Set background color for the itinerary tab
-//                                      tab.view.setBackgroundColor(
-//                                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
-//                                      );
-                                      getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
+                                      if (currentTabPosition.get() == 0) {
+                                          smoothScrollToView(scrollView, detailsTabLayout);
+                                          updateTabLayoutStyles();
+                                          currentTabPosition.set(2);
+                                      }
+                                      scrollView.setScrollable(false);
                                   }
                               });
-
-                              // Scroll to the Explore Section
-//                              scrollView.smoothScrollTo(0, overviewSection.getHeight() + detailsTabLayout.getHeight());
-                              scrollView.setScrollable(false);
-
+                              removeItineraryFragment();
                               break;
                       }
                   });
@@ -192,25 +157,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
               public void onTabUnselected(TabLayout.Tab tab) {
                   if (tab.getPosition() == 1|| tab.getPosition() == 2) {
                       scrollView.setScrollable(true);
-                      // Reset background and tab indicator colors
-                      detailsTabLayout.setBackgroundColor(
-                              ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme())
-                      );
-                      detailsTabLayout.setSelectedTabIndicatorColor(
-                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
-                      );
-
-                      // Set the text color for unselected and selected tabs
-                      detailsTabLayout.setTabTextColors(
-                              ResourcesCompat.getColor(getResources(), R.color.gray, getTheme()), // Unselected
-                              ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
-                      );
-
-                      // Reset the status bar color
-                      getWindow().setStatusBarColor(getColor(R.color.transparent));
-                      Toast.makeText(ReadyPlanDetailsActivity.this, "onTabUnselected"+tab.getPosition(), Toast.LENGTH_SHORT).show();
                   }
-
               }
 
               @Override
@@ -240,6 +187,27 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void updateTabLayoutStyles() {
+        detailsTabLayout.setBackgroundResource(R.color.primary_color_light);
+        detailsTabLayout.setSelectedTabIndicatorColor(
+                ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme())
+        );
+        detailsTabLayout.setTabTextColors(
+                ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()), // Unselected
+                ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
+        );
+        getWindow().setStatusBarColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_color_light));
+    }
+
+    private void resetTabLayoutStyles() {
+        detailsTabLayout.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.background_color, getTheme()));
+        detailsTabLayout.setSelectedTabIndicatorColor(ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()));
+        detailsTabLayout.setTabTextColors(
+                ResourcesCompat.getColor(getResources(), R.color.gray, getTheme()), // Unselected
+                ResourcesCompat.getColor(getResources(), R.color.primary_color, getTheme()) // Selected
+        );
+        getWindow().setStatusBarColor(getColor(R.color.transparent));
     }
 
     private void loadExploreFragment(final ExploreLoadCallback callback) {
@@ -409,7 +377,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
         if (view.getVisibility() == View.VISIBLE) {
             int y = view.getTop(); // Get the top position of the view
-            ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y);
+            ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y - 80);
             animator.setDuration(500); // Adjust the duration for smoother scrolling
             animator.start();
         }else{
@@ -417,6 +385,22 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         }
 
         }
+
+    private void fastScrollToView(NonScrollableScrollView scrollView, View view) {
+
+
+
+        if (view.getVisibility() == View.VISIBLE) {
+            int y = view.getTop(); // Get the top position of the view
+            ObjectAnimator animator = ObjectAnimator.ofInt(scrollView, "scrollY", scrollView.getScrollY(), y - 80);
+            animator.setDuration(0); // Adjust the duration for smoother scrolling
+            animator.start();
+        }else{
+            Toast.makeText(this, "view not visible", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
 
     // Show dining recommendation section

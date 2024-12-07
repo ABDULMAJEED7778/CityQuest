@@ -136,12 +136,10 @@ public class ExploreFragment extends Fragment {
         localEventsExpandBtn = view.findViewById(R.id.localEvents_fest_listing_btn); // Local events expand button
         localEventsProgressBar = view.findViewById(R.id.progress_bar_local_events);
 
-
         shoppingRecyclerView = view.findViewById(R.id.shopping_recyclerView); // Add shopping RecyclerView
         shoppingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         shoppingExpandBtn = view.findViewById(R.id.shopping_listing_btn); // Shopping expand button
         shoppingProgressBar = view.findViewById(R.id.progress_bar_shopping);
-
 
         diningExpandBtn.setOnClickListener(v -> {//TODO fix the toggle and progress bar
 
@@ -160,10 +158,6 @@ public class ExploreFragment extends Fragment {
             setAdapterForRecyclerView(shoppingRecyclerView, shoppingList);
 
         });
-
-
-
-
 
         setupSearchInputListener();
         loadData();
@@ -336,12 +330,6 @@ public class ExploreFragment extends Fragment {
         diningList.clear();
         localEventsList.clear();
         shoppingList.clear();
-
-
-
-
-
-
 
     }
 

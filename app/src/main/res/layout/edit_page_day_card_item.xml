@@ -76,70 +76,101 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/places_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:id="@+id/places_layout">
+            android:visibility="gone">
             <!-- RecyclerView for Days -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/edit_places_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:scrollbars="vertical"
-                 />
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
+                android:id="@+id/notes_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="16dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="109dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Notes"
+                        android:textColor="@color/primary_color"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:id="@+id/divider2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.6"
+                        android:background="@drawable/fade_out_line" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/add_place_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/add_place_layout"
-                android:layout_marginVertical="16dp"
                 android:layout_marginHorizontal="10dp"
-                >
+                android:layout_marginVertical="16dp">
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/add_place_button"
                     android:layout_width="0dp"
-                    android:layout_weight="0.6"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="10dp"
-                    android:importantForAccessibility="yes"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="0.6"
+                    android:backgroundTint="@color/primary_color"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/poppins_medium"
+                    android:importantForAccessibility="yes"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
                     android:text="Add Place"
-                    android:textColor="@color/background_color"
                     android:textAlignment="center"
-                    android:backgroundTint="@color/primary_color"
+                    android:textColor="@color/background_color"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/add_place"
                     app:iconSize="24dp"
-                    app:iconTint="@color/background_color"
-                    android:layout_marginEnd="16dp"
-                   />
+                    app:iconTint="@color/background_color" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/add_note_button"
                     android:layout_width="0dp"
-                    android:layout_weight="0.4"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="10dp"
-                    android:importantForAccessibility="yes"
+                    android:layout_weight="0.4"
+                    android:backgroundTint="@color/primary_color_light"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:fontFamily="@font/poppins_medium"
+                    android:importantForAccessibility="yes"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
                     android:text="Note"
                     android:textColor="@color/background_color"
-                    android:backgroundTint="@color/primary_color_light"
                     app:cornerRadius="50dp"
                     app:icon="@drawable/add_notes_icon"
                     app:iconSize="24dp"
-                    app:iconTint="@color/background_color"
-                    />
+                    app:iconTint="@color/background_color" />
             </LinearLayout>
         </LinearLayout>
 

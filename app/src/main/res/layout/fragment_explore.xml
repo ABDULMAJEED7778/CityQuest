@@ -12,21 +12,23 @@
         android:id="@+id/search_input_explore_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:importantForAccessibility="yes"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:textColor="@color/primary_color"
-        android:fontFamily="@font/poppins_light"
-        android:gravity="center_vertical|start"
-        android:drawablePadding="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Search a city, a place or a country"
-        android:textColorHint="@color/hintTextColor"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_corner_et"
         android:drawableStart="@drawable/search_icon"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/primary_color"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_vertical|start"
+        android:hint="Search a city, a place or a country"
+        android:importantForAccessibility="yes"
+        android:padding="12dp"
         android:singleLine="true"
-        android:drawableTint="@color/primary_color"/>
+        android:textColor="@color/primary_color"
+        android:textColorHint="@color/hintTextColor" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_search_suggestion_explore_activity"
@@ -35,11 +37,11 @@
         android:layout_marginVertical="16dp"
         android:background="@drawable/search_suggestion_background"
         android:elevation="4dp"
-        android:visibility="gone"
         android:paddingHorizontal="16dp"
-        app:layoutManager="LinearLayoutManager"
         android:paddingVertical="16dp"
-        android:scrollbars="horizontal" />
+        android:scrollbars="horizontal"
+        android:visibility="gone"
+        app:layoutManager="LinearLayoutManager" />
 
     <ScrollView
         android:id="@+id/my_scroll_view"
@@ -55,18 +57,19 @@
                 android:orientation="vertical">
 
 
-
                 <LinearLayout
                     android:id="@+id/dining_rec_expand"
                     android:layout_width="wrap_content"
                     android:layout_height="56dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center_vertical"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/title_section"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="16dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="0dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -87,11 +90,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_vertical"
                             android:text="Dining Recommendation"
-                            android:textSize="20dp"
-                            android:textColor="@color/primary_color" />
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -109,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:visibility="gone"/>
+                        android:visibility="invisible" />
 
                     <!-- Dining RecyclerView -->
                     <androidx.recyclerview.widget.RecyclerView
@@ -119,9 +123,6 @@
                         android:orientation="horizontal"
                         android:visibility="gone" />
                 </RelativeLayout>
-
-
-
 
 
                 <LinearLayout
@@ -134,7 +135,7 @@
                         android:id="@+id/localEvents_fest_title_section"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -155,12 +156,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_vertical"
-                            android:textSize="20dp"
-
                             android:text="Local Events and Festivals"
-                            android:textColor="@color/primary_color" />
+
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -185,7 +186,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="gone"/>
+                        android:visibility="visible" />
                 </RelativeLayout>
 
 
@@ -199,7 +200,7 @@
                         android:id="@+id/shopping_title_section"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="16dp"
+                        android:layout_marginStart="16dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -220,12 +221,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
+                            android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_vertical"
-                            android:textSize="20dp"
-
                             android:text="Shopping and Souvenirs"
-                            android:textColor="@color/primary_color" />
+
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -250,7 +251,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="gone"/>
+                        android:visibility="visible" />
                 </RelativeLayout>
 
 

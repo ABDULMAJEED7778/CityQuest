@@ -1,7 +1,9 @@
 package com.example.cityquest;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
@@ -26,6 +30,7 @@ import com.example.cityquest.model.ItineraryPlace;
 import com.example.cityquest.model.TripDay;
 import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -34,7 +39,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItineraryFragment extends Fragment {
+public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.OnEditButtonClickListener {
     private RecyclerView daysRecyclerView;
     private DaysDetailsAdapter daysDetailsAdapter;
     private String tripId;// Add tripId if you want to fetch data based on trip ID
@@ -91,7 +96,7 @@ public class ItineraryFragment extends Fragment {
         dayTabLayout = view.findViewById(R.id.dayTabLayout);
 
         layoutManager = new LinearLayoutManager(getContext());
-        daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext())); //TODO change to linear layout manager
+        daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         fetchTripDays(tripId);
 
@@ -140,7 +145,7 @@ public class ItineraryFragment extends Fragment {
                                     totalHeight += child.getHeight();
                                 }
 
-                                totalHeight = totalHeight - numberOfDays*120;
+                                totalHeight = totalHeight + 120;
                                 // Adjust RecyclerView height to wrap its content
                                 ViewGroup.LayoutParams params = daysRecyclerView.getLayoutParams();
                                 params.height = totalHeight;  // Set height to the total content height
@@ -192,10 +197,13 @@ public class ItineraryFragment extends Fragment {
     }
 
     private void setupDayTabs(List<TripDay> tripDays) {
+        dayTabLayout.removeAllTabs(); // Clear existing tabs
+        int i = 1;
+
         if (numberOfDays > 0) {
             for (TripDay tripDay : tripDays) {
                 TabLayout.Tab daysTab = dayTabLayout.newTab();
-                daysTab.setText("Day " + tripDay.getDayNumber());
+                daysTab.setText("Day " + i++);
                 dayTabLayout.addTab(daysTab);
             }
             // Add the "+" tab
@@ -225,12 +233,91 @@ public class ItineraryFragment extends Fragment {
 
     private void updateItinerarySection(List<TripDay> days) {
         if (daysDetailsAdapter == null) {
-            daysDetailsAdapter = new DaysDetailsAdapter(getActivity(), days);
+            daysDetailsAdapter = new DaysDetailsAdapter(getActivity(), days,this);
             daysRecyclerView.setAdapter(daysDetailsAdapter);
         } else {
             daysDetailsAdapter.updateDays(days); // If necessary, update the adapter with new data
         }
     }
+
+    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        int clickedDayPosition = data.getIntExtra("clicked_day_position", -1);
+                        ArrayList<TripDay> tripDays = data.getParcelableArrayListExtra("trip_days");
+
+                        if (clickedDayPosition != -1 && tripDays != null) {
+                            Intent editIntent = new Intent(getContext(), EditTripActivity.class);
+                            editIntent.putExtra("clicked_day_position", clickedDayPosition);
+                            editIntent.putParcelableArrayListExtra("trip_days", tripDays);
+                            startActivity(editIntent);
+                        }
+                    }
+                }
+            }
+    );
+    @Override
+    public boolean isUserSignedIn() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        return auth.getCurrentUser() != null;
+    }
+
+    @Override
+    public void onEditButtonClick(int position, ArrayList<TripDay> days) {
+        Intent editIntent = new Intent(getContext(), EditTripActivity.class);
+        editIntent.putExtra("clicked_day_position", position);
+        editIntent.putParcelableArrayListExtra("trip_days", days);
+        editTripLauncher.launch(editIntent);
+    }
+
+    @FunctionalInterface
+    public interface OnSignInSuccessListener {
+        void onSignInSuccess();
+    }
+
+    @Override
+    public void showSignInDialog(OnSignInSuccessListener listener) {
+        LayoutInflater inflater = getLayoutInflater();
+
+        SignInDialogFragment dialogFragment = new SignInDialogFragment(new SignInDialogFragment.SignInDialogListener() {
+            @Override
+            public void onSignInSuccess() {
+                listener.onSignInSuccess();
+            }
+
+            @Override
+            public void onSignInFailure() {
+                // Handle failure, e.g., show a message or log the error
+            }
+        });
+
+
+        dialogFragment.show(getParentFragmentManager(), "SignInDialog");
+    }
+
+    private ActivityResultLauncher<Intent> editTripLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        // Get the updated trip days from the result
+                        ArrayList<TripDay> updatedTripDays = data.getParcelableArrayListExtra("updated_trip_days");
+                        Log.e("hfjffj",updatedTripDays+"gjggh");
+                        if (updatedTripDays != null) {
+                            // Update the itinerary section with the new days
+                            updateItinerarySection(updatedTripDays);
+                            Log.e("hfjffj",updatedTripDays+"gjggh");
+                            setupDayTabs(updatedTripDays);
+                        }
+                    }
+                }
+            }
+    );
+
 
 
 }

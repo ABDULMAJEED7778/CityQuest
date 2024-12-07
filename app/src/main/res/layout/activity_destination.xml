@@ -186,8 +186,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         app:selectionRequired="true"
-        app:singleLine="true"
-        >
+        app:singleLine="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_historical"
@@ -195,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:padding="8dp"
-
+            app:chipBackgroundColor="@color/transparent"
             android:text="Historical"
             android:textSize="12sp"
             app:chipMinTouchTargetSize="48dp"

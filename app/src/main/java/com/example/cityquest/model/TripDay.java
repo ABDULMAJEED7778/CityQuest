@@ -3,21 +3,58 @@ package com.example.cityquest.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TripDay implements Parcelable  {
     private int dayNumber; // e.g., "Day1", "Day2"
     private List<ItineraryPlace> places; // List of places visited on this day
     private boolean isExpanded = false; // Add this flag to handle the expansion state
+    private List<String> notes;
+
 
 
     // Empty constructor required for Firestore
     public TripDay() {
+        this.notes = new ArrayList<>();
     }
 
     public TripDay(int dayNumber, List<ItineraryPlace> places) {
         this.dayNumber = dayNumber;
         this.places = places;
+    }
+
+    public TripDay(int dayNumber, List<ItineraryPlace> places, List<String> notes) {
+        this.dayNumber = dayNumber;
+        this.places = places;
+        this.notes = notes;
+    }
+
+
+    // Copy constructor
+    public TripDay(TripDay original) {
+        this.dayNumber = original.dayNumber;
+        this.isExpanded = original.isExpanded;
+        this.places = new ArrayList<>();
+        for (ItineraryPlace place : original.places) {
+            this.places.add(new ItineraryPlace(place)); // Assuming ItineraryPlace has a copy constructor
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TripDay tripDay = (TripDay) o;
+        return dayNumber == tripDay.dayNumber &&
+                isExpanded == tripDay.isExpanded &&
+                Objects.equals(places, tripDay.places); // Use equals for the list comparison
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dayNumber, places, isExpanded);
     }
 
     // Parcelable implementation
@@ -76,4 +113,11 @@ public class TripDay implements Parcelable  {
     }
 
 
+    public List<String> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<String> notes) {
+        this.notes = notes;
+    }
 }

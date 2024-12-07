@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cityquest.EditTripActivity;
+import com.example.cityquest.ItineraryFragment;
 import com.example.cityquest.R;
 import com.example.cityquest.model.TripDay;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +28,13 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
     private Context context;
     private List<TripDay> days;
     private List<Boolean> expandedStates; // Track expanded/collapsed states for each day
+    private OnEditButtonClickListener editButtonClickListener;
 
-    public DaysDetailsAdapter(Context context, List<TripDay> days) {
+
+    public DaysDetailsAdapter(Context context, List<TripDay> days , OnEditButtonClickListener listener) {
         this.context = context;
         this.days = days;
+        this.editButtonClickListener = listener;
 
         // Initialize expanded state to false for all days
         this.expandedStates = new ArrayList<>();
@@ -69,11 +74,17 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
 
         // Edit button click handler
         holder.editButton.setOnClickListener(v -> {
-            Intent intent = new Intent(context, EditTripActivity.class);
-            intent.putExtra("clicked_day_position", position);
-            intent.putParcelableArrayListExtra("trip_days", new ArrayList<>(days));
-            context.startActivity(intent);
+            if (editButtonClickListener != null) {
+                if (editButtonClickListener.isUserSignedIn()) {
+                    editButtonClickListener.onEditButtonClick(position, new ArrayList<>(days));
+                } else {
+                    editButtonClickListener.showSignInDialog(() -> {
+                        editButtonClickListener.onEditButtonClick(position, new ArrayList<>(days));
+                    });
+                }
+            }
         });
+
     }
 
     // Toggle the expansion of a specific day card
@@ -125,8 +136,9 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
     }
 
     public void updateDays(List<TripDay> newDays) {
+        this.days.clear(); // Clear the current list
         // Update the current list of days
-        this.days = newDays;
+        this.days.addAll(newDays);
 
         // Reset the expanded states
         expandedStates.clear();
@@ -137,4 +149,12 @@ public class DaysDetailsAdapter extends RecyclerView.Adapter<DaysDetailsAdapter.
         // Notify the adapter that the data has changed
         notifyDataSetChanged();
     }
+
+    public interface OnEditButtonClickListener {
+        void onEditButtonClick(int position, ArrayList<TripDay> days);
+        boolean isUserSignedIn();
+        void showSignInDialog(ItineraryFragment.OnSignInSuccessListener listener);
+    }
+
+
 }

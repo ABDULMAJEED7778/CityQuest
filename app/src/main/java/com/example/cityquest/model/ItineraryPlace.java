@@ -3,6 +3,8 @@ package com.example.cityquest.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
 public class ItineraryPlace implements Parcelable {
     private String placeName; // Name of the place
     private String placeId; // Unique identifier for the place
@@ -17,6 +19,30 @@ public class ItineraryPlace implements Parcelable {
         this.placeId = placeId;
         this.photoUrl = photoUrl;
         this.overview = overview;
+    }
+
+    // Copy constructor
+    public ItineraryPlace(ItineraryPlace original) {
+        this.placeName = original.placeName;
+        this.placeId = original.placeId;
+        this.photoUrl = original.photoUrl;
+        this.overview = original.overview;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItineraryPlace place = (ItineraryPlace) o;
+        return Objects.equals(placeName, place.placeName) &&
+                Objects.equals(placeId, place.placeId) &&
+                Objects.equals(photoUrl, place.photoUrl) &&
+                Objects.equals(overview, place.overview);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(placeName, placeId, photoUrl, overview);
     }
 
     // Parcelable implementation

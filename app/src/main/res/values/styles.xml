@@ -67,6 +67,10 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
+    <style name="bottomSheetTextAppearance" parent="Widget.MaterialComponents.TextView">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
     <style name="bottomNavTextAppearanceActive" parent="Widget.MaterialComponents.TextView">
         <item name="android:fontFamily">@font/poppins_semibold</item>
         <item name="fontFamily">@font/poppins_semibold</item>
@@ -131,9 +135,16 @@
     <style name="popupMenuCheckbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:backgroundTint">@color/primary_color</item>
         <item name="buttonTint">@color/background_color</item>
-
-
     </style>
+
+    <style name="TransparentDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item> <!-- Dim the background slightly -->
+    </style>
+
 
 
 

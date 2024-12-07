@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CityQuest" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.CityQuest" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_color</item>
@@ -13,8 +13,7 @@
         <item name="materialButtonStyle">@style/primaryButtonStyle</item>
         <!-- Status bar color. -->
         <item name="popupMenuStyle">@style/CustomPopupMenu</item>
-
-
+        <item name="colorControlActivated">@color/secondary_color_dark</item>
 
 
     </style>

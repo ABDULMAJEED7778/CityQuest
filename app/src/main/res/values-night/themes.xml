@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.CityQuest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.CityQuest" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="materialButtonStyle">@style/primaryButtonStyle</item>
         <item name="popupMenuStyle">@style/CustomPopupMenu</item>
+        <item name="colorControlActivated">@color/secondary_color_dark</item>
+        <item name="colorPrimary">@color/primary_color</item>
+
 
 
         <!-- Primary brand color. -->

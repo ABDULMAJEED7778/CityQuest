@@ -34,7 +34,8 @@
             <TextView
                 android:id="@+id/no_of_days"
                 android:layout_width="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="48dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/no_of_days_background"
                 android:alpha="0.9"
@@ -314,50 +315,22 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
 
-
-
-
-
-                                    <!-- Restaurant Rating -->
-                                    <TextView
-                                        android:id="@+id/text_restaurant_rating1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/poppins_light"
-                                        android:text="Rating: 4.5/5"
-                                        android:textColor="@color/hintTextColor"
-                                        android:textSize="14sp" />
-
-                                    <!-- Restaurant Cuisine Type -->
-                                    <TextView
-                                        android:id="@+id/text_cuisine_type1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/poppins_light"
-                                        android:paddingBottom="8dp"
-                                        android:text="Cuisine: Italian"
-                                        android:textColor="@color/hintTextColor"
-                                        android:textSize="14sp" />
-
-
-
-
-
-
         </LinearLayout>
 
     </com.example.cityquest.utils.NonScrollableScrollView>
 
     <Button
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_gravity="bottom"
-    android:text="ADD TO MY TRIPS"
-    android:fontFamily="@font/barlowsemicondensed_bold"
-    android:background="@drawable/add_to_my_trip_button"
-    android:textColor="@color/background_color"
-    android:textSize="18sp"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/primary_color_light"
+        android:fontFamily="@font/barlowsemicondensed_bold"
+        android:insetBottom="0dp"
+        android:text="ADD TO MY TRIPS"
+        android:textColor="@color/background_color"
+        android:textSize="18sp"
+        app:cornerRadius="0dp" />
 
 </FrameLayout>
 

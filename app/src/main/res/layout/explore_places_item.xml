@@ -1,17 +1,16 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="250dp"
+    android:layout_width="200dp"
     android:layout_height="200dp"
-    app:cardCornerRadius="20dp"
     android:layout_margin="8dp"
+    app:cardBackgroundColor="#BFBCC8C1"
 
-    app:cardBackgroundColor="@color/primary_color_background"
-    >
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="6dp"
 
 
         >
@@ -19,22 +18,21 @@
         <ImageView
             android:id="@+id/place_image_explore"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/rounded_corners_for_image"
-            android:src="@drawable/bangalore"
-
+            android:layout_height="120dp"
             android:clipToOutline="true"
-            android:scaleType="centerCrop"/>
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/bangalore" />
 
         <ImageView
             android:id="@+id/add_place_to_itinerary_icon"
             android:layout_width="20dp"
             android:layout_height="24dp"
-            android:src="@drawable/bookmark_icon"
             android:layout_gravity="end"
-            android:padding="2dp"
             android:layout_margin="8dp"
             android:background="@drawable/rounded_corner_rating"
+            android:padding="2dp"
+            android:src="@drawable/bookmark_icon"
             app:tint="@color/primary_color"
 
             />
@@ -42,35 +40,35 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:layout_marginStart="0dp"
 
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="8dp"
             android:alpha="1"
-            android:background="@color/primary_color_background"
             android:orientation="vertical"
-            >
+            android:padding="8dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginBottom="4dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/place_name_explore"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:fontFamily="@font/poppins_medium"
                     android:text="alamal Restaurant"
                     android:textColor="@color/primary_color"
                     android:textSize="12sp"
 
                     />
+
                 <ImageView
                     android:id="@+id/star_icon_place_explore"
                     android:layout_width="12dp"
@@ -85,7 +83,7 @@
                     android:id="@+id/place_rating_explore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingVertical="0dp"
@@ -96,9 +94,6 @@
 
 
             </LinearLayout>
-
-
-
 
 
             <RelativeLayout
@@ -112,40 +107,43 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:src="@drawable/location_icon"
-                    app:tint="@color/primary_color" />
+                    app:tint="@color/hintTextColor" />
 
                 <TextView
                     android:id="@+id/place_location_explore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/location_icon_place_explore"
                     android:fontFamily="@font/poppins_regular"
                     android:includeFontPadding="false"
+                    android:maxLines="1"
                     android:paddingVertical="0dp"
                     android:text="kamanahilli nagar,bangalore"
-                    android:layout_toRightOf="@id/location_icon_place_explore"
                     android:textAlignment="center"
-                    android:textColor="@color/secondary_color"
+                    android:textColor="@color/gray"
                     android:textSize="8sp" />
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:id="@+id/place_status_openNow"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@id/location_icon_place_explore"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
                     android:includeFontPadding="false"
                     android:paddingVertical="0dp"
                     android:text="open now"
-                    android:layout_toRightOf="@id/location_icon_place_explore"
-                    android:textColor="@color/primary_color"
+                    android:textColor="@color/secondary_color_dark"
                     android:textSize="8sp" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>
