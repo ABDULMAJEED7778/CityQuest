@@ -14,15 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "653333581488-0c5fi5b9lmrl000gscuqs6c5f40ebn9o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.cityquest",
-            "certificate_hash": "625d5aa2358f9f1305e6f8c55259efff27563e43"
-          }
-        },
-        {
-          "client_id": "653333581488-phuth1b4dsd7b0ujp7ja4ul3f9kdos06.apps.googleusercontent.com",
+          "client_id": "653333581488-c6tsfipji2j4bsspnksghj41cbhl17n6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +27,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "653333581488-phuth1b4dsd7b0ujp7ja4ul3f9kdos06.apps.googleusercontent.com",
+              "client_id": "653333581488-c6tsfipji2j4bsspnksghj41cbhl17n6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

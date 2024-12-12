@@ -60,9 +60,9 @@ public class SummaryActivity extends AppCompatActivity {
                 tripsCollection.add(trip).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Trip saved successfully, move to the next activity
-                        Intent intent = new Intent(SummaryActivity.this, TripsActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                        Intent intent = new Intent(SummaryActivity.this, TripsActivity.class);
+//                        startActivity(intent);
+//                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     } else {
                         // Handle the error
                         Toast.makeText(this, task.getException() != null ? task.getException().getMessage() : "Error saving trip.", Toast.LENGTH_SHORT).show();

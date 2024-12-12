@@ -29,6 +29,7 @@ public class FirebaseUtils {
         return db.collection("users");
     }
 
+
     public static CollectionReference getCitiesCollection() {
         return db.collection("cities");
     }
@@ -36,6 +37,10 @@ public class FirebaseUtils {
     // Get reference to a specific user document
     public static DocumentReference getUserDocument(String userId) {
         return getUsersCollection().document(userId);
+    }
+    public static DocumentReference getMyTripsDocument(String userId,String TripId) {
+        return getUsersCollection().document(userId).collection("mytrips").document(TripId);
+
     }
 
     // Get reference to trips collection for a specific user

@@ -176,11 +176,11 @@ public class DestinationActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         });
 
-        skipBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(DestinationActivity.this, TripsActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        });
+//        skipBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(DestinationActivity.this, TripsActivity.class);
+//            startActivity(intent);
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//        });
 
 
 

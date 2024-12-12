@@ -194,6 +194,9 @@ public class ExploreAroundFragment extends Fragment {
         trendingCitiesRecyclerView = view.findViewById(R.id.recycler_view_city); // Your RecyclerView ID
         trendingCitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         cityAdapter = new TrendingCityAdapter(getContext(),cityList);
+        Log.e("cityList",cityList.toString());
+        Log.e("user",FirebaseUtils.getCurrentUser().getUid());
+
 
         //this is used to achieve horizontal paging as in viewPager
         PagerSnapHelper snapHelper = new PagerSnapHelper();
@@ -292,7 +295,7 @@ public class ExploreAroundFragment extends Fragment {
 //                        viewPager.setAdapter(cityPagerAdapter);
 
                     } else {
-                        Log.d("CityActivity", "Error getting documents: ", task.getException());
+                        Log.e("CityActivity", "Error getting documents: ", task.getException());
                     }
                     loadingAnim.setVisibility(View.GONE); // Hide the loading indicator after fetching data
                     topLayout.setVisibility(View.VISIBLE);

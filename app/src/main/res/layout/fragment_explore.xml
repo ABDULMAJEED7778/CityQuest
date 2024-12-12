@@ -78,6 +78,8 @@
                             android:layout_width="25dp"
                             android:layout_height="20dp"
                             android:layout_marginEnd="8dp"
+                            android:contentDescription="Expand Dining Section"
+
                             android:background="@drawable/rounded_corner_dining_rec_btn"
                             android:cropToPadding="false"
                             android:paddingHorizontal="2dp"
@@ -144,6 +146,7 @@
                             android:layout_width="25dp"
                             android:layout_height="20dp"
                             android:layout_marginEnd="8dp"
+                            android:contentDescription="Expand Events and Festivals Section"
                             android:background="@drawable/rounded_corner_dining_rec_btn"
                             android:cropToPadding="false"
                             android:paddingHorizontal="2dp"
@@ -207,8 +210,11 @@
                         <ImageButton
                             android:id="@+id/shopping_listing_btn"
                             android:layout_width="25dp"
+                            android:importantForAccessibility="yes"
                             android:layout_height="20dp"
                             android:layout_marginEnd="8dp"
+                            android:contentDescription="Expand Shopping Section"
+
                             android:background="@drawable/rounded_corner_dining_rec_btn"
                             android:cropToPadding="false"
                             android:paddingHorizontal="2dp"

@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
 
 
+    //tells you where user came from before signing to navigate to the same place after signing EX savedTripsFragment
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
             return insets;
         });
+
+
 
         locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
 
@@ -174,5 +179,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 }

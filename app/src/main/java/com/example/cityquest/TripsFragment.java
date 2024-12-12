@@ -16,6 +16,7 @@ import android.view.WindowInsets;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -33,8 +34,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.cityquest.adapter.TripAdapter;
 import com.example.cityquest.model.ReadyTrips;
+import com.example.cityquest.utils.FirebaseUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,9 +45,11 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class TripsFragment extends Fragment {
+public class TripsFragment extends Fragment implements TripAdapter.OnFavoriteTripActionListener{
 
     private RecyclerView recyclerView;
     private TripAdapter adapter;
@@ -82,7 +87,7 @@ public class TripsFragment extends Fragment {
 
 
         trips = new ArrayList<>();
-        adapter = new TripAdapter(getContext(),trips);
+        adapter = new TripAdapter(getContext(),trips,this);
         recyclerView.setAdapter(adapter);
 
 
@@ -133,24 +138,51 @@ public class TripsFragment extends Fragment {
     private void fetchTripsFromFirestore() {
         recyclerView.setVisibility(View.GONE);
         loadingAnim.setVisibility(View.VISIBLE);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("readyTrips") // Collection name in Firestore
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        trips.clear(); // Clear the existing list to avoid duplicates
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             // Map Firestore document data to ReadyTrips object
                             ReadyTrips trip = document.toObject(ReadyTrips.class);
                             trips.add(trip); // Add the trip to the list
                         }
                         adapter.notifyDataSetChanged(); // Notify adapter about data changes
+
+                        // Fetch saved trips after trips have been loaded
+                        if(FirebaseUtils.getCurrentUser() != null)
+                            fetchSavedTrips();
                     } else {
                         Log.w("Firestore", "Error getting documents.", task.getException());
                     }
+
+                    // Hide loading animation and show RecyclerView
+                    loadingAnim.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 });
-        loadingAnim.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
     }
+    private void fetchSavedTrips() {
+        String userId = FirebaseUtils.getCurrentUser().getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users").document(userId).collection("mytrips")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Set<String> savedTripIds = new HashSet<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            savedTripIds.add(document.getId());
+                        }
+                        adapter.updateSavedTrips(savedTripIds);
+                    } else {
+                        Log.w("Firestore", "Error getting saved trips.", task.getException());
+                    }
+                });
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -210,6 +242,63 @@ public class TripsFragment extends Fragment {
             }
         }, getViewLifecycleOwner());
 
+    }
+
+
+    @Override
+    public boolean isUserSignedIn() {
+        return FirebaseUtils.getCurrentUser() != null;
+    }
+
+    @Override
+    public void showSignInDialog(OnSignInSuccessListener listener) {
+        // Show the sign-in dialog using the fragment manager of the parent fragment
+        SignInDialogFragment dialogFragment = new SignInDialogFragment(new SignInDialogFragment.SignInDialogListener() {
+            @Override
+            public void onSignInSuccess() {
+                listener.onSignInSuccess();
+            }
+
+            @Override
+            public void onSignInFailure() {
+
+            }
+        });
+        // Show the dialog using the parent fragment manager
+        dialogFragment.show(getParentFragmentManager(), "SignInDialog");
+    }
+
+
+    @Override
+    public void saveTripToFirestore(ReadyTrips trip) {
+
+
+        String userId = FirebaseUtils.getCurrentUser().getUid();
+        DocumentReference tripRef = FirebaseUtils.getMyTripsDocument(userId, trip.getTripId());
+
+        tripRef.set(trip)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Trip saved successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to save trip.", Toast.LENGTH_SHORT).show();
+                    Log.e("MyActivity", "Error saving trip: ", e);
+                });
+    }
+
+    @Override
+    public void removeTripFromFirestore(ReadyTrips trip) {
+        String userId = FirebaseUtils.getCurrentUser().getUid();
+        DocumentReference tripRef = FirebaseUtils.getMyTripsDocument(userId, trip.getTripId());
+
+        tripRef.delete()
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Trip removed successfully!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to remove trip.", Toast.LENGTH_SHORT).show();
+                    Log.e("TripsFragment", "Error removing trip: ", e);
+                });
     }
 
 

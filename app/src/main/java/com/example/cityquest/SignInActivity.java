@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import com.example.cityquest.Database.AppDatabase;
 import com.example.cityquest.Database.ReadyTripsDao;
 import com.example.cityquest.model.ReadyTrips;
+import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.utils.FirestoreCityUploader;
 import com.example.cityquest.utils.FirestoreTripUploader;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
@@ -36,6 +37,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -47,6 +52,8 @@ public class SignInActivity extends AppCompatActivity {
     Button signInBtn;
     FirebaseAuth mAuth;
 
+  //  String origin = getIntent().getStringExtra("origin");
+   // String tripId = getIntent().getStringExtra("tripId");
 
 
     AlertDialog progressDialog;
@@ -104,19 +111,20 @@ public class SignInActivity extends AppCompatActivity {
                 FirestoreCityUploader cityUploader = new FirestoreCityUploader();
                 cityUploader.uploadCities();
 
-                // Assume you have a ReadyTrips object
-                ReadyTrips newTrip = new ReadyTrips("1", "to Paris", "photo_url", 4.5f,
-                        "Paris", "France", "Sunny", 25.0f, "Adventure", "Friends",
-                        "2024-10-10", "2024-10-15", "A wonderful trip to Paris");
-
-// Get the ReadyTripsDao from the AppDatabase
-                AppDatabase db = AppDatabase.getDatabase(SignInActivity.this);
-                ReadyTripsDao readyTripsDao = db.readyTripsDao();
-
-// Insert the trip into the database using ExecutorService
-                AppDatabase.databaseWriteExecutor.execute(() -> {
-                    readyTripsDao.insertTrip(newTrip);
-                });
+                //TODO use this to save the trip locally to the database
+//                // Assume you have a ReadyTrips object
+//                ReadyTrips newTrip = new ReadyTrips("1", "to Paris", "photo_url", 4.5f,
+//                        "Paris", "France", "Sunny", 25.0f, "Adventure", "Friends",
+//                        "2024-10-10", "2024-10-15", "A wonderful trip to Paris");
+//
+//// Get the ReadyTripsDao from the AppDatabase
+//                AppDatabase db = AppDatabase.getDatabase(SignInActivity.this);
+//                ReadyTripsDao readyTripsDao = db.readyTripsDao();
+//
+//// Insert the trip into the database using ExecutorService
+//                AppDatabase.databaseWriteExecutor.execute(() -> {
+//                    readyTripsDao.insertTrip(newTrip);
+//                });
 
 
             }
@@ -173,9 +181,12 @@ public class SignInActivity extends AppCompatActivity {
                                 // Hide the progress dialog
                                 progressDialog.dismiss();
 
+
                                 if (task.isSuccessful()) {
+                                    Intent intent;
+                                    intent = new Intent(SignInActivity.this, MainActivity.class);
                                     Toast.makeText(SignInActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(SignInActivity.this, CompanionsActivity.class);
+
                                     startActivity(intent);
                                     finish();  // Finish the login activity
                                 } else {
@@ -241,13 +252,52 @@ public class SignInActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-            Intent intent = new Intent(SignInActivity.this, DestinationActivity.class);
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
+
         }
     }
+
+    private void saveTripToFirestore(String tripId) {//TODO use it in sign in pop up
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Reference to the ReadyTrips document
+        DocumentReference readyTripRef = db.collection("ReadyTrips").document(tripId);
+
+        // Reference to the user's mytrips collection
+        DocumentReference userTripRef = db.collection("users").document(userId).collection("mytrips").document(tripId);
+
+        // Fetch the trip data from ReadyTrips collection
+        readyTripRef.get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Get the trip data as a Map or custom object
+                        Map<String, Object> tripData = documentSnapshot.getData();
+
+                        // Save the trip data to the user's mytrips subcollection
+                        userTripRef.set(tripData)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Trip saved successfully!", Toast.LENGTH_SHORT).show();
+                                    Log.d("TripAdapter", "Trip saved successfully to Firestore");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Failed to save trip.", Toast.LENGTH_SHORT).show();
+                                    Log.e("TripAdapter", "Error saving trip: ", e);
+                                });
+                    } else {
+                        Toast.makeText(this, "Trip not found!", Toast.LENGTH_SHORT).show();
+                        Log.e("TripAdapter", "Trip with ID " + tripId + " does not exist.");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to fetch trip.", Toast.LENGTH_SHORT).show();
+                    Log.e("TripAdapter", "Error fetching trip: ", e);
+                });
+    }
+
 
 
     @Override
