@@ -89,8 +89,9 @@ public class DestinationActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         decorView.setSystemUiVisibility(uiOptions);
 
+        //TODO make sure to intialze places client only once
         String apiKey = getString(R.string.google_maps_api_key);
-        //Places.initializeWithNewPlacesApiEnabled(this, apiKey);
+        Places.initializeWithNewPlacesApiEnabled(this, apiKey);
         placesClient = Places.createClient(this);
 
         // Initialize RecyclerView for showing autocomplete results

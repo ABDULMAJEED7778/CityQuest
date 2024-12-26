@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_marginTop="8dp">
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingHorizontal="8dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/profile_image_post_item"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/user_placholer_icon"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circled_image"
+        android:clipToOutline="true"
+
+        android:outlineProvider="background"
+        />
+
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user_name_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Ghassan Salmen"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/time_post_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlowsemicondensed_regular"
+                android:text="31 mins ago"
+                android:textColor="@color/hintTextColor"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/follow_linearLayout_post_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+
+            >
+
+            <ImageView
+                android:id="@+id/follow_imageView_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_icon"
+                android:layout_marginTop="2dp"
+                app:tint="@color/secondary_color"
+                />
+            <TextView
+
+                android:id="@+id/follow_textView_post_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlowsemicondensed_regular"
+                android:text="Follow"
+                android:textColor="@color/secondary_color"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- Media container (Video or Photos) -->
+    <FrameLayout
+        android:id="@+id/media_container"
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <LinearLayout
+            android:id="@+id/view_pager_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+        <!-- ViewPager2 for horizontal scrolling images -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_photos_post_item"
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                 />
+
+
+
+
+
+        <!-- TabLayout for dots indicator -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstrains"
+            android:backgroundTint="@color/background_color"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicator="@null"
+            app:tabIndicatorColor="@color/primary_color"
+            app:tabIndicatorGravity="center"
+            app:tabIndicatorHeight="0dp"
+            />
+
+        </LinearLayout>
+
+
+
+
+        <androidx.media3.ui.PlayerView
+            android:id="@+id/videoView_post_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:use_controller="true"
+            android:visibility="gone"
+            android:background="@color/black"
+
+
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+
+            app:resize_mode="fit"/>
+
+
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/post_title_post_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Trip to Goa"
+            android:textColor="@color/primary_color"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/post_description_post_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/barlowsemicondensed_regular"
+
+            android:ellipsize="end"
+            android:text="Embark on a journey through the Cultural Delights of Bangalore, where vibrant traditions meet modern innovation. Explore bustling markets, savor aromatic spices, and immerse yourself in the rich heritage of India's Garden City."
+            android:textColor="@color/hintTextColor"
+            android:textSize="20sp"
+            />
+<!--        <com.colormoon.readmoretextview.ReadMoreTextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:id="@+id/tvReadMoreLess_post_item"-->
+<!--            android:textColor="@color/hintTextColor"-->
+<!--            android:textSize="20sp"-->
+<!--            android:fontFamily="@font/barlowsemicondensed_regular"-->
+
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="Embark on a journey through the Cultural Delights of Bangalore, where vibrant traditions meet modern innovation. Explore bustling markets, savor aromatic spices, and immerse yourself in the rich heritage of India's Garden City."-->
+
+<!--            />-->
+
+        <TextView
+            android:id="@+id/read_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="Read More"
+            android:textColor="@color/secondary_color"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_medium"
+             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:tint="@color/hintTextColor"
+                android:src="@drawable/eye_icon" />
+
+            <TextView
+                android:id="@+id/view_count_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="25,452 Views"
+                android:textColor="@color/hintTextColor"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hintTextColor"/>
+    <!-- Post actions like Like, Comment -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:paddingVertical="10dp"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/like_button_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/hintTextColor"
+
+                android:src="@drawable/thumbs_up" />
+            <TextView
+                android:id="@+id/like_count_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="250"
+                android:textColor="@color/hintTextColor"
+                android:layout_marginLeft="4dp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comment_linearLayout_post_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/comment_button_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/hintTextColor"
+                android:src="@drawable/comment_icon" />
+            <TextView
+                android:id="@+id/comment_count_post_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="250"
+                android:textColor="@color/hintTextColor"
+                android:layout_marginLeft="4dp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/share_button_post_item"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                app:tint="@color/hintTextColor"
+                android:src="@drawable/share_post_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Share"
+                android:textColor="@color/hintTextColor"
+                android:layout_marginLeft="4dp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hintTextColor"/>
+    <!-- Load More Button -->
+    <Button
+        android:id="@+id/load_more_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/primary_color_light"
+        android:fontFamily="@font/barlowsemicondensed_bold"
+        android:insetBottom="0dp"
+        android:text="Load More"
+        android:textColor="@color/background_color"
+        android:visibility="gone"
+        android:textSize="18sp"
+        app:cornerRadius="0dp" />
+
+
+
+
+</LinearLayout>

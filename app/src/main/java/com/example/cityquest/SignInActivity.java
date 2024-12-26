@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import com.example.cityquest.Database.AppDatabase;
 import com.example.cityquest.Database.ReadyTripsDao;
 import com.example.cityquest.model.ReadyTrips;
+import com.example.cityquest.model.User;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.utils.FirestoreCityUploader;
 import com.example.cityquest.utils.FirestoreTripUploader;
@@ -183,6 +184,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
                                 if (task.isSuccessful()) {
+
                                     Intent intent;
                                     intent = new Intent(SignInActivity.this, MainActivity.class);
                                     Toast.makeText(SignInActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();

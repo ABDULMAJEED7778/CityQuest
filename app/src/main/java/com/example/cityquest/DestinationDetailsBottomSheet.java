@@ -87,8 +87,11 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         recyclerView.setAdapter(photosAdapter);
 
 
-        // Initialize PlacesClient
-        placesClient = Places.createClient(requireContext());
+        placesClient = Places.createClient(getContext());
+
+
+
+
 
 
         Bundle args = getArguments();
@@ -132,9 +135,7 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
             }
 
             // Get the city overview (EDITORIAL_SUMMARY)
-            Log.e("hellow", "place.getEditorialSummary()");
             String overview = place.getEditorialSummary() != null ? place.getEditorialSummary() : "No overview available";
-
             CityOverfiewTextView.setText(overview); // Set the city overview
 
             // Get the photo metadata
@@ -144,33 +145,33 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
                 return;
             }
 
+            // Loop through each photo metadata and request the photo URI
             for (PhotoMetadata photoMetadata : metadataList) {
                 // Create a FetchResolvedPhotoUriRequest for each photo
-                final FetchResolvedPhotoUriRequest photoRequest = FetchResolvedPhotoUriRequest.builder(photoMetadata)
+                FetchResolvedPhotoUriRequest photoRequest = FetchResolvedPhotoUriRequest.builder(photoMetadata)
                         .setMaxWidth(500) // Adjust width and height as needed
                         .setMaxHeight(300)
                         .build();
 
                 // Request the photo URI
-                placesClient.fetchResolvedPhotoUri(photoRequest).addOnSuccessListener((fetchResolvedPhotoUriResponse) -> {
+                placesClient.fetchResolvedPhotoUri(photoRequest).addOnSuccessListener(fetchResolvedPhotoUriResponse -> {
                     Uri uri = fetchResolvedPhotoUriResponse.getUri();
                     String photographer = photoMetadata.getAttributions(); // Get photographer attribution if available
 
                     // Pass the Uri and photographer name to the adapter
                     photosAdapter.addPhoto(uri, photographer);
-                }).addOnFailureListener((exception) -> {
+                }).addOnFailureListener(exception -> {
                     if (exception instanceof ApiException) {
-                        final ApiException apiException = (ApiException) exception;
                         Log.e("PlaceBottomSheet", "Error fetching photo: " + exception.getMessage());
                     }
                 });
             }
-        }).addOnFailureListener((exception) -> {
+        }).addOnFailureListener(exception -> {
             if (exception instanceof ApiException) {
-                final ApiException apiException = (ApiException) exception;
                 Log.e("PlaceBottomSheet", "Error fetching place details: " + ((ApiException) exception).getStatusCode());
             }
         });
     }
+
 
 }

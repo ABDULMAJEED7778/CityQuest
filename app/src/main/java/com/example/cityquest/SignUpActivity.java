@@ -2,6 +2,8 @@ package com.example.cityquest;
 
 
 
+import static com.example.cityquest.Database.AppDatabase.databaseWriteExecutor;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.cityquest.Database.AppDatabase;
 import com.example.cityquest.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -94,13 +97,19 @@ public class SignUpActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 if (task.isSuccessful()) {
                                     String userId = mAuth.getCurrentUser().getUid();
-                                    User user = new User(userId,userName, email,"");
+                                    User user = new User(userId,userName, email,0,0,0,"");
                                     db.collection("users").document(userId)
                                             .set(user)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
+
+                                                        AppDatabase database = AppDatabase.getDatabase(SignUpActivity.this);
+                                                        databaseWriteExecutor.execute(() -> {
+                                                            database.userDao().insertUser(user);
+                                                        });
+
                                                         Toast.makeText(SignUpActivity.this, "Account created", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                                                         startActivity(intent);

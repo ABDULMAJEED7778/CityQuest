@@ -2,6 +2,7 @@ package com.example.cityquest.model;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class ReadyTrips {
     private String overview; // Description/Overview of the trip
 
     // Empty constructor required for Firestore
+    @Ignore
+
     public ReadyTrips() {}
 
     // Constructor

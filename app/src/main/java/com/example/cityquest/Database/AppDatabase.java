@@ -6,13 +6,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.cityquest.model.ReadyTrips;
+import com.example.cityquest.model.User;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {ReadyTrips.class}, version = 2)
+@Database(entities = {ReadyTrips.class, User.class}, version = 3,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ReadyTripsDao readyTripsDao();
+    public abstract UserDao userDao(); // Add UserDao
+
 
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4; // For running multiple tasks concurrently

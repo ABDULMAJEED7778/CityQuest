@@ -1,0 +1,85 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/dp_270"
+    android:layout_height="200dp"
+    android:layout_margin="8dp"
+
+    android:backgroundTint="@color/background_color"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="16dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        >
+
+        <ImageView
+            android:id="@+id/things_to_do_img"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:clipToOutline="true"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/bangalore" />
+
+
+
+        <ImageView
+            android:id="@+id/things_to_do_favorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:background="@drawable/circled_image"
+            android:padding="5dp"
+            android:src="@drawable/heart_icon"
+            app:tint="@color/red" />
+
+
+
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/things_to_do_place_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Sarovaram Park"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/primary_color"
+        android:textSize="12sp"
+
+
+        />
+    <TextView
+        android:id="@+id/things_to_do_place_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+
+        android:fontFamily="@font/poppins_regular"
+        android:text="One of the 27 wetlands of india"
+        android:textColor="@color/gray"
+        android:textSize="10sp"
+
+        />
+
+    </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>

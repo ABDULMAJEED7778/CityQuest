@@ -1,10 +1,24 @@
 package com.example.cityquest.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+import java.util.List;
+
+@Entity(tableName = "user_table")
+
 public class User {
 
+    @PrimaryKey
+    @NonNull
     private String userId;
     private String userName;
     private String email;
+    private int followersCount;
+    private int followingCount;
+    private int postCount;
 //    private String phoneNumber;
     private String profilePictureUrl;
 //    private List<Trip> trips;
@@ -14,17 +28,28 @@ public class User {
    // private String address;
   //  private String dateOfBirth;
     //private String userType;
+    @Ignore // Room will ignore this field
+    private List<String> followers; // IDs of followers
+    @Ignore // Room will ignore this field
+    private List<String> following; // IDs of following
 
 
 
     public User() {
     }
-    public User(String userId, String userName, String email, String profilePictureUrl) {
+
+    @Ignore
+    public User(String userId, String userName, String email, int followersCount, int followingCount, int postCount, String profilePictureUrl) {
         this.userId = userId;
         this.userName = userName;
         this.email = email;
-        this.profilePictureUrl = profilePictureUrl;}
+        this.followersCount = followersCount;
+        this.followingCount = followingCount;
+        this.postCount = postCount;
+        this.profilePictureUrl = profilePictureUrl;
+    }
 
+    @NonNull
     public String getUserId() {
         return userId;
     }
@@ -47,6 +72,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
     }
 
     public String getProfilePictureUrl() {

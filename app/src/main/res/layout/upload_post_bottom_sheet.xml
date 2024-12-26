@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+
+    android:background="@color/white">
+
+    <!-- Close Icon with Title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:id="@+id/close_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_close"
+            android:contentDescription="close" />
+
+        <TextView
+            android:id="@+id/text_upload_via_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Upload Via Gallery"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_medium" />
+    </LinearLayout>
+
+    <!-- Photo Upload Item -->
+    <LinearLayout
+        android:id="@+id/upload_photos_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/photos_icon"
+            app:tint="@color/gray" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photos"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload max 5 photos"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:fontFamily="@font/poppins_light" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/primary_color"
+            />
+    </LinearLayout>
+
+    <!-- Video Upload Item -->
+    <LinearLayout
+        android:id="@+id/upload_video_linear_layout"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/video_icon"
+            app:tint="@color/gray"
+             />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Video"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload one video"
+                android:textSize="12sp"
+                android:textColor="@color/gray"
+                android:fontFamily="@font/poppins_light" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/right_arrow"
+            app:tint="@color/primary_color" />
+    </LinearLayout>
+</LinearLayout>

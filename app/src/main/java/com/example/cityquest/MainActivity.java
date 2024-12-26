@@ -1,5 +1,7 @@
 package com.example.cityquest;
 
+import static com.example.cityquest.Database.AppDatabase.databaseWriteExecutor;
+
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -22,7 +24,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.cityquest.Database.AppDatabase;
 import com.example.cityquest.model.LocationViewModel;
+import com.example.cityquest.model.User;
+import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.utils.LocationPermissionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
             int defaultNavHeight = getResources().getDimensionPixelSize(R.dimen.bottom_nav_height);
             ViewGroup.LayoutParams layoutParams = bottomNavigationView.getLayoutParams();
+
+            retriveAndSaveUserData();
 
 
             if (systemBarsInsets.bottom > 0 && gestureInsets.bottom > 0) {
@@ -130,10 +137,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
+    private void retriveAndSaveUserData() {
+        FirebaseUtils.getUsersCollection().document(FirebaseUtils.getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        User user = documentSnapshot.toObject(User.class);
+                        AppDatabase database = AppDatabase.getDatabase(this);
+                        databaseWriteExecutor.execute(() -> {
+                            database.userDao().insertUser(user);
+                        });
+                    }
+                    else {
+                        Log.e("Firestore", "User data not found");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching user data", e));
+    }
 
 
     private void getLastLocation() {

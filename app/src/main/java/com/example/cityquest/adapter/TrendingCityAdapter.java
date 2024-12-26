@@ -1,6 +1,7 @@
 package com.example.cityquest.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.cityquest.ExploreCityActivity;
 import com.example.cityquest.R;
+import com.example.cityquest.SignInActivity;
+import com.example.cityquest.SignUpActivity;
 import com.example.cityquest.model.City;
 
 import java.util.List;
@@ -48,6 +52,22 @@ public class TrendingCityAdapter extends RecyclerView.Adapter<TrendingCityAdapte
                 .load(city.getCityImageUrl())  // Load the city image from the URL
                 .placeholder(R.drawable.bangalore)  // Placeholder image while loading
                 .into(holder.cityImageView);
+
+        holder.itemView.setOnClickListener(v -> {
+            // Create an Intent to navigate to the CityDetailsActivity
+            Intent intent = new Intent(context, ExploreCityActivity.class);
+
+//
+//            // Pass data (e.g., city name, country name, or city object) to the next activity
+//            intent.putExtra("CITY_NAME", city.getCityName());
+//            intent.putExtra("COUNTRY_NAME", city.getCountryName());
+//            intent.putExtra("CITY_RATING", city.getCityRating());
+//            intent.putExtra("CITY_IMAGE_URL", city.getCityImageUrl());
+
+            // Start the new activity
+            context.startActivity(intent);
+        });
+
     }
 
     @Override

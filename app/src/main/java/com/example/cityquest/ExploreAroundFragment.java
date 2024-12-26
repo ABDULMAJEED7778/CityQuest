@@ -37,6 +37,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -71,6 +72,8 @@ public class ExploreAroundFragment extends Fragment {
 
     private CityPagerAdapter cityPagerAdapter;
     Button searchButton;
+
+    ImageButton profileButton;
 
     private RecyclerView trendingCitiesRecyclerView, weekendTripRecyclerView, citiesRecyclerView;
     private TrendingCityAdapter cityAdapter;
@@ -113,6 +116,7 @@ public class ExploreAroundFragment extends Fragment {
         bottomLayout = view.findViewById(R.id.explore_page_bottom_layout);
         scrollView = view.findViewById(R.id.scrollView_explore_page);
         loadingAnim = view.findViewById(R.id.loading_anim_explore_page);
+        profileButton = view.findViewById(R.id.profile_Image_btn_explore);
 
 
 
@@ -148,6 +152,11 @@ public class ExploreAroundFragment extends Fragment {
                     Log.i("dfasdfas",color + "dfsasdf");
                 }
             }
+        });
+
+        profileButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MyProfileActivity.class);
+            startActivity(intent);
         });
 
         searchButton.setOnTouchListener((v, event) -> {
@@ -195,7 +204,7 @@ public class ExploreAroundFragment extends Fragment {
         trendingCitiesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         cityAdapter = new TrendingCityAdapter(getContext(),cityList);
         Log.e("cityList",cityList.toString());
-        Log.e("user",FirebaseUtils.getCurrentUser().getUid());
+
 
 
         //this is used to achieve horizontal paging as in viewPager

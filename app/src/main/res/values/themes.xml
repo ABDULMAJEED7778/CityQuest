@@ -14,12 +14,22 @@
         <!-- Status bar color. -->
         <item name="popupMenuStyle">@style/CustomPopupMenu</item>
         <item name="colorControlActivated">@color/secondary_color_dark</item>
+
+        <item name="floatingActionButtonStyle">@style/CustomFloatingActionButton</item>
+
     </style>
     <!-- Base application theme. -->
     <style name="Base.Theme.CityQuest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+
+    <style name="CustomFloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:background">@color/gray</item>
+        <item name="android:elevation">8dp</item>
+        <item name="rippleColor">#80FFFFFF</item> <!-- Semi-transparent white ripple -->
+    </style>
+
 
 
 </resources>

@@ -1,0 +1,27 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/companion_item_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@drawable/companion_item_selector"
+
+    >
+
+
+    <ImageView
+        android:id="@+id/image_slider_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/solo_photo"
+        android:scaleType="centerCrop" />
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>

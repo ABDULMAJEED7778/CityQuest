@@ -7,8 +7,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class FirebaseUtils {
     private static final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -29,6 +31,9 @@ public class FirebaseUtils {
         return db.collection("users");
     }
 
+    public static CollectionReference getPostsCollection() {
+        return db.collection("posts");
+    }
 
     public static CollectionReference getCitiesCollection() {
         return db.collection("cities");
@@ -38,10 +43,28 @@ public class FirebaseUtils {
     public static DocumentReference getUserDocument(String userId) {
         return getUsersCollection().document(userId);
     }
+
+    public static void getUserData(String userId, OnCompleteListener<DocumentSnapshot> onCompleteListener) {
+        getUserDocument(userId)
+                .get()
+                .addOnCompleteListener(onCompleteListener);
+    }
+
     public static DocumentReference getMyTripsDocument(String userId,String TripId) {
         return getUsersCollection().document(userId).collection("mytrips").document(TripId);
 
     }
+    public static CollectionReference getLikedPostsCollection(String userId) {
+        return getUsersCollection().document(userId).collection("myLikedPosts");
+
+    }
+
+    public static void getUserLikedPosts(String userId, OnCompleteListener<QuerySnapshot> onCompleteListener) {
+        getLikedPostsCollection(userId)
+                .get()
+                .addOnCompleteListener(onCompleteListener);
+    }
+
 
     // Get reference to trips collection for a specific user
     public static CollectionReference getTripsCollection(String userId) {

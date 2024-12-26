@@ -110,12 +110,16 @@
                     android:layout_weight="1"/>
 
                 <ImageButton
+
+                    android:id="@+id/profile_Image_btn_explore"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:background="@drawable/circled_image"
-                    android:src="@drawable/bell_icon"
+                    android:src="@drawable/user_placholer_icon"
+                    android:layout_marginRight="6dp"
                     android:layout_gravity="end|center_vertical"
                     />
+
 
             </LinearLayout>
 
@@ -331,5 +335,6 @@
             </LinearLayout>
         </RelativeLayout>
 </RelativeLayout>
+
 
 </ScrollView>

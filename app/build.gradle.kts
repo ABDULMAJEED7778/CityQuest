@@ -62,6 +62,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.navigation:navigation-fragment:2.6.0")
     implementation("androidx.navigation:navigation-ui:2.6.0")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
 
@@ -110,10 +111,25 @@ dependencies {
     implementation ("com.google.maps:google-maps-services:2.2.0")
     implementation ("org.slf4j:slf4j-simple:1.7.25")
 
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
+
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+
+
+    implementation ("androidx.media3:media3-exoplayer:1.4.0")
+    implementation ("androidx.media3:media3-ui:1.4.0")
+
+
+    implementation ("org.ocpsoft.prettytime:prettytime:5.0.0.Final")
+    implementation ("com.github.colourmoon:readmore-textview:v1.0.2")
+
+
+
+
 
 
 

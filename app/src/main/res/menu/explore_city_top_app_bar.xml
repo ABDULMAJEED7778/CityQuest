@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/share_icon"
+        android:title="share"
+        android:contentDescription="share City"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/primary_color"
+        />
+
+
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/heart_icon"
+        android:title="favorite"
+        android:contentDescription="Add city to favorites"
+        app:showAsAction="ifRoom"
+        app:iconTint="@color/primary_color"
+        />
+</menu>

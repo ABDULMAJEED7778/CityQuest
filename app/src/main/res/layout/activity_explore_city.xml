@@ -1,0 +1,408 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+
+    android:background="@color/background_color"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:title=""
+        app:menu="@menu/explore_city_top_app_bar"
+        app:navigationIcon="@drawable/backarrow_icon"
+            app:navigationIconTint="@color/primary_color" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scrollView_explore_city"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ViewPager2 for horizontal scrolling images -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                />
+
+
+
+
+
+            <!-- TabLayout for dots indicator -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstrains"
+                android:backgroundTint="@color/background_color"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicator="@null"
+                app:tabIndicatorColor="@color/primary_color"
+                app:tabIndicatorGravity="center"
+                app:tabIndicatorHeight="0dp"
+                 />
+
+            <TextView
+                android:id="@+id/cityName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Goa"
+                android:fontFamily="@font/barlowsemicondensed_bold"
+                android:paddingLeft="16dp"
+
+                android:textColor="@color/primary_color"
+                android:textSize="32sp"
+                android:textStyle="normal"/>
+
+            <TextView
+                android:id="@+id/city_popular_for_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlowsemicondensed_regular"
+                android:paddingLeft="16dp"
+                android:text="Popular for beaches and nightlife"
+                android:textColor="@color/hintTextColor"
+                android:textSize="20sp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout_for_cityExplore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/background_color"
+
+
+                android:paddingHorizontal="16dp"
+                android:paddingTop="8dp"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/primary_color"
+                app:tabMaxWidth="140dp"
+                app:tabMinWidth="100dp"
+                app:tabMode="auto"
+                app:tabRippleColor="@color/primary_color_background"
+                app:tabSelectedTextColor="@color/primary_color"
+                app:tabTextAppearance="@style/details_tap_ready_plan_page"
+                app:tabTextColor="@color/gray">
+
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Overview"
+
+                    />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Things to do"
+
+                    />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nearby"
+
+                    />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Travel Stories"
+
+                    />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <!-- Content Sections -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Overview Section -->
+                <LinearLayout
+                    android:id="@+id/section_overview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/overview_section"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/barlowsemicondensed_regular"
+                        android:padding="16dp"
+                        android:text="Embark on a journey through the Cultural Delights of Bangalore, where vibrant traditions meet modern innovation. Explore bustling markets, savor aromatic spices, and immerse yourself in the rich heritage of India's Garden City."
+                        android:textColor="@color/hintTextColor"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/things_to_do_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+
+
+                        android:text="Things To Do &amp; See"
+                        android:textAllCaps="false"
+                        android:textColor="@color/primary_color"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+
+
+                            android:text="View All"
+                            android:textAllCaps="false"
+                            android:textColor="@color/secondary_color"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/right_arrow"
+                            android:paddingBottom="4dp"
+                            app:tint="@color/secondary_color"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout_things_to_do"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/background_color"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/primary_color"
+                    app:tabMaxWidth="160dp"
+                    app:tabMinWidth="100dp"
+                    app:tabMode="scrollable"
+                    app:tabRippleColor="@color/primary_color_background"
+                    app:tabSelectedTextColor="@color/primary_color"
+                    app:tabTextAppearance="@style/tab_layout_things_to_do_textStyle"
+                    app:tabTextColor="@color/gray">
+
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Top Attractions"
+
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nature"
+
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food"
+
+                        />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cultural Activities"
+
+                        />
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_TopAttractions"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:clipToPadding="false"
+                     />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_Nature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_Food"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:visibility="gone"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_Culture"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:visibility="gone"
+                    />
+
+
+
+                <!-- Explore Section -->
+                <LinearLayout
+                    android:id="@+id/section_nearby"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/poppins_medium"
+
+
+                            android:text="Nearby Destination from "
+                            android:textAllCaps="false"
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/nearby_destination_cityName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Goa"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textAllCaps="false"
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+
+
+
+
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_nearbyDest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:scrollbars="horizontal"
+
+                    />
+
+                <LinearLayout
+                    android:id="@+id/section_stories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/poppins_medium"
+
+                            android:text="Inspiration From Travellers"
+                            android:textAllCaps="false"
+                            android:textColor="@color/primary_color"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+
+
+
+
+
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_stories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:scrollbars="horizontal"
+
+                        />
+
+
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
