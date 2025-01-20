@@ -90,7 +90,7 @@ public class DestinationActivity extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
 
         //TODO make sure to intialze places client only once
-        String apiKey = getString(R.string.google_maps_api_key);
+        String apiKey = BuildConfig.MAPS_API_KEY;
         Places.initializeWithNewPlacesApiEnabled(this, apiKey);
         placesClient = Places.createClient(this);
 
@@ -108,8 +108,8 @@ public class DestinationActivity extends AppCompatActivity {
                 String placeId = selectedPrediction.getPlaceId();
                 String cityName = selectedPrediction.getPrimaryText(null).toString();
                 Log.e("placeId",placeId);
-                DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId,cityName);
-                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
+//                DestinationDetailsBottomSheet bottomSheet = DestinationDetailsBottomSheet.newInstance(placeId,cityName);
+//                bottomSheet.show(getSupportFragmentManager(), bottomSheet.getTag());
 
 //                fetchPlaceDetails(placeId);
             }

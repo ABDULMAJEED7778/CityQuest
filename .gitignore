@@ -1,3 +1,7 @@
+# Exclude secrets.properties from Git
+secrets.properties
+
+
 *.iml
 .gradle
 /local.properties

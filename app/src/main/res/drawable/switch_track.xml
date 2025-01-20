@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Track when Switch is ON -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dimens_20"/>
+            <solid android:color="@color/secondary_color_dark"/> <!-- Lighter color for ON state -->
+            <size android:width="@dimen/dimens_200" android:height="@dimen/dimens_35"/> <!-- Custom size -->
+
+        </shape>
+    </item>
+
+    <!-- Track when Switch is OFF -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/dimens_20"/>
+            <solid android:color="@color/primary_color_light"/> <!-- Different color for OFF state -->
+            <size android:width="@dimen/dimens_200" android:height="@dimen/dimens_35"/> <!-- Custom size -->
+
+        </shape>
+    </item>
+
+</selector>

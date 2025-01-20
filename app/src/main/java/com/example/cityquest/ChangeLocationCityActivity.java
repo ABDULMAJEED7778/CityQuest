@@ -71,7 +71,7 @@ public class ChangeLocationCityActivity extends AppCompatActivity implements Cha
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.primary_color_light));
 
 
-        String apiKey = getString(R.string.google_maps_api_key);
+        String apiKey = BuildConfig.MAPS_API_KEY;
         // Initialize the Places SDK
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apiKey); // Replace with your API key

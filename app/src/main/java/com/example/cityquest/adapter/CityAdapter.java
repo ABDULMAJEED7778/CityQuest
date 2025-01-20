@@ -40,7 +40,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
         holder.textViewCountryName.setText(city.getCountryName());
         holder.textViewCityRating.setText(city.getCityRating());
         // Assume you have a method to load images
-        Glide.with(context).load(city.getCityImageUrl()).into(holder.cityImage);
+        Glide.with(context)
+                .load(city.getCityImageUrl())
+                .placeholder(R.drawable.image_placeholder) // Placeholder image
+                .error(R.drawable.image_placeholder)
+                .into(holder.cityImage);
 
 
     }

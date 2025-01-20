@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dimens_16"
+    android:paddingTop="@dimen/dimens_64"
+    android:paddingBottom="@dimen/dimens_16"
+    tools:context=".CompanionsActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/App_logo_destination"
+                android:layout_width="@dimen/dimens_200"
+                android:layout_height="@dimen/dimens_45"
+                android:layout_gravity="start"
+                app:srcCompat="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/coming_with_you_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/dimens_32"
+                android:layout_marginBottom="@dimen/dimens_32"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Coming with you?"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_size_32" />
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                app:columnCount="2"
+                app:rowCount="2">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/going_solo_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimens_250"
+                    android:layout_marginEnd="@dimen/dimens_32"
+                    android:layout_marginBottom="@dimen/dimens_16"
+                    app:cardCornerRadius="@dimen/dimens_25"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/solo_photo" />
+
+                    <TextView
+                        android:id="@+id/solo_card_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="@dimen/dimens_16"
+                        android:fontFamily="@font/barlowsemicondensed_bold"
+                        android:text="Going Solo"
+                        android:textColor="@color/secondary_color"
+                        android:textSize="@dimen/font_size_24" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/partner_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimens_250"
+                    android:layout_marginBottom="@dimen/dimens_16"
+                    app:cardCornerRadius="@dimen/dimens_25"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/partner_photo" />
+
+                    <TextView
+                        android:id="@+id/partner_card_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="@dimen/dimens_16"
+                        android:fontFamily="@font/barlowsemicondensed_bold"
+                        android:text="Partner"
+                        android:textColor="@color/secondary_color"
+                        android:textSize="@dimen/font_size_24" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/family_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimens_250"
+                    android:layout_marginEnd="@dimen/dimens_32"
+                    android:layout_marginBottom="@dimen/dimens_16"
+                    app:cardCornerRadius="@dimen/dimens_25"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/family_photo" />
+
+                    <TextView
+                        android:id="@+id/family_card_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="@dimen/dimens_16"
+                        android:fontFamily="@font/barlowsemicondensed_bold"
+                        android:text="Family"
+                        android:textColor="@color/secondary_color"
+                        android:textSize="@dimen/font_size_24" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/friends_card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimens_250"
+                    android:layout_marginBottom="@dimen/dimens_16"
+                    app:cardCornerRadius="@dimen/dimens_25"
+                    app:layout_columnWeight="1"
+                    app:layout_rowWeight="1">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/friends_photo" />
+
+                    <TextView
+                        android:id="@+id/friends_card_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="@dimen/dimens_16"
+                        android:fontFamily="@font/barlowsemicondensed_bold"
+                        android:text="Friends"
+                        android:textColor="@color/secondary_color"
+                        android:textSize="@dimen/font_size_24" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.gridlayout.widget.GridLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="@dimen/dimens_8">
+
+                <Button
+                    android:id="@+id/backBtn_comp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_gravity="start"
+                    android:background="@drawable/back_btn_background"
+                    android:drawableStart="@drawable/left_arrow"
+                    android:drawablePadding="@dimen/dimens_16"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/barlowsemicondensed_bold"
+                    android:paddingStart="@dimen/dimens_8"
+                    android:paddingEnd="@dimen/dimens_16"
+                    android:text="back"
+                    android:textColor="@color/background_color"
+                    android:textSize="@dimen/font_size_18" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/nextBtn_comp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_gravity="end"
+                    android:background="@drawable/rounded_corner_next_btn"
+                    android:drawableEnd="@drawable/right_arrow"
+                    android:drawablePadding="@dimen/dimens_16"
+                    android:drawableTint="@color/background_color"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/barlowsemicondensed_bold"
+                    android:paddingStart="@dimen/dimens_16"
+                    android:paddingEnd="@dimen/dimens_8"
+                    android:text="Next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/background_color"
+                    android:textSize="@dimen/font_size_20" />
+            </LinearLayout>
+
+</RelativeLayout>

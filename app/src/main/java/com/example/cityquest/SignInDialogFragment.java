@@ -1,5 +1,7 @@
 package com.example.cityquest;
 
+import static com.example.cityquest.Database.AppDatabase.databaseWriteExecutor;
+
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +25,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.cityquest.Database.AppDatabase;
+import com.example.cityquest.model.User;
+import com.example.cityquest.utils.FirebaseUtils;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
@@ -35,6 +40,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class SignInDialogFragment extends DialogFragment {
 
@@ -83,7 +89,7 @@ public class SignInDialogFragment extends DialogFragment {
         signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
-                        .setServerClientId(getString(R.string.default_web_client_id)) // Your OAuth 2.0 client ID
+                        .setServerClientId("R.string.default_web_client_id") // Your OAuth 2.0 client ID
                         .setFilterByAuthorizedAccounts(false) // Show all accounts
                         .build())
                 .build();
@@ -141,6 +147,43 @@ public class SignInDialogFragment extends DialogFragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+
+                            FirebaseUser currentUser = FirebaseUtils.getCurrentUser();
+                            if (currentUser != null) {
+                                String userId = currentUser.getUid();
+
+                                // Check if user data exists in Firestore
+                                FirebaseUtils.getUsersCollection().document(userId)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                if (task.isSuccessful() && task.getResult() != null) {
+                                                    DocumentSnapshot document = task.getResult();
+                                                    if (document.exists()) {
+                                                        // User exists, retrieve the user data
+                                                        User user = document.toObject(User.class);
+
+                                                        // Save the user data in Room
+                                                        if (user != null) {
+                                                            AppDatabase database = AppDatabase.getDatabase(getContext());
+                                                            databaseWriteExecutor.execute(() -> {
+                                                                database.userDao().insertUser(user);
+                                                            });
+                                                        }
+
+                                                    } else {
+                                                        Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                } else {
+                                                    Toast.makeText(getContext(), "Failed to retrieve user", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+
+
                             Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_SHORT).show();
                             listener.onSignInSuccess();  // Notify listener of success
                             dismiss();  // Close the dialog

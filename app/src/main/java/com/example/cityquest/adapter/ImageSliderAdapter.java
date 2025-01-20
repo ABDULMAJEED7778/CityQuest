@@ -1,6 +1,7 @@
 package com.example.cityquest.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
+import com.example.cityquest.model.Photo;
 
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         String imageUrl = imageUrls.get(position);
         Glide.with(context)
                 .load(imageUrl) // Load image using Glide or Picasso
+                .placeholder(R.drawable.image_placeholder) // Replace with your placeholder drawable resource
+                .error(R.drawable.image_placeholder) // Optional: Image to display if loading fails
                 .into(holder.imageView);
     }
 
@@ -49,5 +53,12 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
             imageView = itemView.findViewById(R.id.image_slider_imageView);
         }
     }
+    public void addPhoto(Uri uri) {
+        // Create a Photo object with the URL and photographer name
+
+        imageUrls.add(uri.toString());
+        notifyItemInserted(imageUrls.size() - 1);
+    }
+
 }
 

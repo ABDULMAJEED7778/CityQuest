@@ -47,19 +47,19 @@ public class WeekendTripAdapter extends RecyclerView.Adapter<WeekendTripAdapter.
 
         Glide.with(context)
                 .load(city.getCityImageUrl())  // Load the city image from the URL
-                .placeholder(R.drawable.bangalore)  // Placeholder image while loading
+                .placeholder(R.drawable.image_placeholder) // Replace with your placeholder drawable resource
+                .error(R.drawable.image_placeholder) // Optional: Image to display if loading fails
                 .into(holder.cityImageView);
 
         holder.itemView.setOnClickListener(v -> {
             // Create an Intent to navigate to the CityDetailsActivity
             Intent intent = new Intent(context, ExploreCityActivity.class);
 
-//
-//            // Pass data (e.g., city name, country name, or city object) to the next activity
-//            intent.putExtra("CITY_NAME", city.getCityName());
-//            intent.putExtra("COUNTRY_NAME", city.getCountryName());
-//            intent.putExtra("CITY_RATING", city.getCityRating());
-//            intent.putExtra("CITY_IMAGE_URL", city.getCityImageUrl());
+
+           intent.putExtra("CITY_NAME", city.getCityName());
+            intent.putExtra("CITY_ID", city.getCityId());
+            intent.putExtra("CITY_DESCRIPTION", city.getCityDescription());
+            intent.putExtra("CITY_OVERVIEW", city.getOverview());
 
             // Start the new activity
             context.startActivity(intent);

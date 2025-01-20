@@ -1,6 +1,8 @@
 package com.example.cityquest;
 
 import android.app.Application;
+import android.util.Log;
+
 import com.google.android.libraries.places.api.Places;
 
 public class MyApp extends Application {
@@ -8,10 +10,11 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        String apiKey = getString(R.string.google_maps_api_key);
+        String apiKey = BuildConfig.MAPS_API_KEY;
         // Initialize the Places API only once for the entire app
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),apiKey );
+            Places.initializeWithNewPlacesApiEnabled(this, apiKey);
+            Log.e("MyApp", "Places API initialized");
         }
     }
 }

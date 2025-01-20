@@ -7,6 +7,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +30,13 @@ import com.example.cityquest.model.LocationViewModel;
 import com.example.cityquest.model.User;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.utils.LocationPermissionUtil;
+import com.example.cityquest.utils.TripRepository;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.List;
@@ -80,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        if(FirebaseUtils.getCurrentUser() != null){
+            TripRepository tripRepository = new TripRepository(AppDatabase.getDatabase(this).readyTripsDao(), FirebaseFirestore.getInstance());
+            tripRepository.startListeningForTripUpdates(FirebaseUtils.getCurrentUser().getUid());
+
+        }
+
+
 
 
         locationViewModel = new ViewModelProvider(this).get(LocationViewModel.class);
@@ -113,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = ExploreAroundFragment.newInstance(selectedCity);
                     break;
                 case R.id.nav_itinerary:
-                    selectedFragment = new TripsFragment();
+//                    selectedFragment = new TripsFragment();
+                    selectedFragment = new DestinationFragment();
                     break;
                 case R.id.nav_community:
                     selectedFragment = new CommunityActivity();
@@ -136,6 +147,18 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.nav_explore);
         }
     }
+
+
+
+
+    public void switchToNextFragment(Fragment nextFragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, nextFragment)
+                .addToBackStack(null) // Add to backstack to allow navigating back
+                .commit();
+    }
+
 
     private void retriveAndSaveUserData() {
         FirebaseUtils.getUsersCollection().document(FirebaseUtils.getCurrentUser().getUid())

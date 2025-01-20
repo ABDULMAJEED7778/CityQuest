@@ -19,9 +19,23 @@ public interface ReadyTripsDao {
     @Query("SELECT * FROM ready_trips")
     List<ReadyTrips> getAllTrips();
 
+    @Update
+    void updateTrip(ReadyTrips trip);
+
     @Query("SELECT * FROM ready_trips WHERE tripId = :tripId")
     ReadyTrips getTripById(String tripId);
 
     @Delete
     void deleteTrip(ReadyTrips readyTrip);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertOrUpdateTrips(List<ReadyTrips> trips);
+
+    @Query("SELECT * FROM ready_trips WHERE synced = 0")
+    List<ReadyTrips> getUnsyncedTrips(); // Retrieve unsynced trips for syncing
+
+
+    @Query("DELETE FROM ready_trips WHERE tripId NOT IN (:firestoreIds)")
+    void deleteTripsNotInFirestore(List<String> firestoreIds);
+
 }

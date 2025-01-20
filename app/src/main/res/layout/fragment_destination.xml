@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    tools:context=".DestinationActivity"
+    android:background="@color/background_color"
+    android:paddingBottom="@dimen/dimens_16"
+    android:paddingTop="@dimen/dimens_64"
+    android:paddingHorizontal="@dimen/dimens_16">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <ImageView
+        android:id="@+id/App_logo_destination"
+        android:layout_width="@dimen/dimens_200"
+        android:layout_height="@dimen/dimens_45"
+        android:layout_gravity="start"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/want_to_go_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimens_32"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Where do you want to go?"
+        android:textColor="@color/primary_color"
+        android:textSize="@dimen/font_size_24"
+        android:textStyle="bold" />
+
+    <AutoCompleteTextView
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimens_12"
+        android:importantForAccessibility="yes"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textColor="@color/primary_color"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_vertical|start"
+        android:drawablePadding="@dimen/dimens_16"
+        android:layout_marginTop="@dimen/dimens_16"
+        android:hint="Search a city, a place or a country"
+        android:textColorHint="@color/hintTextColor"
+        android:background="@drawable/rounded_corner_et"
+        android:drawableStart="@drawable/search_icon"
+        android:singleLine="true"
+        android:drawableTint="@color/primary_color" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_search_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dimens_16"
+        android:background="@drawable/search_suggestion_background"
+        android:elevation="@dimen/dimens_4"
+        android:visibility="gone"
+        android:paddingHorizontal="@dimen/dimens_16"
+        android:paddingVertical="@dimen/dimens_16"
+        android:scrollbars="horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/dimens_16">
+
+        <TextView
+            android:id="@+id/popular_cities_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Popular Cities"
+            android:textColor="@color/primary_color"
+            android:textSize="@dimen/font_size_24" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/dimens_4"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dimens_2"
+            android:layout_gravity="center"
+            android:background="@drawable/fade_right_to_left_line" />
+    </LinearLayout>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup_filters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimens_8"
+        app:selectionRequired="true"
+        app:singleLine="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_historical"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_48"
+            android:padding="@dimen/dimens_8"
+            app:chipBackgroundColor="@color/transparent"
+            android:text="Historical"
+            android:textSize="@dimen/font_size_12"
+            app:chipMinTouchTargetSize="@dimen/dimens_48"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_Cultural"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_48"
+            android:padding="@dimen/dimens_8"
+            android:text="Cultural"
+            android:textSize="@dimen/font_size_12"
+            app:chipMinTouchTargetSize="@dimen/dimens_48"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_Modern"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_48"
+            android:padding="@dimen/dimens_8"
+            android:text="Modern"
+            android:textSize="@dimen/font_size_12"
+            app:chipMinTouchTargetSize="@dimen/dimens_48"
+            app:ensureMinTouchTargetSize="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_coastal"
+            style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimens_48"
+            android:padding="@dimen/dimens_8"
+            android:text="Coastal"
+            android:textSize="@dimen/font_size_12"
+            app:chipMinTouchTargetSize="@dimen/dimens_48"
+            app:ensureMinTouchTargetSize="true" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_city_popular"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/dimens_16"
+        android:layout_marginBottom="@dimen/dimens_16"
+        android:scrollbars="vertical" />
+
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <Button
+        android:id="@+id/skipBtn_dest"
+        style="@android:style/Widget.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimens_50"
+        android:layout_gravity="end"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+
+        android:background="@drawable/rounded_corner_city_info"
+        android:drawableEnd="@drawable/right_arrow"
+        android:drawablePadding="@dimen/dimens_16"
+        android:drawableTint="@color/background_color"
+        android:elevation="0dp"
+        android:fontFamily="@font/barlowsemicondensed_bold"
+        android:paddingStart="@dimen/dimens_16"
+        android:paddingEnd="@dimen/dimens_8"
+        android:text="Try Trip To Bangalore"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/background_color"
+        android:textSize="@dimen/font_size_20" />
+</RelativeLayout>

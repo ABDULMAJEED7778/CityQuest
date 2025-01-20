@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/dimens_16"
+    android:paddingTop="@dimen/dimens_64"
+    android:paddingBottom="@dimen/dimens_16"
+    tools:context=".DateRangeActivity">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/App_logo_destination"
+                android:layout_width="@dimen/dimens_200"
+                android:layout_height="@dimen/dimens_45"
+                android:layout_gravity="start"
+                app:srcCompat="@drawable/logo" />
+
+
+            <TextView
+                android:id="@+id/When_do_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimens_32"
+                android:fontFamily="@font/poppins_light"
+                android:text="When do"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_size_32"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/want_to_go_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="you want to go ?"
+                android:textColor="@color/primary_color"
+                android:textSize="@dimen/font_size_32"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/choose_range_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="choose a date range"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_size_14" />
+
+            <EditText
+                android:id="@+id/date_range_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimens_42"
+                android:layout_marginTop="@dimen/dimens_16"
+                android:background="@drawable/rounded_corner_et"
+                android:drawableStart="@drawable/date_range_icon"
+                android:drawablePadding="@dimen/dimens_8"
+                android:focusable="false"
+                android:textColor="@color/primary_color"
+                android:textColorHint="@color/hintTextColor"
+                android:textSize="@dimen/font_size_12"
+                android:hint="8/2/2024 -> 8/16/2024"
+                android:inputType="date"
+                android:padding="@dimen/dimens_10" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimens_16"
+                android:layout_marginBottom="@dimen/dimens_16"
+                android:backgroundTint="@color/hintTextColor_semi_transparent"
+                android:paddingTop="0dp"
+                app:cardCornerRadius="@dimen/dimens_20"
+                app:cardElevation="0dp">
+
+                <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+                    android:id="@+id/calendar_date_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:default_date_color="@color/primary_color"
+                    app:disable_date_color="#ABABAB"
+                    app:header_bg="@drawable/calender_background"
+                    app:range_color="@color/primary_color_light"
+                    app:selected_date_circle_color="@color/primary_color"
+                    app:selected_date_color="@color/background_color"
+                    app:title_color="@color/background_color"
+                    app:week_color="@color/primary_color" />
+
+                <Button
+                    android:id="@+id/reset_dateRange_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/dimens_8"
+                    android:background="@color/transparent_bg"
+                    android:fontFamily="@font/poppins_light"
+                    android:padding="@dimen/dimens_8"
+                    android:text="Reset"
+                    android:textAllCaps="false"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/font_size_18"
+                    android:visibility="invisible" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="@dimen/dimens_8">
+
+                <Button
+                    android:id="@+id/backBtn_dr"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_gravity="start"
+                    android:background="@drawable/back_btn_background"
+                    android:drawableStart="@drawable/left_arrow"
+                    android:drawablePadding="@dimen/dimens_16"
+                    android:drawableTint="@color/background_color"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/barlowsemicondensed_bold"
+                    android:insetBottom="0dp"
+                    android:paddingStart="@dimen/dimens_8"
+                    android:paddingEnd="@dimen/dimens_16"
+                    android:text="back"
+                    android:textColor="@color/background_color"
+                    android:textSize="@dimen/font_size_18"
+                    app:rippleColor="@color/secondary_color_dark" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/nextBtn_dr"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimens_50"
+                    android:layout_gravity="end"
+                    android:background="@drawable/rounded_corner_next_btn"
+                    android:drawableEnd="@drawable/right_arrow"
+                    android:drawablePadding="@dimen/dimens_16"
+                    android:drawableTint="@color/background_color"
+                    android:elevation="0dp"
+                    android:fontFamily="@font/barlowsemicondensed_bold"
+                    android:paddingStart="@dimen/dimens_16"
+                    android:paddingEnd="@dimen/dimens_8"
+                    android:text="Next"
+                    android:textAllCaps="false"
+                    android:textColor="@color/background_color"
+                    android:textSize="@dimen/font_size_20" />
+            </LinearLayout>
+
+</RelativeLayout>

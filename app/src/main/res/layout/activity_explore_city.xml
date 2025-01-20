@@ -139,15 +139,10 @@
                 android:orientation="vertical">
 
                 <!-- Overview Section -->
-                <LinearLayout
-                    android:id="@+id/section_overview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+
 
                     <TextView
-                        android:id="@+id/overview_section"
+                        android:id="@+id/overview_section_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/barlowsemicondensed_regular"
@@ -155,7 +150,7 @@
                         android:text="Embark on a journey through the Cultural Delights of Bangalore, where vibrant traditions meet modern innovation. Explore bustling markets, savor aromatic spices, and immerse yourself in the rich heritage of India's Garden City."
                         android:textColor="@color/hintTextColor"
                         android:textSize="20sp" />
-                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/things_to_do_section"

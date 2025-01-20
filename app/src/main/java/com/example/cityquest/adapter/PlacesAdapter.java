@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.cityquest.BuildConfig;
 import com.example.cityquest.R;
 import com.example.cityquest.model.ItineraryPlace;
 import com.example.cityquest.model.TravelInfo;
@@ -193,7 +194,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesView
             return;
         }
 
-        GoogleMapsAPIsUtils googleMapsAPIsUtils = new GoogleMapsAPIsUtils(context, context.getString(R.string.google_maps_api_key));//TODO add api key
+        GoogleMapsAPIsUtils googleMapsAPIsUtils = new GoogleMapsAPIsUtils(context, BuildConfig.MAPS_API_KEY);//TODO add api key
 
         googleMapsAPIsUtils.getDistancesForDay(placeIds, selectedTravelMode, new GoogleMapsAPIsUtils.DistanceCallback() {
             @Override

@@ -12,11 +12,24 @@ public class City {
 
     private String CityRating;
     private String CityDescription;
+    private String overview;
+
 
 
     public City() {
     }
 
+
+    public City(String cityName, String countryName, String cityType, String cityId, String cityImageUrl, String cityRating, String cityDescription, String overview) {
+        CityName = cityName;
+        CountryName = countryName;
+        this.cityType = cityType;
+        this.cityId = cityId;
+        CityImageUrl = cityImageUrl;
+        CityRating = cityRating;
+        CityDescription = cityDescription;
+        this.overview = overview;
+    }
     public City(String cityName, String countryName, String cityType, String cityId, String cityImageUrl, String cityRating, String cityDescription) {
         CityName = cityName;
         CountryName = countryName;
@@ -25,6 +38,15 @@ public class City {
         CityImageUrl = cityImageUrl;
         CityRating = cityRating;
         CityDescription = cityDescription;
+
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getCityName() {

@@ -1,16 +1,23 @@
 package com.example.cityquest.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.cityquest.utils.Converters;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 @Entity(tableName = "ready_trips")
-public class ReadyTrips {
+public class ReadyTrips implements Parcelable {
 
     @NonNull
     @PrimaryKey
@@ -19,7 +26,14 @@ public class ReadyTrips {
     private String photoUrl; // Photo URL of the trip
     private float rating; // Rating of the trip
     private String city; // Location city
+    private String destinationId; // City ID
+
+
     private String country; // Location country
+
+    @TypeConverters(Converters.class) // Apply TypeConverter to activities
+    private List<String> activities; // List of activities chosen by the user
+
     private String weatherStatus; // Weather status (rainy, sunny, etc.)
     private float temperature; // Temperature in Celsius/Fahrenheit
     private String tripType; // Type of trip (adventure, sport, etc.)
@@ -27,6 +41,8 @@ public class ReadyTrips {
     private String startDate; // Start date of the trip
     private String endDate; // End date of the trip
     private String overview; // Description/Overview of the trip
+
+    private boolean synced = true; // Flag to indicate if the trip is synced with Firestore
 
     // Empty constructor required for Firestore
     @Ignore
@@ -36,7 +52,7 @@ public class ReadyTrips {
     // Constructor
     public ReadyTrips(String tripId, String name, String photoUrl, float rating, String city, String country,
                 String weatherStatus, float temperature, String tripType, String companionType,
-                String startDate, String endDate, String overview) {
+                String startDate, String endDate, String overview, List<String> activities, String destinationId) {
         this.tripId = tripId;
         this.name = name;
         this.photoUrl = photoUrl;
@@ -50,6 +66,25 @@ public class ReadyTrips {
         this.startDate = startDate;
         this.endDate = endDate;
         this.overview = overview;
+        this.activities = activities;
+        this.destinationId = destinationId;
+    }
+
+
+    public String getDestinationId() {
+        return destinationId;
+    }
+
+    public void setDestinationId(String destinationId) {
+        this.destinationId = destinationId;
+    }
+
+    public List<String> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<String> activities) {
+        this.activities = activities;
     }
 
     public String getTripId() {
@@ -156,5 +191,72 @@ public class ReadyTrips {
         this.overview = overview;
     }
 
+    public boolean isSynced() {
+        return synced;
+    }
+
+    public void setSynced(boolean synced) {
+        this.synced = synced;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(tripId);
+        dest.writeString(name);
+        dest.writeString(photoUrl);
+        dest.writeFloat(rating);
+        dest.writeString(city);
+        dest.writeString(destinationId);
+        dest.writeString(country);
+        dest.writeStringList(activities);
+        dest.writeString(weatherStatus);
+        dest.writeFloat(temperature);
+        dest.writeString(tripType);
+        dest.writeString(companionType);
+        dest.writeString(startDate);
+        dest.writeString(endDate);
+        dest.writeString(overview);
+        dest.writeByte((byte) (synced ? 1 : 0)); // Convert boolean to byte
+    }
+
+    // Constructor for creating the object from a Parcel
+    protected ReadyTrips(Parcel in) {
+        tripId = in.readString();
+        name = in.readString();
+        photoUrl = in.readString();
+        rating = in.readFloat();
+        city = in.readString();
+        destinationId = in.readString();
+        country = in.readString();
+        activities = in.createStringArrayList();
+        weatherStatus = in.readString();
+        temperature = in.readFloat();
+        tripType = in.readString();
+        companionType = in.readString();
+        startDate = in.readString();
+        endDate = in.readString();
+        overview = in.readString();
+        synced = in.readByte() != 0; // Convert byte back to boolean
+    }
+
+    // Parcelable.Creator implementation
+    public static final Creator<ReadyTrips> CREATOR = new Creator<ReadyTrips>() {
+        @Override
+        public ReadyTrips createFromParcel(Parcel in) {
+            return new ReadyTrips(in);
+        }
+
+        @Override
+        public ReadyTrips[] newArray(int size) {
+            return new ReadyTrips[size];
+        }
+    };
 
 }

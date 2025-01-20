@@ -60,6 +60,7 @@ public class TripsFragment extends Fragment implements TripAdapter.OnFavoriteTri
     private LinearLayout filtersLayout;
     private MenuItem filterMenuItem;
     private LottieAnimationView loadingAnim;
+    ReadyTrips trip;
 
 
 
@@ -90,6 +91,10 @@ public class TripsFragment extends Fragment implements TripAdapter.OnFavoriteTri
         adapter = new TripAdapter(getContext(),trips,this);
         recyclerView.setAdapter(adapter);
 
+        if (getArguments() != null) {
+            trip = getArguments().getParcelable("trip");
+        }
+        Toast.makeText(getContext(),"trip"+trip.getName(),Toast.LENGTH_LONG).show();
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override

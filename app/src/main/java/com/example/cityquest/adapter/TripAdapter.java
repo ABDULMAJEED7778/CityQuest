@@ -70,9 +70,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         holder.startEndDate.setText(trip.getStartDate() + " - " + trip.getEndDate());
         holder.companion.setText(trip.getCompanionType());
 
-        // Load the background image from the URL
+
+
         Glide.with(context)
                 .load(trip.getPhotoUrl())
+                .placeholder(R.drawable.image_placeholder) // Replace with your placeholder drawable resource
+                .error(R.drawable.image_placeholder) // Optional: Image to display if loading fails
                 .into(holder.tripItemImageView);
 
         holder.itemView.setOnClickListener(v -> {

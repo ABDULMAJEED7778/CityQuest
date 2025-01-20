@@ -25,3 +25,4 @@ dependencyResolutionManagement {
 rootProject.name = "CityQuest"
 include(":app")
 
+include(":JavaLib")

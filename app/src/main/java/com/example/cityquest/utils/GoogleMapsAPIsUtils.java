@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cityquest.BuildConfig;
 import com.example.cityquest.R;
 import com.example.cityquest.model.PlaceDetails;
 import com.example.cityquest.model.TravelInfo;
@@ -43,7 +44,7 @@ public class GoogleMapsAPIsUtils {
 
 
 
-    private static final String API_KEY =  "AIzaSyARpRWILYhqfSV_mpEa92h_xYoyqLEiTgU";
+    private static final String API_KEY =  BuildConfig.MAPS_API_KEY;
 
     private Context context;
     private RequestQueue requestQueue;
@@ -161,7 +162,7 @@ public class GoogleMapsAPIsUtils {
     //this is for nearby places
 
     // Method to perform nearby search using PlacesClient
-    public void searchNearbyPlaces(double lat, double lng, int radius, List<String> includedTypes, NearbySearchCallback callback) {
+    public void searchNearbyPlaces(double lat, double lng, int radius, List<String> includedTypes,int maxResultCount, NearbySearchCallback callback) {
         LatLng center = new LatLng(lat, lng);
         CircularBounds bounds = CircularBounds.newInstance(center, radius);
 
@@ -177,7 +178,7 @@ public class GoogleMapsAPIsUtils {
         // Create the request
         SearchNearbyRequest searchNearbyRequest = SearchNearbyRequest.builder(bounds, placeFields)
                 .setIncludedTypes(includedTypes)
-                .setMaxResultCount(3)
+                .setMaxResultCount(maxResultCount)
                 .build();
 
         // Perform the search

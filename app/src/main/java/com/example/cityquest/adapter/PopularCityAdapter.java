@@ -45,7 +45,8 @@ public class PopularCityAdapter extends RecyclerView.Adapter<PopularCityAdapter.
         holder.textViewCountryName.setText(city.getCountryName());
         holder.textViewCityRating.setText(city.getCityRating());
         // Assume you have a method to load images
-        Glide.with(holder.cityImage.getContext()).load(city.getCityImageUrl()).into(holder.cityImage);
+        Glide.with(holder.cityImage.getContext()).load(city.getCityImageUrl()).placeholder(R.drawable.image_placeholder) // Placeholder image
+                .error(R.drawable.image_placeholder).into(holder.cityImage);
 
 
     }

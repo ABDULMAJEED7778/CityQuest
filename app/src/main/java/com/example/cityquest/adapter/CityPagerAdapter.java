@@ -41,7 +41,11 @@ public class CityPagerAdapter extends RecyclerView.Adapter<CityPagerAdapter.City
         // Load the city photo using Glide
         Glide.with(context)
                 .load(city.getCityImageUrl()) // Assuming getPhotoUri() returns the URI for the city's photo
+                .placeholder(R.drawable.image_placeholder) // Replace with your placeholder drawable resource
+                .error(R.drawable.image_placeholder) // Optional: Image to display if loading fails
                 .into(holder.imageViewCity);
+
+
 
     }
 

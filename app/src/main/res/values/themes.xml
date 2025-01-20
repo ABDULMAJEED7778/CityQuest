@@ -16,6 +16,8 @@
         <item name="colorControlActivated">@color/secondary_color_dark</item>
 
         <item name="floatingActionButtonStyle">@style/CustomFloatingActionButton</item>
+<!--        <item name="switchStyle">@style/CustomSwitchStyle</item>-->
+
 
     </style>
     <!-- Base application theme. -->

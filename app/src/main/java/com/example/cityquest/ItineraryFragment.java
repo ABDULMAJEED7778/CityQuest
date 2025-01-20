@@ -59,6 +59,16 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
     public ItineraryFragment() {
         super(R.layout.fragment_itinerary); // Reference to your fragment layout
     }
+    public static ItineraryFragment newInstance(ArrayList<TripDay> cityName) {
+        ItineraryFragment fragment = new ItineraryFragment();
+        Bundle args = new Bundle();
+
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+
 
     // Define the LoadCompleteListener interface inside your fragment class
 
@@ -98,7 +108,20 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
         layoutManager = new LinearLayoutManager(getContext());
         daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        fetchTripDays(tripId);
+
+
+        // Retrieve the city name from arguments
+        if (getArguments() != null) {
+            ArrayList<TripDay> itinerary  = getArguments().getParcelableArrayList("itinerary");
+            if(itinerary == null){
+
+                fetchTripDays(tripId);
+            }else {
+                updateItinerarySection(itinerary); // Update the RecyclerView with the days and their places
+                onDataLoaded();
+                setupDayTabs(itinerary);
+            }
+        }
 
 //        daysRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override

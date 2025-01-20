@@ -93,7 +93,7 @@ public class ExploreFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Initialize GoogleMapsAPIsUtils with context and API key
-        googlePlacesUtils = new GoogleMapsAPIsUtils(requireContext(), getString(R.string.google_maps_api_key));
+        googlePlacesUtils = new GoogleMapsAPIsUtils(requireContext(), BuildConfig.MAPS_API_KEY);
     }
 
     @Nullable
@@ -215,7 +215,7 @@ public class ExploreFragment extends Fragment {
     }
 
     private void fetchNearbyPlaces(double latitude, double longitude, int searchRadius, List<String> types, List<PlaceDetails> list) {
-        googlePlacesUtils.searchNearbyPlaces(latitude, longitude, searchRadius, types, new GoogleMapsAPIsUtils.NearbySearchCallback() {
+        googlePlacesUtils.searchNearbyPlaces(latitude, longitude, searchRadius, types,3 ,new GoogleMapsAPIsUtils.NearbySearchCallback() {
             @Override
             public void onSuccess(List<PlaceDetails> places) {
                 list.addAll(places);

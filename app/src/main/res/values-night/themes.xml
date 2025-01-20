@@ -19,6 +19,8 @@
         <!-- Status bar color. -->
 
     </style>
+
+
     <!-- Base application theme. -->
     <style name="Base.Theme.CityQuest" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->

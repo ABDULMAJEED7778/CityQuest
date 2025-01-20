@@ -17,6 +17,13 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+
+    <style name="CustomSwitchStyle" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="trackTint">@color/secondary_color</item>
+        <item name="thumbTint">@color/primary_color</item>
+    </style>
+
+
     <!-- Custom Button Style -->
     <style name="primaryButtonStyle" parent="Widget.Material3.Button">
         <item name="backgroundTint">@color/primary_color</item>
@@ -43,6 +50,14 @@
         <item name="colorOnSecondary">@color/background_color</item>
         <!-- Add other theme attributes as needed -->
     </style>
+
+    <style name="YourFragmentTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#FF0000</item>
+        <item name="android:textColorPrimary">#00FF00</item>
+        <item name="android:background">#FFFF00</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
 
     <style name="TripsPage" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here -->
@@ -132,6 +147,8 @@
         <item name="android:itemTextAppearance">@style/popupMenuTextAppearance</item>
         <item name="checkboxStyle">@style/popupMenuCheckbox</item>
     </style>
+
+
 
     <style name="popupMenuTextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/background_color</item>

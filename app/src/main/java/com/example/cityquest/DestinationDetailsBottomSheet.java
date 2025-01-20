@@ -15,9 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cityquest.adapter.PhotoAdapter;
+import com.example.cityquest.adapter.PostImageSliderAdapter;
+import com.example.cityquest.model.ReadyTrips;
 import com.example.cityquest.model.Trip;
 import com.example.cityquest.model.Trips;
 import com.google.android.gms.common.api.ApiException;
@@ -48,20 +52,30 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
 
     private static final String ARG_PLACE_ID = "place_id";
     private static final String ARG_CITY_NAME = "city_name";
-    private RecyclerView recyclerView;
+
+    ViewPager2 viewPagerPhotos;
+    ImageView leftArrow, rightArrow;
+
     private Button selectBtn, viewOnMap;
     private TextView cityNameTextView, CityOverfiewTextView;
     private PhotoAdapter photosAdapter;
     private PlacesClient placesClient; // Declare PlacesClient here
+    private DestinationFragment parentFragment; // Reference to the parent fragment
+    PostImageSliderAdapter postImageSliderAdapter;
+    private TabLayout tabLayout;
+    List<String> imageUrls =new ArrayList<>();
 
 
 
-    public static DestinationDetailsBottomSheet newInstance(String placeId, String cityName) {
+
+    public static DestinationDetailsBottomSheet newInstance(String placeId, String cityName, DestinationFragment parentFragment) {
         DestinationDetailsBottomSheet fragment = new DestinationDetailsBottomSheet();
         Bundle args = new Bundle();
         args.putString(ARG_PLACE_ID, placeId);
         args.putString(ARG_CITY_NAME, cityName);
         fragment.setArguments(args);
+        fragment.parentFragment = parentFragment;
+
         return fragment;
     }
 
@@ -70,7 +84,7 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
     public int getTheme() {
         return R.style.MyBottomSheetDialogTheme; // Use the defined theme here
     }
-
+//
 
     @Nullable
     @Override
@@ -78,16 +92,19 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
         View view = inflater.inflate(R.layout.activity_destination_details, container, false);
 
         // Initialize ViewPager2
-        recyclerView = view.findViewById(R.id.recyclerView_CityDetails);
+
         selectBtn = view.findViewById(R.id.select_btn_detail);
         cityNameTextView = view.findViewById(R.id.city_name_txt);
         CityOverfiewTextView = view.findViewById(R.id.city_details);
         photosAdapter = new PhotoAdapter(new ArrayList<>());
-        recyclerView.setLayoutManager(new CarouselLayoutManager());
-        recyclerView.setAdapter(photosAdapter);
+        leftArrow = view.findViewById(R.id.left_arrow_dest);
+        rightArrow = view.findViewById(R.id.right_arrow_dest);
+        viewPagerPhotos = view.findViewById(R.id.view_pager_photos_dest);
+
 
 
         placesClient = Places.createClient(getContext());
+        tabLayout = view.findViewById(R.id.tabLayout_dest);
 
 
 
@@ -99,17 +116,25 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
             String placeId = args.getString(ARG_PLACE_ID);
             String cityName = args.getString(ARG_CITY_NAME);
 
-            Trips trip = new Trips(); // Create a new Trip object
-            trip.setDestination(cityName); // Set the destination
-            trip.setTripId(placeId);
+            ReadyTrips trip = new ReadyTrips(); // Create a new Trip object
+            trip.setCity(cityName); // Set the destination
+            trip.setDestinationId(placeId);
 
 
             fetchPlacePhotos(placeId);
 
             selectBtn.setOnClickListener(v -> {
-                Intent intent = new Intent(getContext(), DateRangeActivity.class);
-                intent.putExtra("trip", trip);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), DateRangeActivity.class);
+//                intent.putExtra("trip", trip);
+//                startActivity(intent);
+
+
+                Toast.makeText(getContext(),parentFragment +"", Toast.LENGTH_SHORT).show();
+                if (parentFragment != null) {
+                    parentFragment.navigateToDateFragment(trip);
+                }
+                dismiss();
+
             });
         }
 
@@ -117,11 +142,13 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
     }
 
     private void fetchPlacePhotos(String placeId) {
+
+        postImageSliderAdapter = new PostImageSliderAdapter(getContext(),imageUrls);
+        viewPagerPhotos.setAdapter(postImageSliderAdapter);
         // Request DISPLAY_NAME, PHOTO_METADATAS, and EDITORIAL_SUMMARY fields
         final List<Place.Field> fields = Arrays.asList(
                 Place.Field.NAME,
-                Place.Field.PHOTO_METADATAS,
-                Place.Field.EDITORIAL_SUMMARY
+                Place.Field.PHOTO_METADATAS
         );
 
         final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, fields);
@@ -134,9 +161,7 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
                 cityNameTextView.setText(displayName);
             }
 
-            // Get the city overview (EDITORIAL_SUMMARY)
-            String overview = place.getEditorialSummary() != null ? place.getEditorialSummary() : "No overview available";
-            CityOverfiewTextView.setText(overview); // Set the city overview
+
 
             // Get the photo metadata
             final List<PhotoMetadata> metadataList = place.getPhotoMetadatas();
@@ -144,6 +169,13 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
                 Log.w("PlaceBottomSheet", "No photo metadata available.");
                 return;
             }
+
+
+            imageUrls.clear();
+            // Track successful and failed fetches
+            final int[] fetchCount = {0};
+            final int[] failureCount = {0};
+
 
             // Loop through each photo metadata and request the photo URI
             for (PhotoMetadata photoMetadata : metadataList) {
@@ -155,23 +187,170 @@ public class DestinationDetailsBottomSheet extends BottomSheetDialogFragment {
 
                 // Request the photo URI
                 placesClient.fetchResolvedPhotoUri(photoRequest).addOnSuccessListener(fetchResolvedPhotoUriResponse -> {
-                    Uri uri = fetchResolvedPhotoUriResponse.getUri();
+                    String uri = fetchResolvedPhotoUriResponse.getUri().toString();
                     String photographer = photoMetadata.getAttributions(); // Get photographer attribution if available
 
                     // Pass the Uri and photographer name to the adapter
-                    photosAdapter.addPhoto(uri, photographer);
+
+                    imageUrls.add(uri);
+                    // Increment the fetch count
+                    fetchCount[0]++;
+
+                    if (fetchCount[0] + failureCount[0] == metadataList.size()) {
+                        // Notify the adapter that data has changed
+                        postImageSliderAdapter.notifyDataSetChanged();
+
+                        // Set the ViewPager adapter after data is available
+                        viewPagerPhotos.setAdapter(postImageSliderAdapter);
+
+                        // Update UI for visibility of arrows and tabs
+                        updateUIForImages();
+                    }
+
+
+
                 }).addOnFailureListener(exception -> {
-                    if (exception instanceof ApiException) {
-                        Log.e("PlaceBottomSheet", "Error fetching photo: " + exception.getMessage());
+                    Log.e("PlaceBottomSheet", "Error fetching photo: " + exception.getMessage());
+                    failureCount[0]++; // Increment failure count
+
+                    // Continue with the fetch process even if one fails
+                    if (fetchCount[0] + failureCount[0] == metadataList.size()) {
+                        // Notify the adapter even if some photos failed
+                        postImageSliderAdapter.notifyDataSetChanged();
+
+                        // Set the ViewPager adapter after data is available
+                        viewPagerPhotos.setAdapter(postImageSliderAdapter);
+
+                        // Update UI for visibility of arrows and tabs
+                        updateUIForImages();
                     }
                 });
             }
+            Toast.makeText(getContext(), "photos"+postImageSliderAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "photos"+postImageSliderAdapter, Toast.LENGTH_SHORT).show();
+
+
+
+                if (imageUrls.size() > 0) {
+
+
+
+
+                    if(imageUrls.size() >1){
+
+                        leftArrow.setVisibility(View.VISIBLE);
+                        rightArrow.setVisibility(View.VISIBLE);
+                        new TabLayoutMediator(tabLayout, viewPagerPhotos, (tab, p) -> {
+                            // Some implementation (if needed, e.g., set tab text)
+                        }).attach();
+
+                        // Update arrow visibility based on the current photo position
+                        viewPagerPhotos.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                            @Override
+                            public void onPageSelected(int position) {
+                                super.onPageSelected(position);
+
+                                // Show/hide left arrow
+                                if (position == 0) {
+                                    leftArrow.setVisibility(View.GONE);
+                                } else {
+                                    leftArrow.setVisibility(View.VISIBLE);
+                                }
+
+                                // Show/hide right arrow
+                                if (position == imageUrls.size()  - 1) {
+                                    rightArrow.setVisibility(View.GONE);
+                                } else {
+                                   rightArrow.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                        // Arrow click listeners for manual navigation
+                        leftArrow.setOnClickListener(v -> {
+                            int currentItem = viewPagerPhotos.getCurrentItem();
+                            if (currentItem > 0) {
+                                viewPagerPhotos.setCurrentItem(currentItem - 1);
+                            }
+                        });
+
+                        rightArrow.setOnClickListener(v -> {
+                            int currentItem = viewPagerPhotos.getCurrentItem();
+                            if (currentItem < imageUrls.size()  - 1) {
+                                viewPagerPhotos.setCurrentItem(currentItem + 1);
+                            }
+                        });
+
+                        tabLayout.setVisibility(View.VISIBLE);
+                    }else {
+                        tabLayout.setVisibility(View.GONE);
+
+                        // Hide arrows if only one photo
+                        leftArrow.setVisibility(View.GONE);
+                        rightArrow.setVisibility(View.GONE);
+
+
+                    }
+                }
         }).addOnFailureListener(exception -> {
             if (exception instanceof ApiException) {
                 Log.e("PlaceBottomSheet", "Error fetching place details: " + ((ApiException) exception).getStatusCode());
             }
         });
+
     }
 
+    private void updateUIForImages() {
+        if (imageUrls.size() > 0) {
+            if (imageUrls.size() > 1) {
+                // Show arrows and tabs when there are multiple images
+                leftArrow.setVisibility(View.VISIBLE);
+                rightArrow.setVisibility(View.VISIBLE);
 
+                new TabLayoutMediator(tabLayout, viewPagerPhotos, (tab, position) -> {
+                    // Optional: set tab text here
+                }).attach();
+
+                // Update arrow visibility based on the current photo position
+                viewPagerPhotos.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+
+                        // Show/hide left arrow
+                        leftArrow.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+
+                        // Show/hide right arrow
+                        rightArrow.setVisibility(position == imageUrls.size() - 1 ? View.GONE : View.VISIBLE);
+                    }
+                });
+
+                // Arrow click listeners for manual navigation
+                leftArrow.setOnClickListener(v -> {
+                    int currentItem = viewPagerPhotos.getCurrentItem();
+                    if (currentItem > 0) {
+                        viewPagerPhotos.setCurrentItem(currentItem - 1);
+                    }
+                });
+
+                rightArrow.setOnClickListener(v -> {
+                    int currentItem = viewPagerPhotos.getCurrentItem();
+                    if (currentItem < imageUrls.size() - 1) {
+                        viewPagerPhotos.setCurrentItem(currentItem + 1);
+                    }
+                });
+
+                tabLayout.setVisibility(View.VISIBLE);
+            } else {
+                // If only one image, hide the TabLayout and arrows
+                tabLayout.setVisibility(View.GONE);
+                leftArrow.setVisibility(View.GONE);
+                rightArrow.setVisibility(View.GONE);
+            }
+        } else {
+            // If no images are available, show a placeholder or error message
+            Log.w("PlaceBottomSheet", "No images available to display.");
+        }
+
+
+    }
 }

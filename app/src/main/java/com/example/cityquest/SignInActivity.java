@@ -1,5 +1,7 @@
 package com.example.cityquest;
 
+import static com.example.cityquest.Database.AppDatabase.databaseWriteExecutor;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -87,7 +90,7 @@ public class SignInActivity extends AppCompatActivity {
         signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
-                        .setServerClientId(getString(R.string.default_web_client_id)) // Your OAuth 2.0 client ID
+                        .setServerClientId("getString(R.string.default_web_client_id") // Your OAuth 2.0 client ID
                         .setFilterByAuthorizedAccounts(false) // Show all accounts
                         .build())
                 .build();
@@ -107,7 +110,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirestoreTripUploader tripUploader = new FirestoreTripUploader();
-                tripUploader.generateAndStoreTrips();
+//                tripUploader.generateAndStoreTrips();
 
                 FirestoreCityUploader cityUploader = new FirestoreCityUploader();
                 cityUploader.uploadCities();
@@ -185,12 +188,48 @@ public class SignInActivity extends AppCompatActivity {
 
                                 if (task.isSuccessful()) {
 
-                                    Intent intent;
-                                    intent = new Intent(SignInActivity.this, MainActivity.class);
-                                    Toast.makeText(SignInActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
 
-                                    startActivity(intent);
-                                    finish();  // Finish the login activity
+                                    FirebaseUser currentUser = FirebaseUtils.getCurrentUser();
+                                    if (currentUser != null) {
+                                        String userId = currentUser.getUid();
+
+                                        // Check if user data exists in Firestore
+                                        FirebaseUtils.getUsersCollection().document(userId)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful() && task.getResult() != null) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                // User exists, retrieve the user data
+                                                                User user = document.toObject(User.class);
+
+                                                                // Save the user data in Room
+                                                                if (user != null) {
+                                                                    AppDatabase database = AppDatabase.getDatabase(SignInActivity.this);
+                                                                    databaseWriteExecutor.execute(() -> {
+                                                                        database.userDao().insertUser(user);
+                                                                    });
+                                                                }
+
+                                                                // Proceed to next activity
+                                                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            } else {
+                                                                Toast.makeText(SignInActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(SignInActivity.this, "Failed to retrieve user", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
+
+
+
+
                                 } else {
                                     String errorMessage = task.getException().getMessage();
                                     Log.e("signact", "Login failed: " + errorMessage);

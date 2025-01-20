@@ -136,7 +136,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
         if (story.getVideoUrl() != null && !story.getVideoUrl().isEmpty()) {
             holder.playerView.setVisibility(View.VISIBLE);
-            holder.viewPagerLayout.setVisibility(View.GONE);
+//            holder.viewPagerLayout.setVisibility(View.GONE);
+            holder.viewPagerPhotos.setVisibility(View.GONE);
+            holder.tabLayout.setVisibility(View.GONE);
+
 
             // Attach Player only; don't play yet
             ExoPlayer player = PlayerManager.getInstance(context);
@@ -149,7 +152,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         } else if (story.getPhotoUrls() != null && !story.getPhotoUrls().isEmpty()) {
             // Show the ViewPager and hide the PlayerView
             holder.playerView.setVisibility(View.GONE);
-            holder.viewPagerLayout.setVisibility(View.VISIBLE);
+//            holder.viewPagerLayout.setVisibility(View.VISIBLE);
+            holder.viewPagerPhotos.setVisibility(View.VISIBLE);
+            holder.tabLayout.setVisibility(View.VISIBLE);
 
 
             // Set up the ViewPager2 adapter for photos
@@ -158,32 +163,76 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
             if(story.getPhotoUrls().size()>1){
 
+                holder.leftArrow.setVisibility(View.VISIBLE);
+                holder.rightArrow.setVisibility(View.VISIBLE);
                 new TabLayoutMediator(holder.tabLayout, holder.viewPagerPhotos, (tab, p) -> {
                     // Some implementation (if needed, e.g., set tab text)
                 }).attach();
+
+                // Update arrow visibility based on the current photo position
+                holder.viewPagerPhotos.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        super.onPageSelected(position);
+
+                        // Show/hide left arrow
+                        if (position == 0) {
+                            holder.leftArrow.setVisibility(View.GONE);
+                        } else {
+                            holder.leftArrow.setVisibility(View.VISIBLE);
+                        }
+
+                        // Show/hide right arrow
+                        if (position == story.getPhotoUrls().size() - 1) {
+                            holder.rightArrow.setVisibility(View.GONE);
+                        } else {
+                            holder.rightArrow.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+                // Arrow click listeners for manual navigation
+                holder.leftArrow.setOnClickListener(v -> {
+                    int currentItem = holder.viewPagerPhotos.getCurrentItem();
+                    if (currentItem > 0) {
+                        holder.viewPagerPhotos.setCurrentItem(currentItem - 1);
+                    }
+                });
+
+                holder.rightArrow.setOnClickListener(v -> {
+                    int currentItem = holder.viewPagerPhotos.getCurrentItem();
+                    if (currentItem < story.getPhotoUrls().size() - 1) {
+                        holder.viewPagerPhotos.setCurrentItem(currentItem + 1);
+                    }
+                });
 
                 holder.tabLayout.setVisibility(View.VISIBLE);
             }else {
                 holder.tabLayout.setVisibility(View.GONE);
 
-                holder.mediaContainer.post(() -> {
-                    // Get the current height after layout pass
-                    ViewGroup.LayoutParams layoutParams = holder.mediaContainer.getLayoutParams();
-                    int currentHeight = holder.mediaContainer.getHeight();
+                // Hide arrows if only one photo
+                holder.leftArrow.setVisibility(View.GONE);
+                holder.rightArrow.setVisibility(View.GONE);
 
-                    // Reduce height by 50dp (convert dp to pixels)
-                    int reductionInPx = (int) (50 * holder.mediaContainer.getContext().getResources().getDisplayMetrics().density);
-
-                    // Apply the new height
-                    layoutParams.height = currentHeight - reductionInPx;
-                    holder.mediaContainer.setLayoutParams(layoutParams);
-                });
+//                holder.mediaContainer.post(() -> {
+//                    // Get the current height after layout pass
+//                    ViewGroup.LayoutParams layoutParams = holder.mediaContainer.getLayoutParams();
+//                    int currentHeight = holder.mediaContainer.getHeight();
+//
+//                    // Reduce height by 50dp (convert dp to pixels)
+//                    int reductionInPx = (int) (50 * holder.mediaContainer.getContext().getResources().getDisplayMetrics().density);
+//
+//                    // Apply the new height
+//                    layoutParams.height = currentHeight - reductionInPx;
+//                    holder.mediaContainer.setLayoutParams(layoutParams);
+//                });
             }
 
         } else {
             // Hide both PlayerView and ViewPager if no media is available
             holder.playerView.setVisibility(View.GONE);
-            holder.viewPagerLayout.setVisibility(View.GONE);
+//            holder.viewPagerLayout.setVisibility(View.GONE);
+            holder.viewPagerPhotos.setVisibility(View.GONE);
+            holder.tabLayout.setVisibility(View.GONE);
         }
 
         holder.commentLinearLayout.setOnClickListener(v->{
@@ -316,10 +365,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public PlayerView playerView; // Use PlayerView for ExoPlayer
         Button loadMoreButton;
         LinearLayout commentLinearLayout;
-        LinearLayout viewPagerLayout;
+//        LinearLayout viewPagerLayout;
         private TabLayout tabLayout;
         TextView readMoreButton;
         FrameLayout mediaContainer;
+        ImageView leftArrow, rightArrow;
+
         //ReadMoreTextView readMoreTextView;
 
 
@@ -339,11 +390,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             viewPagerPhotos = itemView.findViewById(R.id.view_pager_photos_post_item);
             userImageView = itemView.findViewById(R.id.profile_image_post_item);
             commentLinearLayout = itemView.findViewById(R.id.comment_linearLayout_post_item);
-            viewPagerLayout = itemView.findViewById(R.id.view_pager_linearlayout);
+           // viewPagerLayout = itemView.findViewById(R.id.view_pager_linearlayout);
             tabLayout = itemView.findViewById(R.id.tabLayout);
             //readMoreTextView = itemView.findViewById(R.id.tvReadMoreLess_post_item);
             descriptionTV = itemView.findViewById(R.id.post_description_post_item);
             mediaContainer = itemView.findViewById(R.id.media_container);
+            leftArrow = itemView.findViewById(R.id.left_arrow);
+            rightArrow = itemView.findViewById(R.id.right_arrow);
 
            readMoreButton = itemView.findViewById(R.id.read_more_button);
         }

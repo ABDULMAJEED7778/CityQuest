@@ -54,6 +54,8 @@ public class ExplorePlaceAdapter extends RecyclerView.Adapter<ExplorePlaceAdapte
         } else {
             Glide.with(context)
                     .load(R.drawable.bangalore) // Placeholder image in drawable
+                    .placeholder(R.drawable.image_placeholder) // Placeholder image
+                    .error(R.drawable.image_placeholder)
                     .into(holder.photoImageView);
         }
     }

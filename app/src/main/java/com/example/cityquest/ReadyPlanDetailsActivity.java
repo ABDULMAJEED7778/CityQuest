@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.ObjectAnimator;
 
 import com.example.cityquest.model.ReadyTrips;
+import com.example.cityquest.model.TripDay;
 import com.example.cityquest.utils.NonScrollableScrollView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import android.widget.TextView;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.widget.LinearLayout;
@@ -54,6 +56,8 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private FrameLayout exploreFragmentContainer;
     private int numberOfDays;
     private String tripId;
+    boolean directFromDestActivity = false;
+    ArrayList<TripDay> itinerary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +87,35 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
         scrollView.setScrollable(true);
 
-        // Get trip ID from intent
-        tripId = getIntent().getStringExtra("tripId");
 
-        // Fetch trip details from Firestore
-        fetchTripDetails(tripId);
+
+
+        // Attempt to retrieve the tripId
+         tripId = getIntent().getStringExtra("tripId");
+
+        // Attempt to retrieve the trip object
+        ReadyTrips trip = getIntent().getParcelableExtra("trip");
+
+        itinerary = getIntent().getParcelableArrayListExtra("itinerary");
+
+
+        if (trip != null) {
+            // Use the trip object directly
+            displayTripDetails(trip);
+            if(itinerary!=null){
+                directFromDestActivity = true;
+            }
+        } else if (tripId != null) {
+            // Fetch trip details using the tripId
+            fetchTripDetails(tripId);
+        } else {
+            // Handle the case where neither is provided
+            Toast.makeText(this, "No trip information provided", Toast.LENGTH_SHORT).show();
+            finish(); // Close the activity gracefully
+        }
+
+
+
 
         AtomicInteger currentTabPosition = new AtomicInteger(0);
         detailsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -173,7 +201,13 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
 
     // Function to load Itinerary Fragment
     private void loadItineraryFragment(final ItineraryLoadCallback callback) {
-        ItineraryFragment itineraryFragment = new ItineraryFragment(); // Create the fragment
+        ItineraryFragment itineraryFragment;
+        if(directFromDestActivity){
+             itineraryFragment = new ItineraryFragment().newInstance(itinerary); // Create the fragment
+
+        }else {
+             itineraryFragment = new ItineraryFragment(); // Create the fragment
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.itinerary_fragment_container, itineraryFragment);
         transaction.commit(); // Commit the transaction

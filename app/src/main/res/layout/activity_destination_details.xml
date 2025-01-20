@@ -24,13 +24,75 @@
         android:textSize="24sp"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_CityDetails"
+    <FrameLayout
+        android:id="@+id/media_container"
         android:layout_width="match_parent"
-        app:carousel_alignment="center"
-        android:orientation="horizontal"
-        android:layout_height="250dp"
-         />
+        android:layout_height="@dimen/dp_450"
+        android:layout_marginBottom="@dimen/dimens_16">
+
+
+
+        <!-- ViewPager2 for horizontal scrolling images -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_photos_dest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <ImageView
+            android:id="@+id/left_arrow_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/left_arrow_icon"
+            app:tint="#80F5BD45"
+            android:visibility="gone" />
+
+        <!-- Right arrow -->
+        <ImageView
+            android:id="@+id/right_arrow_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/right_arrow_icon2"
+
+            app:tint="#80F5BD45"
+
+            android:visibility="gone" />
+
+
+
+
+
+        <!-- TabLayout for dots indicator -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout_dest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstrains"
+            android:backgroundTint="@color/background_color"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            android:layout_gravity="bottom|center"
+            android:background="@android:color/transparent"
+
+            app:tabMode="fixed"
+
+
+            app:tabPaddingStart="8dp"
+            app:tabPaddingEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:tabIndicator="@null"
+            app:tabIndicatorColor="@color/primary_color"
+            app:tabIndicatorGravity="center"
+            app:tabIndicatorHeight="0dp"
+            />
+
+
+
+    </FrameLayout>
 
 
 
@@ -55,17 +117,7 @@
 
 
     </ScrollView>
-    <TextView
-        android:id="@+id/city_details_temporary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginVertical="16dp"
-        android:padding="16dp"
-        android:text="Mumbai, India's bustling financial capital, is a vibrant metropolis known for its iconic landmarks like the Gateway of India and Marine Drive. It blends historic charm with modern dynamism, offering a diverse cultural and economic landscape."
-        android:fontFamily="@font/poppins_regular"
-        android:textColor="@color/primary_color"
-        />
+
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -72,7 +72,7 @@ public class ViewPostCommentsActivity extends AppCompatActivity {
     private TextView replyToUserNameTV;
     private ImageButton closeReplyToButton;
     FrameLayout mediaContainer;
-    LinearLayout viewPagerLayout;
+    //LinearLayout viewPagerLayout;
     private TabLayout tabLayout;
     ViewPager2 viewPagerPhotos;
     public PlayerView playerView; // Use PlayerView for ExoPlayer
@@ -108,7 +108,7 @@ public class ViewPostCommentsActivity extends AppCompatActivity {
         closeReplyToButton = findViewById(R.id.close_reply_button);
 
         mediaContainer = postIncludedLayout.findViewById(R.id.media_container);
-        viewPagerLayout = postIncludedLayout.findViewById(R.id.view_pager_linearlayout);
+        //viewPagerLayout = postIncludedLayout.findViewById(R.id.view_pager_linearlayout);
         playerView = postIncludedLayout.findViewById(R.id.videoView_post_item);
         tabLayout = postIncludedLayout.findViewById(R.id.tabLayout);
         viewPagerPhotos = postIncludedLayout.findViewById(R.id.view_pager_photos_post_item);
@@ -330,7 +330,9 @@ public class ViewPostCommentsActivity extends AppCompatActivity {
 
                                 if (post.getVideoUrl() != null && !post.getVideoUrl().isEmpty()) {
                                     playerView.setVisibility(View.VISIBLE);
-                                    viewPagerLayout.setVisibility(View.GONE);
+//                                    viewPagerLayout.setVisibility(View.GONE);
+                                    viewPagerPhotos.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
 
                                     // Attach Player only; don't play yet
                                     ExoPlayer player = PlayerManager.getInstance(this);
@@ -343,7 +345,9 @@ public class ViewPostCommentsActivity extends AppCompatActivity {
                                 } else if (post.getPhotoUrls() != null && !post.getPhotoUrls().isEmpty()) {
                                     // Show the ViewPager and hide the PlayerView
                                     playerView.setVisibility(View.GONE);
-                                    viewPagerLayout.setVisibility(View.VISIBLE);
+                                    //viewPagerLayout.setVisibility(View.VISIBLE);
+                                    viewPagerPhotos.setVisibility(View.VISIBLE);
+                                    tabLayout.setVisibility(View.VISIBLE);
 
 
                                     // Set up the ViewPager2 adapter for photos
@@ -377,7 +381,9 @@ public class ViewPostCommentsActivity extends AppCompatActivity {
                                 } else {
                                     // Hide both PlayerView and ViewPager if no media is available
                                     playerView.setVisibility(View.GONE);
-                                    viewPagerLayout.setVisibility(View.GONE);
+                                    //viewPagerLayout.setVisibility(View.GONE);
+                                    viewPagerPhotos.setVisibility(View.GONE);
+                                    tabLayout.setVisibility(View.GONE);
                                 }
 
                             }

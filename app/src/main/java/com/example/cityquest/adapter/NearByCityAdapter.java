@@ -1,6 +1,7 @@
 package com.example.cityquest.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.cityquest.R;
 import com.example.cityquest.model.City;
 import com.example.cityquest.model.ItineraryPlace;
+import com.example.cityquest.model.PlaceDetails;
 
 import java.util.List;
 
@@ -21,10 +23,10 @@ import java.util.List;
 
 public class NearByCityAdapter extends RecyclerView.Adapter<NearByCityAdapter.ViewHolder> {
 
-    private List<City> cities;
+    private List<PlaceDetails> cities;
     Context context;
 
-    public NearByCityAdapter(Context context,List<City> cities) {
+    public NearByCityAdapter(Context context,List<PlaceDetails> cities) {
 
         this.cities = cities;
         this.context = context;
@@ -42,13 +44,23 @@ public class NearByCityAdapter extends RecyclerView.Adapter<NearByCityAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Bind data to the view
-        City city = cities.get(position);
-        holder.placeName.setText(city.getCityName());
-        holder.placeDescription.setText(city.getCityDescription());
+        PlaceDetails city = cities.get(position);
+        holder.placeName.setText(city.getName());
+        holder.placeDescription.setText(city.getFormattedAddress());
 
-        Glide.with(context)
-                .load(city.getCityImageUrl()) // Placeholder image in drawable
-                .into(holder.placeImage);
+
+
+        // Load photo bitmap if available, otherwise use Glide with placeholder
+        Bitmap photoBitmap = city.getPhotoBitmap();
+        if (photoBitmap != null) {
+            holder.placeImage.setImageBitmap(photoBitmap);
+        } else {
+            Glide.with(context)
+                    .load(R.drawable.image_placeholder) // Placeholder image in drawable
+                    .placeholder(R.drawable.image_placeholder) // Placeholder image
+                    .error(R.drawable.image_placeholder)
+                    .into(holder.placeImage);
+        }
     }
 
     @Override

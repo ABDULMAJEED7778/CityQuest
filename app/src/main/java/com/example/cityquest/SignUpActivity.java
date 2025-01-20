@@ -105,10 +105,7 @@ public class SignUpActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
 
-                                                        AppDatabase database = AppDatabase.getDatabase(SignUpActivity.this);
-                                                        databaseWriteExecutor.execute(() -> {
-                                                            database.userDao().insertUser(user);
-                                                        });
+
 
                                                         Toast.makeText(SignUpActivity.this, "Account created", Toast.LENGTH_SHORT).show();
                                                         Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
