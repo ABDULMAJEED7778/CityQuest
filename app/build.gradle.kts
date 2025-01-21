@@ -164,6 +164,8 @@ dependencies {
     implementation ("com.github.colourmoon:readmore-textview:v1.0.2")
 
     implementation ("com.google.code.gson:gson:2.11.0")
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 
 
 }

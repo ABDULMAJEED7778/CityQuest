@@ -169,6 +169,13 @@
         <item name="android:backgroundDimAmount">0.5</item> <!-- Dim the background slightly -->
     </style>
 
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logo</item>
+        <item name="windowSplashScreenAnimationDuration">3000</item>
+        <item name="postSplashScreenTheme">@style/Theme.CityQuest</item>
+    </style>
+
 
 
 
