@@ -49,8 +49,8 @@ Explore four exciting sections to make the most of your travel planning journey.
 ---
 
 ### 5. **Itinerary Planning 🗓️🗺️**
-![Itinerary](snapshots/itinerary_planing_1.png)  
 ![Itinerary](snapshots/itinerary_planing_2.png)
+![Itinerary](snapshots/itinerary_planing_1.png)  
 
 Effortlessly plan your trips with our itinerary feature. ✨
 
