@@ -4,8 +4,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
 
+    <LinearLayout
+        android:id="@+id/topAppBar_Community"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimens_8"
+        android:elevation="3dp"
+        android:background="@color/background_color"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/dp_200"
+            android:layout_height="@dimen/dimens_30"
+            android:src="@drawable/logo"/>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="@dimen/dimens_24"
+            android:layout_height="@dimen/dimens_24"
+            android:src="@drawable/add_post_icon2"
+            app:tint="@color/primary_color"
+            android:layout_marginRight="@dimen/dimens_8"/>
+        <ImageView
+            android:layout_width="@dimen/dimens_26"
+            android:layout_height="@dimen/dimens_26"
+            android:src="@drawable/heart_icon_filled"
+            app:tint="@color/primary_color"/>
+
+
+
+
+    </LinearLayout>
 <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
 <!--        android:id="@+id/bottom_navigation"-->
 <!--        android:layout_width="0dp"-->
@@ -17,11 +56,37 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:menu="@menu/bottom_navigation_menu" />-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/community_posts_recycler_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout_community"
         android:layout_width="match_parent"
+        android:layout_below="@+id/topAppBar_Community"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            android:id="@+id/community_posts_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:clipToPadding="false"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+            />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_anim_community_page"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        />
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_speed="2"
+        app:lottie_rawRes="@raw/trips_page_skeleton_anim" />
 
 </RelativeLayout>

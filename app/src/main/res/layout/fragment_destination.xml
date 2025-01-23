@@ -156,7 +156,21 @@
         android:layout_weight="1"
         android:layout_marginTop="@dimen/dimens_16"
         android:layout_marginBottom="@dimen/dimens_16"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:visibility="gone"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+
+                android:id="@+id/loading_anim_dest_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="20dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_speed="2"
+                app:lottie_rawRes="@raw/trips_page_skeleton_anim"
+                />
 
 
 

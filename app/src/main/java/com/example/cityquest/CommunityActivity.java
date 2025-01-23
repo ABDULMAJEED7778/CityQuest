@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,15 @@ import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.cityquest.adapter.PostsAdapter;
 import com.example.cityquest.model.TravelStory;
 import com.example.cityquest.utils.FirebaseUtils;
 import com.example.cityquest.utils.PlayerManager;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,8 +41,13 @@ import java.util.Set;
 public class CommunityActivity extends Fragment {
 
     private RecyclerView postsRecyclerView;
+
+    private LottieAnimationView loadingAnim;
+
+
     private PostsAdapter postsAdapter;
     private List<TravelStory> travelStories;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private int lastVisibleItemPosition = RecyclerView.NO_POSITION; // Keeps track of the last visible item
 
@@ -48,12 +58,24 @@ public class CommunityActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.activity_community, container, false);
 
+        // Inflate the fragment layout
+        LayoutInflater themedInflater = inflater.cloneInContext(new ContextThemeWrapper(getActivity(), R.style.TripsPage));
+        View view = themedInflater.inflate(R.layout.activity_community, container, false);
+        // Inflate the layout for this fragment
+
+        loadingAnim = view.findViewById(R.id.loading_anim_community_page);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout_community);
+        swipeRefreshLayout.setColorSchemeResources(R.color.secondary_color, R.color.background_color);
         // Initialize RecyclerView
         postsRecyclerView = view.findViewById(R.id.community_posts_recycler_view);
         postsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+
+        // Set up the menu item click listeners
+
+
 
         travelStories = new ArrayList<>();
         // Load mock data for posts
@@ -64,6 +86,11 @@ public class CommunityActivity extends Fragment {
         // Initialize and set adapter
         postsAdapter = new PostsAdapter(getContext(), travelStories);
         postsRecyclerView.setAdapter(postsAdapter);
+        // Set up SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // Simulate data refresh
+            loadPosts(false);
+        });
 
         // Set the "Load More" button click listener
         postsAdapter.setLoadMoreClickListener(v -> {
@@ -296,6 +323,10 @@ public class CommunityActivity extends Fragment {
 
     // Method to load posts
     private void loadPosts(boolean isInitialLoad) {
+        postsRecyclerView.setVisibility(View.GONE);
+        if (!swipeRefreshLayout.isRefreshing()) {
+            loadingAnim.setVisibility(View.VISIBLE);
+        }
         Query query = FirebaseUtils.getPostsCollection()
                 .orderBy("datePosted", Query.Direction.DESCENDING)
                 .limit(10);
@@ -329,6 +360,11 @@ public class CommunityActivity extends Fragment {
             }
 
             isLoading = false; // Mark loading as false
+            postsRecyclerView.setVisibility(View.VISIBLE);
+            loadingAnim.setVisibility(View.GONE);
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
         });
     }
 

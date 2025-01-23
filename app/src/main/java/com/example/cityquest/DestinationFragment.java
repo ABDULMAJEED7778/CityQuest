@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.cityquest.Database.AppDatabase;
 import com.example.cityquest.adapter.PlaceAutocompleteAdapter;
 import com.example.cityquest.adapter.PopularCityAdapter;
@@ -58,6 +59,7 @@ public class DestinationFragment extends Fragment {
     private Button skipBtn;
     private AutoCompleteTextView searchET;
     private RecyclerView searchRecyclerView;
+    private LottieAnimationView loadingAnim;
 
     private PopularCityAdapter popularCityAdapter;
     RecyclerView recyclerViewCityPopular;
@@ -65,10 +67,18 @@ public class DestinationFragment extends Fragment {
     private List<City> cities;
     private ChipGroup chipGroup;
     private PlaceAutocompleteAdapter suggestionAdapter;
-    AppDatabase database = AppDatabase.getDatabase(getContext());
+    AppDatabase database;
 
     public DestinationFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Safely initialize the database
+        database = AppDatabase.getDatabase(requireContext().getApplicationContext());
     }
 
     @Nullable
@@ -142,41 +152,15 @@ public class DestinationFragment extends Fragment {
 
         });
 
-        getScreenSize(view);
+
 
         return view;
     }
-    private void getScreenSize(View view) {
 
-        View line = view.findViewById(R.id.divider);
-        line.post(new Runnable() {
-            @Override
-            public void run() {
-                int heightInPixels = line.getHeight();
-
-// Convert pixels to dp
-                float density = getResources().getDisplayMetrics().density;
-                int heightInDp = (int) (heightInPixels / density);
-                Toast.makeText(getContext(), "hight of line: " + heightInDp + "", Toast.LENGTH_SHORT).show();
-                Toast.makeText(getContext(), "dinsity: " + density + "", Toast.LENGTH_SHORT).show();
-
-                DisplayMetrics metrics = new DisplayMetrics();
-                requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                int widthPx = metrics.widthPixels;
-
-
-
-                // Calculate screen width in dp
-                int widthDp = (int) (widthPx / density);
-                Toast.makeText(getContext(), "width of screen: " + widthDp + "", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
 
     private void initializeViews(View view) {
         searchRecyclerView = view.findViewById(R.id.recyclerView_search_suggestion);
+        loadingAnim = view.findViewById(R.id.loading_anim_dest_page);
         recyclerViewCityPopular = view.findViewById(R.id.recyclerView_city_popular);
 
         searchET = view.findViewById(R.id.search_input);
@@ -254,7 +238,7 @@ public class DestinationFragment extends Fragment {
         });
     }
     public void navigateToDateFragment(ReadyTrips trip) {
-        Toast.makeText(getContext(), "toDAtefragment", Toast.LENGTH_SHORT).show();
+
         DateRangeFragment dateFragment = new DateRangeFragment();
         Bundle args = new Bundle();
         args.putParcelable("trip", trip);
@@ -269,6 +253,8 @@ public class DestinationFragment extends Fragment {
 
 
     private void fetchCitiesFromFirestore() {
+        recyclerViewCityPopular.setVisibility(View.GONE);
+        loadingAnim.setVisibility(View.VISIBLE);
         FirebaseUtils.getCitiesCollection()
                 .get()
                 .addOnCompleteListener(task -> {
@@ -282,6 +268,8 @@ public class DestinationFragment extends Fragment {
                     } else {
                         Log.d("DestinationFragment", "Error fetching cities: ", task.getException());
                     }
+                    recyclerViewCityPopular.setVisibility(View.VISIBLE);
+                    loadingAnim.setVisibility(View.GONE);
                 });
     }
 

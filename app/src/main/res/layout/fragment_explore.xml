@@ -220,7 +220,8 @@
                             android:paddingHorizontal="2dp"
                             android:paddingVertical="2dp"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/down_arrow_icon_vector" />
+                            app:tint="@color/primary_color"
+                            app:srcCompat="@drawable/right_arrow" />
 
                         <TextView
                             android:id="@+id/shopping_TV"

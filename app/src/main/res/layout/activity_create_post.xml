@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     tools:context=".CreatePostActivity">
 
 
@@ -27,6 +29,8 @@
         android:id="@+id/nested_scrollView_explore_city"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 

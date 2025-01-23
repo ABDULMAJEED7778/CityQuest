@@ -40,8 +40,16 @@ public class SummaryFragment extends Fragment {
     private FlexboxLayout flexboxLayout;
     private ReadyTrips trip;
     private SwitchCompat tripTypeSwitch;
-    AppDatabase database = AppDatabase.getDatabase(getContext());
+    AppDatabase database;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Safely initialize the database
+        database = AppDatabase.getDatabase(requireContext().getApplicationContext());
+    }
 
 
 
@@ -147,8 +155,11 @@ public class SummaryFragment extends Fragment {
     public void saveTripToFirebase(ReadyTrips trip) {
 
 
+        CollectionReference myTripsRefrence = FirebaseUtils.getTripsCollection(FirebaseUtils.getCurrentUser().getUid());
+
+        String tripId = myTripsRefrence.getId();
         // Save to Firestore
-        FirebaseUtils.getTripsCollection(FirebaseUtils.getCurrentUser().getUid())
+        myTripsRefrence
                 .add(trip) // Add the trip to Firestore
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
@@ -156,6 +167,9 @@ public class SummaryFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.e("Firebase", "Trip is added to Firestore", task.getException());
                             trip.setSynced(true);
+                            trip.setTripId(tripId);
+
+
                             databaseWriteExecutor.execute(() -> {
                                 database.readyTripsDao().updateTrip(trip); // Update synced status
                             });

@@ -8,14 +8,14 @@ Welcome to **CityQuest**! 🎉🌍 This ultimate trip-planning app empowers you 
 ## **🌟 Features 🌟**
 
 ### 1. **Splash Screen** 🌟  
-![Splash](snapshots/Splash.png) 
+![Splash](snapshots/Splash_screen_img.png) 
 
 Kickstart your journey with our elegant and welcoming splash screen. 🚀✨  
 
 ---
 
 ### 2. **Onboarding 🎉📲**  
-![Onboarding](snapshots/Onboarding.png)  
+![Onboarding](snapshots/onboarding_img.png)  
 
 Start your adventure with an engaging onboarding experience! 🎈📝  
 
@@ -26,7 +26,7 @@ Start your adventure with an engaging onboarding experience! 🎈📝
 ---
 
 ### 3. **Authentication 🔒**  
-![Authentication](snapshots/Authentication.png)  
+![Authentication](snapshots/authentication_img.png)  
 
 Stay secure with our robust authentication system! 🛡️  
 
@@ -36,8 +36,8 @@ Stay secure with our robust authentication system! 🛡️
 
 ---
 
-### 4. **Main Page Sections 🏙️**
-![Main Page](snapshots/Main_Page.png)
+### 4. **Home Page Sections 🏙️**
+![Main Page](snapshots/home_page_img.png)
 
 Explore four exciting sections to make the most of your travel planning journey. 🌟
 
@@ -49,7 +49,8 @@ Explore four exciting sections to make the most of your travel planning journey.
 ---
 
 ### 5. **Itinerary Planning 🗓️🗺️**
-![Itinerary](snapshots/Itinerary.png)  
+![Itinerary](snapshots/itinerary_planing_1.png)  
+![Itinerary](snapshots/itinerary_planing_2.png)
 
 Effortlessly plan your trips with our itinerary feature. ✨
 
@@ -60,7 +61,7 @@ Effortlessly plan your trips with our itinerary feature. ✨
 ---
 
 ### 6. **Community Page 🌍🤝**  
-![Community](snapshots/Community.png)  
+![Community](snapshots/community_img.png)  
 
 Connect with a vibrant community of travelers! 🌐
 
@@ -70,55 +71,13 @@ Connect with a vibrant community of travelers! 🌐
 
 ---
 
-### 7. **Explore Tab 🔍🌆**
-![Explore](snapshots/Explore.png)
-
-Discover exciting destinations with ease! 🌍✨
-
-- **City Search:** Browse and search for cities to explore. 🔎
-- **City Details:** Tap on a city to see top attractions, nature spots, food destinations, and more. 🏙️🌟
-- **Profile Navigation:** Access your profile to view your posts and edit your details. 👤⚙️
-
----
-
-### 8. **My Trips 🗂️📅**  
-![My Trips](snapshots/My_Trips.png)  
-
-Manage all your saved trips in one place. 🗂️📋
-
-- **View Saved Trips:** Access detailed itineraries of your planned trips. 🌟
-- **Edit Plans:** Make changes to your saved itineraries as needed. ✏️✔️
-
----
-
-### 9. **Profile 👤⚙️**  
-![Profile](snapshots/Profile.png)  
-
-Manage your account and personal details effortlessly. 👤⚙️  
-
-- **User Information:** Update your name, location, and profile picture. 📋🖼️  
-- **Posts:** View and manage your shared trips and posts. 🌟
-- **Security Settings:** Change your password or manage Google login. 🔒✨  
-
----
-
-### 10. **Search with Filters 🔍⚙️**  
-![Search](snapshots/Search.png)  
-
-Find your next adventure with advanced search features! 🔍⚙️  
-
-- **Quick Search:** Type keywords or city names for instant results. ⌨️
-- **Filters:** Narrow down results based on city, type of attraction, or interests. 🌟
-
----
-
 ## **📬 Contact Us 📬**  
 
 Have questions or need assistance? We’re here to help! 🤗💬  
 
-- **Email:** moanbm123@gmail.com 📧  
-- **LinkedIn:** [@Mohammed Anwar](https://www.linkedin.com/in/mohammad-anwar-bin-muslim-50102725b/) 🐦  
-- **WhatsApp:** [Contact us on WhatsApp](https://wa.me/+917411440342) 📱  
+- **Email:** ghassansalmeen7@gmail.com 📧  
+- **LinkedIn:** [@Ghassan Salmeen](https://www.linkedin.com/in/ghassan-muneef-saeed-salmen-779202333/) 🐦  
+- **WhatsApp:** [Contact us on WhatsApp](https://wa.me/+917619699362) 📱  
 
 ---
 

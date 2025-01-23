@@ -3,6 +3,7 @@ package com.example.cityquest;
 import static com.example.cityquest.Database.AppDatabase.databaseWriteExecutor;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -80,6 +81,17 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
 
+        // Check if the user has completed onboarding
+        SharedPreferences preferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+        boolean isFirstLaunch = preferences.getBoolean("isFirstLaunch", true);
+
+        // Navigate to the appropriate activity
+        if (isFirstLaunch) {
+            startActivity(new Intent(this, IntroActivity.class));
+            finish();
+        }
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -143,6 +155,7 @@ public class SignInActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                Log.e("toMain","from explore btn");
                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -216,6 +229,7 @@ public class SignInActivity extends AppCompatActivity {
                                                                         database.userDao().insertUser(user);
                                                                     });
                                                                 }
+                                                                Log.e("toMain","from sign btn");
 
                                                                 // Proceed to next activity
                                                                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
@@ -296,7 +310,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
+        Log.e("toMain","from update ui method"+user);
         if (user != null) {
+            Toast.makeText(this, "user is "+user.getEmail(), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             finish();

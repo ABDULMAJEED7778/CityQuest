@@ -197,12 +197,23 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/rounded_corners_for_image"
                         >
-                    <ImageView
-                        android:id="@+id/place_image_adapter"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/bangalore" />
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="@dimen/dimens_16"
+
+
+                            >
+
+                            <ImageView
+                                android:id="@+id/place_image_adapter"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/bangluru" />
+
+                        </androidx.cardview.widget.CardView>
+
                     </FrameLayout>
 
                     <LinearLayout

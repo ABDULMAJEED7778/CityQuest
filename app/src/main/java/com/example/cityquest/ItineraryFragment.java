@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -45,6 +46,7 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
     private String tripId;// Add tripId if you want to fetch data based on trip ID
     private TabLayout dayTabLayout;
     private LinearLayoutManager layoutManager;
+    private boolean directFromDest =false;
 
     public interface LoadCompleteListener {
         void onLoadComplete();
@@ -59,9 +61,14 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
     public ItineraryFragment() {
         super(R.layout.fragment_itinerary); // Reference to your fragment layout
     }
-    public static ItineraryFragment newInstance(ArrayList<TripDay> cityName) {
+    public static ItineraryFragment newInstance(ArrayList<TripDay> itinerary, String tripId) {
         ItineraryFragment fragment = new ItineraryFragment();
         Bundle args = new Bundle();
+
+
+        args.putParcelableArrayList("itinerary", itinerary); // Put the city name in the arguments
+        args.putString("tripId", tripId);
+
 
         fragment.setArguments(args);
 
@@ -95,12 +102,8 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_itinerary, container, false);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_itinerary, container, false);
 
         daysRecyclerView = view.findViewById(R.id.days_recycler_view);
         dayTabLayout = view.findViewById(R.id.dayTabLayout);
@@ -109,19 +112,38 @@ public class ItineraryFragment extends Fragment implements DaysDetailsAdapter.On
         daysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-
-        // Retrieve the city name from arguments
         if (getArguments() != null) {
             ArrayList<TripDay> itinerary  = getArguments().getParcelableArrayList("itinerary");
-            if(itinerary == null){
 
-                fetchTripDays(tripId);
-            }else {
+            if(itinerary != null){
+
+
+
+                directFromDest = true;
                 updateItinerarySection(itinerary); // Update the RecyclerView with the days and their places
                 onDataLoaded();
                 setupDayTabs(itinerary);
+            }else {
+                directFromDest = false;
+                tripId = getArguments().getString("tripId");
             }
         }
+        if(!directFromDest){
+            Toast.makeText(getContext(), "tripId"+tripId, Toast.LENGTH_SHORT).show();
+            fetchTripDays(tripId);
+        }
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
+
+
+
 
 //        daysRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override

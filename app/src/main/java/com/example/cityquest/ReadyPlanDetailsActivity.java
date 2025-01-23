@@ -56,6 +56,7 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     private FrameLayout exploreFragmentContainer;
     private int numberOfDays;
     private String tripId;
+    private String tripIdForCustomTrip;
     boolean directFromDestActivity = false;
     ArrayList<TripDay> itinerary;
 
@@ -102,8 +103,12 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
         if (trip != null) {
             // Use the trip object directly
             displayTripDetails(trip);
+
+            tripIdForCustomTrip = trip.getTripId();
+
             if(itinerary!=null){
                 directFromDestActivity = true;
+                Toast.makeText(this, "size of itinerary"+itinerary.size(), Toast.LENGTH_SHORT).show();
             }
         } else if (tripId != null) {
             // Fetch trip details using the tripId
@@ -202,8 +207,8 @@ public class ReadyPlanDetailsActivity extends AppCompatActivity {
     // Function to load Itinerary Fragment
     private void loadItineraryFragment(final ItineraryLoadCallback callback) {
         ItineraryFragment itineraryFragment;
-        if(directFromDestActivity){
-             itineraryFragment = new ItineraryFragment().newInstance(itinerary); // Create the fragment
+        if(directFromDestActivity||tripIdForCustomTrip!=null){
+             itineraryFragment = new ItineraryFragment().newInstance(itinerary, tripIdForCustomTrip); // Create the fragment
 
         }else {
              itineraryFragment = new ItineraryFragment(); // Create the fragment

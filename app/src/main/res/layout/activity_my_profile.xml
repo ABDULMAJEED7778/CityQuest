@@ -31,7 +31,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="16dp">
+        >
+
 
         <ImageView
             android:id="@+id/profile_image_my_profile"
@@ -39,10 +40,12 @@
             android:layout_height="70dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:src="@drawable/man"
+            android:scaleType="centerCrop"
             android:background="@drawable/circled_image"
-            android:src="@drawable/user_placholer_icon"
+            android:clipToOutline="true"
 
-            />
+            android:outlineProvider="background"/>
 
         <TextView
             android:id="@+id/profile_name_my_profile"
@@ -64,8 +67,7 @@
             android:textSize="16sp" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/going_solo_card"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/dimens_385"
             android:layout_height="90dp"
             android:layout_margin="4dp"
             android:layout_marginBottom="16dp"
@@ -91,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="0"
+                        android:text="15"
                         android:textColor="@color/primary_color"
                         android:textSize="20sp"
                         />
@@ -125,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="0"
+                        android:text="54"
                         android:textColor="@color/primary_color"
                         android:textSize="20sp" />
                     <TextView
@@ -158,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="0"
+                        android:text="87"
                         android:textColor="@color/primary_color"
                         android:textSize="20sp" />
                     <TextView
@@ -183,6 +185,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:gravity="center_horizontal">
 
             <TextView
@@ -223,8 +226,6 @@
 
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
 
 
 

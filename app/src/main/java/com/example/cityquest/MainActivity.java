@@ -67,7 +67,10 @@ public class MainActivity extends AppCompatActivity {
             int defaultNavHeight = getResources().getDimensionPixelSize(R.dimen.bottom_nav_height);
             ViewGroup.LayoutParams layoutParams = bottomNavigationView.getLayoutParams();
 
-            retriveAndSaveUserData();
+            if(FirebaseUtils.getCurrentUser() != null){
+                retriveAndSaveUserData();
+            }
+
 
 
             if (systemBarsInsets.bottom > 0 && gestureInsets.bottom > 0) {

@@ -1,6 +1,7 @@
 package com.example.cityquest;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
@@ -58,6 +60,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private LinearLayout seclectedCityLL;
     private TextView selectedCityTV;
     private EditText postTitleEd, postDescriptionEd;
+    private NestedScrollView nestedScrollView;
     private Button sharePostBtn;
     private String placeId;
 
@@ -93,6 +96,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
         seclectedCityLL = findViewById(R.id.selected_city_linearLayout);
         selectedCityTV = findViewById(R.id.selected_city_tv);
+        nestedScrollView = findViewById(R.id.nested_scrollView_explore_city);
 
         username = getIntent().getStringExtra("username");
 
@@ -105,6 +109,29 @@ public class CreatePostActivity extends AppCompatActivity {
         // Initialize Autocomplete Adapter
         suggestionAdapter = new PlaceAutocompleteAdapter(this, new ArrayList<>());
         citiesRecyclerView.setAdapter(suggestionAdapter);
+
+        searchET.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                v.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                    // Scroll to the RecyclerView when the keyboard opens
+                    citiesRecyclerView.post(() -> citiesRecyclerView.smoothScrollToPosition(0));
+                });
+            }
+        });
+        nestedScrollView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            Rect r = new Rect();
+            nestedScrollView.getWindowVisibleDisplayFrame(r);
+            int heightDiff = nestedScrollView.getRootView().getHeight() - r.height();
+            if (heightDiff > 100) { // Keyboard is open
+                View focusedView = getCurrentFocus();
+                if (focusedView != null) {
+                    nestedScrollView.smoothScrollTo(0, focusedView.getBottom());
+                }
+            }
+        });
+
+
+
 
         suggestionAdapter.setOnItemClickListener(position -> {
             AutocompletePrediction selectedPrediction = suggestionAdapter.getItemAt(position);
